@@ -10,7 +10,7 @@ function LoginContainer({ handleSwitch, type }) {
                 <div className={clsx(styles.header)}>
                     <img src={DobeeRoomLogo} alt={'Logo DobeeRoom'} className={clsx(styles.logo)} />
                     <h2 className={clsx(styles.title)} >
-                        { type ? 'Đăng nhập vào DOBEEROOM' : 'Đăng ký tài khoản' }
+                        { type ? 'Đăng nhập' : 'Đăng ký tài khoản' }
                     </h2>
                 </div>
                 <div className={clsx(styles.body)}>

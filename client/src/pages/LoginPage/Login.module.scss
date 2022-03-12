@@ -1,6 +1,6 @@
 @import "../../commons/sass/index.scss";
 
-@mixin d-flex($direction) {
+@mixin dFlex($direction) {
   display: flex;
   flex-direction: #{$direction};
   justify-content: center;
@@ -8,7 +8,7 @@
 }
 
 .wrapper {
-  @include d-flex(column);
+  @include dFlex(column);
   overflow: hidden;
   height: 100vh;
   background-image: url("../../assets/images/bg-dobeeroom.png");
@@ -19,7 +19,7 @@
 }
 
 .container {
-  @include d-flex(column);
+  @include dFlex(column);
 }
 
 .lisence {
@@ -58,7 +58,7 @@
   }
 
   .body {
-    @include d-flex(column);
+    @include dFlex(column);
     margin: 20px 0;
     text-align: center;
   }

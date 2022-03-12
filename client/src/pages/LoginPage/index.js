@@ -8,7 +8,7 @@ export default function LoginPage() {
 
     useEffect(() => {
         if (type) {
-            document.title = 'Đăng Nhập Vào DobeeRoom | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
+            document.title = 'Đăng Nhập | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
         } else {
             document.title = 'Đăng Ký Tài Khoản | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
         }
@@ -22,7 +22,7 @@ export default function LoginPage() {
         <div className={clsx(styles.wrapper)}>
             <LoginContainer handleSwitch={handleSwitch} type={type} />
             <div className={clsx(styles.lisence)}>
-                <span>© 2022, Copyright by DOBEETEAM</span>
+                <span>© 2022, Copyright by AndyngoJs</span>
             </div>
         </div>
     )
