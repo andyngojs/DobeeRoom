@@ -1,0 +1,36 @@
+@import "../../sass/index.scss";
+.container {
+  --height: 50px;
+  height: var(--height);
+  width: 320px;
+  line-height: var(--height);
+  cursor: pointer;
+  margin: 12px 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 4px 3px 12px $gray-color;
+  text-decoration: none;
+
+  &:hover {
+    opacity: .8;
+  }
+
+  .title {
+    color: $white-color;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .icon {
+    color: $white-color;
+    font-size: 18px;
+  }
+}
+
+.fbBtn {
+  background-color: $primary-color;
+}
+.ggBtn {
+  background-color: $secondary-color;
+}

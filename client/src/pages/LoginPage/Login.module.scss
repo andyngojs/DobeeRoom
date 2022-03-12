@@ -1,0 +1,79 @@
+@import "../../commons/sass/index.scss";
+
+@mixin d-flex($direction) {
+  display: flex;
+  flex-direction: #{$direction};
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  @include d-flex(column);
+  overflow: hidden;
+  height: 100vh;
+  background-image: url("../../assets/images/bg-dobeeroom.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  user-select: none;
+}
+
+.container {
+  @include d-flex(column);
+}
+
+.lisence {
+  color: $white-color;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.content {
+  width: 640px;
+  max-width: calc(100vw - 32px);
+  min-height: 600px;
+  background-color: $white-color;
+  padding: 48px 16px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 200px $text-color;
+  @include responsiveStyle(0, 739px) {
+    min-height: 577px;
+  }
+
+  .header {
+    text-align: center;
+    .logo {
+      width: 80px;
+      margin-bottom: 14px;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: $text-color;
+      line-height: 1.4;
+      @include responsiveStyle(0, 739px) {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .body {
+    @include d-flex(column);
+    margin: 20px 0;
+    text-align: center;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    color: $text-color;
+    font-size: 14px;
+    font-weight: 500;
+
+    .switchMethod {
+      font-weight: 700;
+      color: $primary-color;
+      cursor: pointer;
+    }
+  }
+}
+
