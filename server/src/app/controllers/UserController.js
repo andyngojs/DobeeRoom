@@ -1,7 +1,18 @@
-export const getUser = (req, res) => {
+import { UserModel } from '../models/UserModel.js';
+
+export const getUser = async (req, res) => {
         try {
-                res.send('GET User...');
+                const users = await UserModel.find();
+                res.status(200).json(users);
         } catch (err) {
-                throw new Error(err);
+                console.log("Message: " ,err);
+        }
+};
+
+export const createUser = (req, res) => {
+        try {
+                res.json({ message: 'success' });
+        } catch (err) {
+                console.log("Message: ", err);
         }
 };
