@@ -23,6 +23,6 @@ mongoose.connect(url, { useUnifiedTopology: true })
             console.log(`Your app running on http://localhost:${port}`);
         });
     }).catch((error) => {
-        throw new Error(error);
+        console.log("Message: ", error);
     });
 
