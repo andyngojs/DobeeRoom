@@ -1,29 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import clsx from "clsx";
 import styles from './Login.module.scss'
 import LoginContainer from "./LoginContainer";
 
 export default function LoginPage() {
-    const [type, setType] = useState(true);
 
     useEffect(() => {
-        if (type) {
             document.title = 'Đăng Nhập | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
-        } else {
-            document.title = 'Đăng Ký Tài Khoản | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
-        }
-    }, [type]);
-
-    const handleSwitch = () => {
-        setType(!type);
-    }
+            return () => {
+                document.title = 'DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
+            }
+    }, []);
 
     return (
-        <div className={clsx(styles.wrapper)}>
-            <LoginContainer handleSwitch={handleSwitch} type={type} />
-            <div className={clsx(styles.lisence)}>
-                <span>© 2022, Copyright by AndyngoJs</span>
+            <div className={clsx(styles.wrapper)}>
+                <LoginContainer />
+                <div className={clsx(styles.lisence)}>
+                    <span>© 2022, Copyright by AndyngoJs</span>
+                </div>
             </div>
-        </div>
     )
 }
