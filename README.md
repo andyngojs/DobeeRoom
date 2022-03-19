@@ -13,6 +13,3 @@ Dong Ngo (AndyngoJs)
 
 ### Tutorial Teacher
 Pham Tien Huy
-
-### Supporter
-Minh Nguyen

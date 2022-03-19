@@ -1,4 +1,4 @@
-export const setUserFB = (payload) => ({
-    type: 'auth/loginFB',
+export const setUser = (payload) => ({
+    type: 'auth/login',
     payload
 })

@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { userNameFBSelector } from '../../redux/selectors';
+import { userNameSelector } from '../../redux/selectors';
+import { get } from '../../utils/LocalStorage';
 
 export default function HomePage() {
-    const nameUserFB = useSelector(userNameFBSelector);
+    const nameUser = useSelector(userNameSelector);
+
+    console.log(get())
 
     useEffect(() => {
         document.title = 'Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
     }, []);
 
     return (
-        <div>hello { nameUserFB }</div>
+        <div>hello { nameUser }</div>
     );
 };
