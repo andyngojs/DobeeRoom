@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    providerIn: {
+    providerId: {
         type: String,
         required: false
     }

@@ -1,11 +1,9 @@
-const KEY = 'DR_SECRET';
+export const get = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
-export const get = () => JSON.parse(localStorage.getItem(KEY)) || [];
-
-export const set = (token) => {
-    localStorage.setItem(KEY, JSON.stringify(token));
+export const set = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
 };
 
-export const remove = () => {
-    localStorage.removeItem(KEY);
+export const remove = (key) => {
+    localStorage.removeItem(key);
 };

@@ -1,3 +1,5 @@
+import { set } from '../../../utils/LocalStorage';
+
 const initState = {
     id: '',
     name: '',
@@ -6,16 +8,19 @@ const initState = {
     phone: null,
     address: '',
     university: '',
-    accessToken: ''
+    accessToken: '',
+    providerId: ''
 };
 
 const authSlice = (state = initState, action) => {
     switch (action.type) {
         case 'auth/login':
-            return {
+            const newState = {
                 ...state,
                 ...action.payload
-            }
+            };
+            // createUser(newState);
+            return newState;
         default:
             return state;
     }

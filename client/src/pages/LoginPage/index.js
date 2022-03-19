@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import clsx from "clsx";
 import styles from './Login.module.scss'
 import LoginContainer from "./LoginContainer";
-// import { get } from '../../utils/LocalStorage';
 
 export default function LoginPage() {
 
