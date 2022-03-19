@@ -7,6 +7,7 @@ import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider, onAuthStateC
 import styles from './SigninButton.module.scss';
 import { setUser } from '../../../redux/actions';
 import { auth } from '../../../firebase/config';
+import { get } from '../../../utils/LocalStorage';
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();

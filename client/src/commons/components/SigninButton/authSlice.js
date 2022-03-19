@@ -19,7 +19,7 @@ const authSlice = (state = initState, action) => {
                 ...state,
                 ...action.payload
             };
-            // createUser(newState);
+            set('INFOR', newState);
             return newState;
         default:
             return state;
