@@ -5,14 +5,17 @@ export const getUser = async (req, res) => {
                 const users = await UserModel.find();
                 res.status(200).json(users);
         } catch (err) {
-                console.log("Message: " ,err);
+                res.status(500).json({ message: err });
         }
 };
 
-export const createUser = (req, res) => {
+export const createUser = async (req, res) => {
         try {
-                res.json({ message: 'success' });
+                const newUser = req.body;
+                const user =  new UserModel(newUser);
+                await user.save();
+                res.status(200).json(user);
         } catch (err) {
-                console.log("Message: ", err);
+                res.status(500).json({ message: err });
         }
 };

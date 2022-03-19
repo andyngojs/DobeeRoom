@@ -1,21 +1,26 @@
+import { set } from '../../../utils/LocalStorage';
+
 const initState = {
     id: '',
     name: '',
     email: '',
     status: 0,
     phone: null,
-    address: null,
-    university: null,
-    accessToken: ''
+    address: '',
+    university: '',
+    accessToken: '',
+    providerId: ''
 };
 
 const authSlice = (state = initState, action) => {
     switch (action.type) {
-        case 'auth/loginFB':
-            return {
+        case 'auth/login':
+            const newState = {
                 ...state,
                 ...action.payload
-            }
+            };
+            set('INFOR', newState);
+            return newState;
         default:
             return state;
     }
