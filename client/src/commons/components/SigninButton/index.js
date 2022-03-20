@@ -1,11 +1,11 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import clsx from "clsx";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FacebookFilled, GoogleCircleFilled } from '@ant-design/icons';
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import styles from './SigninButton.module.scss';
-import { setUser } from '../../../redux/actions';
+import { setUser, getUserCurrent } from '../../../redux/actions';
 import { auth } from '../../../firebase/config';
 import { get } from '../../../utils/LocalStorage';
 
@@ -19,6 +19,10 @@ const SigninButton = ({ name }) => {
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user) {
+                dispatch(getUserCurrent({
+                    name: user.displayName,
+                    email: user.email,
+                }));
                 navigate('/');
             }
         })
@@ -34,8 +38,8 @@ const SigninButton = ({ name }) => {
                     name: user.displayName,
                     email: user.email,
                     phone: user.phoneNumber,
-                    accessToken: user.accessToken,
-                    providerId: credential.providerId
+                    accessToken: credential.accessToken,
+                    providerId: credential.providerId,
                 }));
             }).catch(err => {
                 console.log(`Code: ${err.code}, Message: ${err.message}`);
@@ -52,8 +56,8 @@ const SigninButton = ({ name }) => {
                     name: user.displayName,
                     email: user.email,
                     phone: user.phoneNumber,
-                    accessToken: user.accessToken,
-                    providerId: credential.providerId
+                    accessToken: credential.accessToken,
+                    providerId: credential.providerId,
                 }));
             }).catch(err => {
                 console.log(`Code: ${err.code}, Message: ${err.message}`);
