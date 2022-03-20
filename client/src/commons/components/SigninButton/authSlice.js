@@ -9,18 +9,25 @@ const initState = {
     address: '',
     university: '',
     accessToken: '',
-    providerId: ''
+    providerId: '',
 };
 
 const authSlice = (state = initState, action) => {
     switch (action.type) {
-        case 'auth/login':
+        case 'auth/register':
             const newState = {
                 ...state,
                 ...action.payload
             };
             set('INFOR', newState);
             return newState;
+        case 'auth/login':
+            const userCurrent = {
+                ...state,
+                ...action.payload
+            };
+            set('INFOR', userCurrent);
+            return userCurrent;
         default:
             return state;
     }

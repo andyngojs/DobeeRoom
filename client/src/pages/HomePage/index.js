@@ -1,35 +1,32 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { userNameSelector } from '../../redux/selectors';
+import { signOut } from 'firebase/auth';
+import { userInforSelector } from '../../redux/selectors';
 import { getUser } from '../../api';
-import { get } from '../../utils/LocalStorage';
+import { get, remove } from '../../utils/LocalStorage';
+import { auth } from '../../firebase/config';
 
 export default function HomePage() {
-    const [users, setUsers ] = useState([])
-    const nameUser = useSelector(userNameSelector);
-    const userLocal = get('INFOR');
-
-    useEffect(() => {
-        getUser().then(res => {
-            setUsers(res.data);
-        }).catch(err => {
-            console.log('Message Error: ', err);
-        });
-    }, []);
+    const navigate = useNavigate();
+    const userInfo = useSelector(userInforSelector);
+    const userInfoLocal = get('INFOR');
 
     useEffect(() => {
         document.title = 'Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
     }, []);
 
+    const handleLogOut = () => {
+        signOut(auth).then(() => {
+            remove('INFOR');
+            navigate('/login')
+        })
+    }
+
     return (
-        <div>{
-            users.map((user) => {
-                if (user.id === userLocal.id) {
-                    return `Hello ${user.name}`
-                } else {
-                    return `Hello ${nameUser}`
-                }
-            })
-        }</div>
+        <div>
+            <h1>Hello { userInfo.name || userInfoLocal.name }</h1>
+            <button onClick={() => handleLogOut() } >Sign Out</button>
+        </div>
     );
 };

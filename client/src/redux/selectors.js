@@ -1,2 +1,2 @@
-export const userNameSelector = (state) => state.auths.name;
+export const userInforSelector = (state) => state.auths;
 
