@@ -1,0 +1,92 @@
+@import '../../sass/index.scss';
+.wrapper {
+  --height: 66px;
+  height: var(--height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28px;
+  border-bottom: 1px solid #e8ebed;
+  font-size: 14px;
+  position: relative;
+
+  .logo {
+    display: flex;
+    flex: 1 1;
+    align-items: center;
+    img {
+      width: 60px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .logoHeading {
+      color: $text-color;
+      font-size: 16px;
+      font-weight: 700;
+      margin-left: 16px;
+    }
+  }
+  .action {
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .imgAvatar {
+      background-color: $power-blue-color;
+      color: $text-color;
+      margin-right: 4px;
+    }
+    .nameUser {
+        font-size: 14px;
+        font-weight: 800;
+        color: $text-color;
+    }
+  }
+  .btn {
+    --height: 50px;
+    height: var(--height);
+    width: 320px;
+    line-height: var(--height);
+    cursor: pointer;
+    margin: 12px 0;
+    border-radius: 10px;
+  }
+}
+
+// Modal
+.modalWrapper {
+  background-color: $white-color;
+  border-radius: 8px;
+  box-shadow: 0px -4px 32px #cccccc;
+  padding: 8px 24px;
+  position: absolute;
+  right: 28px;
+  top: 60px;
+  z-index: 99;
+
+  ul {
+    list-style-type: none;
+    li {
+      line-height: 28px;
+      padding: 9px 0;
+      a {
+        text-decoration: none;
+        color: $gray-color;
+        font-size: 14px;
+        display: block;
+        &:hover {
+          color: $text-color;
+        }
+      }
+    }
+  }
+  .btnHanle {
+    color: $text-color;
+    padding: 9px 0;
+    cursor: pointer;
+  }
+}
