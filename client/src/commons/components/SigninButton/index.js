@@ -22,6 +22,7 @@ const SigninButton = ({ name }) => {
                 dispatch(getUserCurrent({
                     name: user.displayName,
                     email: user.email,
+                    accessToken: user.accessToken
                 }));
                 navigate('/');
             }
