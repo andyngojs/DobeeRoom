@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { Avatar, Button, Typography } from 'antd';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
-import logoFull from '../../../assets/images/dobeeroom.svg';
-import { get } from '../../../utils/LocalStorage';
-import { accessTokenSelector, userInforSelector } from '../../../redux/selectors';
+import logoFull from '../../assets/images/dobeeroom.svg';
+import { get } from '../../utils/LocalStorage';
+import { accessTokenSelector, userInforSelector } from '../../redux/selectors';
 import Modal from './Modal';
 
 const { Text } = Typography;

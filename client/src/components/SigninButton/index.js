@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { FacebookFilled, GoogleCircleFilled } from '@ant-design/icons';
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import styles from './SigninButton.module.scss';
-import { setUser, getUserCurrent } from '../../../redux/actions';
-import { auth } from '../../../firebase/config';
-import { get } from '../../../utils/LocalStorage';
+import { setUser, getUserCurrent } from '../../redux/actions';
+import { auth } from '../../firebase/config';
+import { get } from '../../utils/LocalStorage';
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();

@@ -1,4 +1,4 @@
-import { set } from '../../../utils/LocalStorage';
+import { set } from '../../utils/LocalStorage';
 
 const initState = {
     id: '',

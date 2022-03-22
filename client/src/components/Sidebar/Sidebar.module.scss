@@ -1,0 +1,16 @@
+.wrapper {
+  --width: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  position: sticky;
+  left: 0;
+  top: 74px;
+  width: 92px;
+
+  .navbarList {
+    margin: 10px 0;
+    padding-left: 0;
+  }
+}

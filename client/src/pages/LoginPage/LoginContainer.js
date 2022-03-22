@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Link } from 'react-router-dom';
 import styles from "./Login.module.scss";
-import SigninButton from "../../commons/components/SigninButton";
+import SigninButton from "../../components/SigninButton";
 import DobeeRoomLogo from "../../assets/images/dobeeroom.svg";
 
 function LoginContainer() {

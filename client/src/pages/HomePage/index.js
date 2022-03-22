@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Layout  } from 'antd';
 
-import Header from '../../commons/components/Header';
+import Header from '../../components/Header';
+
+const { Sider, Content } = Layout;
 
 export default function HomePage() {
 
@@ -10,8 +13,8 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div>
-            <Header />
-        </div>
+        <>
+            <p>Homepage!</p>
+        </>
     );
 };

@@ -1,10 +1,9 @@
-// import {useContext} from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { Typography  } from 'antd';
+import { Typography, Divider  } from 'antd';
 import clsx from 'clsx';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
-import { remove } from '../../../utils/LocalStorage';
+import { auth } from '../../firebase/config';
+import { remove } from '../../utils/LocalStorage';
 import styles from './Header.module.scss';
 
 const { Text } = Typography;
@@ -31,7 +30,7 @@ const Modal = () => {
                 <li>
                     <Link to={'/me/bookmarks/post'}>Bài viết đã lưu của tôi</Link>
                 </li>
-                <hr />
+                <Divider type={'horizontal'} style={{ margin: 6 }} />
                 <div className={clsx(styles.btnHanle)} onClick={() => handleLogOut()}>
                     <Text >Đăng xuất</Text>
                 </div>

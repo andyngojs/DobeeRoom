@@ -1,0 +1,15 @@
+@import "./src/sass/index.scss";
+
+.withSidebar {
+  display: flex;
+  min-height: 100vh;
+
+  .sideBarWrapper {
+    flex-shrink: 0;
+  }
+  .contentWrapper {
+    flex: 1;
+    max-width: calc(100% - 92px);
+    padding: 0 40px 0 20px;
+  }
+}
