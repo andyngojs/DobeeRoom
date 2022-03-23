@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Typography, Divider  } from 'antd';
-import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
+import clsx from 'clsx';
+import { Typography, Divider  } from 'antd';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
 import { logOut } from '../../redux/actions';
@@ -14,12 +14,12 @@ const { Text } = Typography;
 const Modal = () => {
     const navigate = useNavigate();
 
-    const handleLogOut = useEffect(() => {
+    const handleLogOut = () => {
         signOut(auth).then(() => {
             remove('INFOR');
             navigate('/login')
         })
-    }, [navigate]);
+    };
 
     return (
         <div className={clsx(styles.modalWrapper)}>
