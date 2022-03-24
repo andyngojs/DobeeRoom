@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { Typography, Divider  } from 'antd';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
-import { logOut } from '../../redux/actions';
 import { remove } from '../../utils/LocalStorage';
 import styles from './Header.module.scss';
 
