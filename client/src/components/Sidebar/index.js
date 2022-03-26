@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
 import {
@@ -25,11 +25,32 @@ import {
 } from "../../redux/selectors";
 
 const Siderbar = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const isActiveHome = useSelector(isActiveHomeSelector);
   const isActiveSearch = useSelector(isActiveSearchSelector);
   const isActiveUser = useSelector(isActiveUserSelector);
   const isActiveAbout = useSelector(isActiveAboutSelector);
+
+  const handleSelectedTab = useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        dispatch(activeHomeTab);
+        break;
+      case "/search":
+        dispatch(activeSearchTab);
+        break;
+      case "/user":
+        dispatch(activeUserTab);
+        break;
+      case "/about":
+        dispatch(activeAboutTab);
+        break;
+      default: {
+        dispatch(activeHomeTab);
+      }
+    }
+  }, [location.pathname]);
 
   return (
     <div className={clsx(styles.wrapper)}>
@@ -43,7 +64,7 @@ const Siderbar = () => {
       <ul className={clsx(styles.navbarList)}>
         <li
           className={clsx({ [styles.active]: isActiveHome })}
-          onClick={() => dispatch(activeHomeTab)}
+          onClick={handleSelectedTab}
         >
           <Link to={"/"}>
             <HomeOutlined />
@@ -52,7 +73,7 @@ const Siderbar = () => {
         </li>
         <li
           className={clsx({ [styles.active]: isActiveSearch })}
-          onClick={() => dispatch(activeSearchTab)}
+          onClick={handleSelectedTab}
         >
           <Link to={"/search"}>
             <SearchOutlined />
@@ -61,7 +82,7 @@ const Siderbar = () => {
         </li>
         <li
           className={clsx({ [styles.active]: isActiveUser })}
-          onClick={() => dispatch(activeUserTab)}
+          onClick={handleSelectedTab}
         >
           <Link to={"/user"}>
             <UserOutlined />
@@ -70,7 +91,7 @@ const Siderbar = () => {
         </li>
         <li
           className={clsx({ [styles.active]: isActiveAbout })}
-          onClick={() => dispatch(activeAboutTab)}
+          onClick={handleSelectedTab}
         >
           <Link to={"/about"}>
             <ContainerOutlined />

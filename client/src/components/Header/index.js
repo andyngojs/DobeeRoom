@@ -1,56 +1,69 @@
-import { useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Avatar, Button, Typography } from 'antd';
-import clsx from 'clsx';
-import styles from './Header.module.scss';
-import logoFull from '../../assets/images/dobeeroom.svg';
-import { get } from '../../utils/LocalStorage';
-import { accessTokenSelector, userInforSelector } from '../../redux/selectors';
-import Modal from './Modal';
+import { useState, useCallback, memo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Avatar, Button, Typography } from "antd";
+import clsx from "clsx";
+import styles from "./Header.module.scss";
+import logoFull from "../../assets/images/dobeeroom.svg";
+import { get } from "../../utils/LocalStorage";
+import { accessTokenSelector, userInforSelector } from "../../redux/selectors";
+import Modal from "./Modal";
 
 const { Text } = Typography;
 
-export default function Header() {
-    const [ show, setShow ] = useState(false)
-    const userInfoLocal = get('INFOR');
-    const navigate = useNavigate();
-    const accessToken = useSelector(accessTokenSelector);
-    const userInfo = useSelector(userInforSelector);
+function Header() {
+  const [show, setShow] = useState(false);
+  const userInfoLocal = get("INFOR");
+  const navigate = useNavigate();
+  const accessToken = useSelector(accessTokenSelector);
+  const userInfo = useSelector(userInforSelector);
 
-    const toggleModal = () => {
-        setShow(!show);
-    };
+  const toggleModal = () => {
+    setShow(!show);
+  };
 
-    const handleLogin = useCallback(() => {
-        navigate('/login');
-    }, []);
+  const handleLogin = useCallback(() => {
+    navigate("/login");
+  }, []);
 
-    return (
-        <div className={clsx(styles.wrapper)}>
-            <div className={clsx(styles.logo)}>
-                <Link to={'/'} >
-                    <img src={logoFull} alt={'DobeeRoom'} />
-                </Link>
-                <h3 className={clsx(styles.logoHeading)} >DobeeRoom - Tìm kiếm nhà trọ cho sinh viên</h3>
-            </div>
-            {
-                !!userInfoLocal.accessToken || !!accessToken
-                    ? <div className={clsx(styles.action)} onClick={toggleModal} >
-                        <Avatar
-                            className={clsx(styles.imgAvatar)}
-                            shape={'circle'}
-                            gap={2}
-                            size={'medium'}
-                        > { userInfoLocal.name.charAt(0) || userInfo.name.charAt(0) } </Avatar>
-                        <Text className={clsx(styles.nameUser)} >{ userInfoLocal.name || userInfo.name }</Text>
-                    </div>
-                    : <Button type="primary" shape="round" size={"large"} onClick={() => handleLogin()} >
-                        Đăng Nhập
-                    </Button>
-            }
-            { show ?  <Modal /> : '' }
-
+  return (
+    <div className={clsx(styles.wrapper)}>
+      <div className={clsx(styles.logo)}>
+        <Link to={"/"}>
+          <img src={logoFull} alt={"DobeeRoom"} />
+        </Link>
+        <h3 className={clsx(styles.logoHeading)}>
+          DobeeRoom - Tìm kiếm nhà trọ cho sinh viên
+        </h3>
+      </div>
+      {!!userInfoLocal.accessToken || !!accessToken ? (
+        <div className={clsx(styles.action)} onClick={toggleModal}>
+          <Avatar
+            className={clsx(styles.imgAvatar)}
+            shape={"circle"}
+            gap={2}
+            size={"medium"}
+          >
+            {" "}
+            {userInfoLocal.name.charAt(0) || userInfo.name.charAt(0)}{" "}
+          </Avatar>
+          <Text className={clsx(styles.nameUser)}>
+            {userInfoLocal.name || userInfo.name}
+          </Text>
         </div>
-    );
+      ) : (
+        <Button
+          type="primary"
+          shape="round"
+          size={"large"}
+          onClick={() => handleLogin()}
+        >
+          Đăng Nhập
+        </Button>
+      )}
+      {show ? <Modal /> : ""}
+    </div>
+  );
 }
+
+export default memo(Header);
