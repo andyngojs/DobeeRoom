@@ -3,6 +3,7 @@ import styles from "./Main.module.scss";
 import Header from "../Header";
 import Siderbar from "../Sidebar";
 import MainRouting from "./Main.routing";
+import Footer from "../Footer";
 
 export default function Layout() {
   return (
@@ -16,6 +17,7 @@ export default function Layout() {
           <MainRouting />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

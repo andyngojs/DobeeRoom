@@ -1,0 +1,27 @@
+@import "../../sass/index.scss";
+
+.wrapper {
+  background-color: $footer-bg;
+  color: #a9b3bb;
+  padding: 68px 0 40px;
+  overflow: hidden;
+
+  .logoFooter {
+    width: 60px;
+  }
+  .description {
+    margin-top: 12px;
+    font-size: 16px;
+  }
+  .textFooter {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+  @include responsiveStyle(0, 739px) {
+    text-align: center;
+  }
+
+  @include responsiveStyle(0, 1023px) {
+    text-align: center;
+  }
+}

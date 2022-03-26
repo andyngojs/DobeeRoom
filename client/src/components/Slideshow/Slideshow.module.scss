@@ -1,0 +1,94 @@
+@import "../../sass/index.scss";
+
+.wrapper {
+  min-height: 270px;
+}
+
+.item {
+  background: linear-gradient(
+    185deg,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+  height: 270px;
+  overflow: hidden;
+  border-radius: 16px;
+  display: flex !important;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 640px;
+    max-width: 100%;
+    justify-content: center;
+    font-size: 16px;
+    color: $white-color;
+    padding: 0 36px 36px;
+    .heading {
+      color: $white-color;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+  }
+  .right {
+    display: flex;
+    flex: 3 1;
+    justify-content: flex-end;
+    padding: 0 12px;
+    .imgBanner {
+      width: 200px;
+      margin-right: 80px;
+    }
+  }
+}
+
+.btnPrev {
+  background: $white-color;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: -16px;
+  box-shadow: 0 3px 6px $greyish-color;
+  z-index: 1;
+
+  .iconPrev {
+    font-size: 14px;
+    color: $text-color;
+    position: absolute;
+    top: 30%;
+    left: 25%;
+  }
+
+  &:hover {
+    background-color: $white-color;
+  }
+}
+
+.btnNext {
+  background: $white-color;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  box-shadow: 0 3px 6px $greyish-color;
+  z-index: 1;
+  .iconNext {
+    font-size: 14px;
+    color: $text-color;
+    position: absolute;
+    top: 30%;
+    right: 25%;
+  }
+  &:hover {
+    background-color: $white-color;
+  }
+}

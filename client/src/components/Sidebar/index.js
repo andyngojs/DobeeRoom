@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
@@ -36,15 +36,22 @@ const Siderbar = () => {
     switch (location.pathname) {
       case "/":
         dispatch(activeHomeTab);
+        document.title = "Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
         break;
       case "/search":
         dispatch(activeSearchTab);
+        document.title =
+          "Tìm Kiếm Phòng Trọ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
         break;
       case "/user":
         dispatch(activeUserTab);
+        document.title =
+          "Trang Cá Nhân | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
         break;
       case "/about":
         dispatch(activeAboutTab);
+        document.title =
+          "Giới Thiệu về DobeeRoom | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
         break;
       default: {
         dispatch(activeHomeTab);

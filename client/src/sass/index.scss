@@ -1,2 +1,9 @@
 @import "./variables";
 @import "./responsive";
+@import "./grid";
+
+.slick-dots {
+  bottom: -38px;
+  left: 40px;
+  text-align: left;
+}

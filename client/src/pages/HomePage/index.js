@@ -1,20 +1,14 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Layout  } from 'antd';
-
-import Header from '../../components/Header';
-
-const { Sider, Content } = Layout;
+import clsx from "clsx";
+import styles from "./Home.module.scss";
+import Slideshow from "../../components/Slideshow";
 
 export default function HomePage() {
-
-    useEffect(() => {
-        document.title = 'Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ';
-    }, []);
-
-    return (
-        <>
-            <p>Homepage!</p>
-        </>
-    );
-};
+  return (
+    <div style={{ maxWidth: "1920px" }}>
+      <div className={clsx(styles.slideshow)}>
+        <Slideshow />
+      </div>
+      <div className={clsx(styles.wrapper)}>Home content</div>
+    </div>
+  );
+}
