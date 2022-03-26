@@ -57,7 +57,7 @@ const Siderbar = () => {
         dispatch(activeHomeTab);
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, dispatch]);
 
   return (
     <div className={clsx(styles.wrapper)}>

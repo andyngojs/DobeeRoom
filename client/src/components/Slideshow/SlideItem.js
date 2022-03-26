@@ -2,12 +2,12 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./Slideshow.module.scss";
 
-export default function Slideshow({ image }) {
+export default function Slideshow({ title, description, image }) {
   return (
     <div className={clsx(styles.item)}>
       <div className={clsx(styles.left)}>
-        <h2 className={clsx(styles.heading)}>DobeeRoom</h2>
-        <p>Nền tảng hỗ trợ sinh viên tìm kiếm nhà trọ</p>
+        <h2 className={clsx(styles.heading)}>{title}</h2>
+        <p> {description} </p>
       </div>
       <div className={clsx(styles.right)}>
         <img

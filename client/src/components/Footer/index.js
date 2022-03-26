@@ -10,7 +10,11 @@ export default function Footer() {
       <div className="grid wide">
         <div className="row">
           <div className="col c-12 m-12 l-12">
-            <img src={logo} className={clsx(styles.logoFooter)} />
+            <img
+              src={logo}
+              className={clsx(styles.logoFooter)}
+              alt="Dobeeroom"
+            />
             <p className={clsx(styles.description)}>
               DobeeRoom - Nền tảng trực tuyến hỗ trợ sinh viên tìm kiếm phòng
               trọ.

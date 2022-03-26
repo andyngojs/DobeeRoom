@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import styles from "./Home.module.scss";
 import Slideshow from "../../components/Slideshow";
+import RoomItem from "./components/RoomItem";
 
 export default function HomePage() {
   return (
@@ -8,7 +9,23 @@ export default function HomePage() {
       <div className={clsx(styles.slideshow)}>
         <Slideshow />
       </div>
-      <div className={clsx(styles.wrapper)}>Home content</div>
+      <div className={clsx(styles.wrapper)}>
+        <div>
+          <h1 className={clsx(styles.heading)}>Thông tin phòng trọ</h1>
+        </div>
+        <div className={clsx(styles.scrollList, "grid")}>
+          <div className="row wide">
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

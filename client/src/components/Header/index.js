@@ -24,7 +24,7 @@ function Header() {
 
   const handleLogin = useCallback(() => {
     navigate("/login");
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={clsx(styles.wrapper)}>

@@ -38,7 +38,7 @@ export default function Slideshow() {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 4000,
     prevArrow: <ButtonPrevArrow />,
     nextArrow: <ButtonNextArrow />,
   };
@@ -46,9 +46,21 @@ export default function Slideshow() {
     <>
       <div className={clsx(styles.wrapper)}>
         <Slider {...settings}>
-          <SlideItem image={imgBanner} />
-          <SlideItem image={imgBanner} />
-          <SlideItem image={imgBanner} />
+          <SlideItem
+            image={imgBanner}
+            title={"DobeeRoom"}
+            description="Nền tảng hỗ trợ sinh viên tìm kiếm phòng trọ"
+          />
+          <SlideItem
+            image={imgBanner}
+            title="Tìm phòng trọ nhanh chóng & tiện lợi"
+            description="Bạn là sinh viên? Bạn lo lắng vì không tìm được phòng phù hợp? Đừng lo, vì đã có DobeeRoom giúp bạn!"
+          />
+          <SlideItem
+            image={imgBanner}
+            title="Giao diện thân thiện và bắt mắt"
+            description="Các thông tin phòng trọ được thiết kế rõ ràng, minh bạch giúp bạn có thể tìm kiếm phòng dễ dàng hơn."
+          />
         </Slider>
       </div>
     </>
