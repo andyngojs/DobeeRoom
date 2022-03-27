@@ -3,13 +3,21 @@
 .withSidebar {
   display: flex;
   min-height: 100vh;
+  overflow: hidden;
 
   .sideBarWrapper {
     flex-shrink: 0;
+    @include responsiveStyle(0, 1023px) {
+      display: none;
+    }
   }
   .contentWrapper {
     flex: 1;
     max-width: calc(100% - 92px);
     padding: 0 40px 0 20px;
+    @include responsiveStyle(0, 1023px) {
+      max-width: 100%;
+      padding: 0 32px;
+    }
   }
 }

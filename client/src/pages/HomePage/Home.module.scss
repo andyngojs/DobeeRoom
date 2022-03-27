@@ -12,8 +12,16 @@
     font-size: 28px;
     font-weight: 800;
   }
+  @include responsiveStyle(0, 1023px) {
+    padding: 0 0 78px;
+  }
 }
 
 .scrollList {
   margin-bottom: 8px;
+  @include responsiveStyle(0, 1023px) {
+    .row {
+      width: 100%;
+    }
+  }
 }

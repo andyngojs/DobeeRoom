@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import clsx from "clsx";
 import {
+  PlusOutlined,
   HomeOutlined,
   SearchOutlined,
   UserOutlined,
   ContainerOutlined,
 } from "@ant-design/icons";
-import clsx from "clsx";
-import styles from "./Sidebar.module.scss";
+import styles from "./MobileMenu.module.scss";
 import {
   activeHomeTab,
   activeSearchTab,
@@ -22,7 +23,7 @@ import {
   isActiveAboutSelector,
 } from "../../redux/selectors";
 
-const Siderbar = () => {
+export default function MobileMenu() {
   const location = useLocation();
   const dispatch = useDispatch();
   const isActiveHome = useSelector(isActiveHomeSelector);
@@ -58,47 +59,49 @@ const Siderbar = () => {
   }, [location.pathname, dispatch]);
 
   return (
-    <div className={clsx(styles.wrapper)}>
-      <ul className={clsx(styles.navbarList)}>
-        <li
-          className={clsx({ [styles.active]: isActiveHome })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/"}>
-            <HomeOutlined />
-            <span> Trang Chủ </span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveSearch })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/search"}>
-            <SearchOutlined />
-            <span> Tìm Kiếm</span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveUser })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/user"}>
-            <UserOutlined />
-            <span> Cá Nhân </span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveAbout })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/about"}>
-            <ContainerOutlined />
-            <span> Giới Thiệu </span>
-          </Link>
-        </li>
-      </ul>
+    <div className={clsx(styles.modal)}>
+      <div className={clsx(styles.body)}>
+        <div className={clsx(styles.scrollable)}>
+          <ul className={clsx(styles.navbarList)}>
+            <li
+              className={clsx({ [styles.active]: isActiveHome })}
+              onClick={handleSelectedTab}
+            >
+              <Link to={"/"}>
+                <HomeOutlined />
+                <span> Trang Chủ </span>
+              </Link>
+            </li>
+            <li
+              className={clsx({ [styles.active]: isActiveSearch })}
+              onClick={handleSelectedTab}
+            >
+              <Link to={"/search"}>
+                <SearchOutlined />
+                <span> Tìm Kiếm</span>
+              </Link>
+            </li>
+            <li
+              className={clsx({ [styles.active]: isActiveUser })}
+              onClick={handleSelectedTab}
+            >
+              <Link to={"/user"}>
+                <UserOutlined />
+                <span> Cá Nhân </span>
+              </Link>
+            </li>
+            <li
+              className={clsx({ [styles.active]: isActiveAbout })}
+              onClick={handleSelectedTab}
+            >
+              <Link to={"/about"}>
+                <ContainerOutlined />
+                <span> Giới Thiệu </span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Siderbar;
+}

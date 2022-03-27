@@ -1,4 +1,4 @@
-@import '../../sass/index.scss';
+@import "../../sass/index.scss";
 .wrapper {
   --height: 66px;
   height: var(--height);
@@ -29,6 +29,26 @@
       font-weight: 700;
       margin-left: 16px;
     }
+    @include responsiveStyle(0, 1023px) {
+      display: none;
+    }
+  }
+
+  .barsMobile {
+    display: none;
+    @include responsiveStyle(0, 1023px) {
+      display: block;
+      svg {
+        font-size: 26px;
+        color: $text-color;
+        cursor: pointer;
+        margin-left: 14px;
+      }
+    }
+  }
+
+  @include responsiveStyle(0, 1023px) {
+    justify-content: space-between;
   }
   .action {
     height: 38px;
@@ -45,9 +65,9 @@
       margin-right: 4px;
     }
     .nameUser {
-        font-size: 14px;
-        font-weight: 800;
-        color: $text-color;
+      font-size: 14px;
+      font-weight: 800;
+      color: $text-color;
     }
   }
   .btn {

@@ -14,7 +14,7 @@ export default function HomePage() {
           <h1 className={clsx(styles.heading)}>Thông tin phòng trọ</h1>
         </div>
         <div className={clsx(styles.scrollList, "grid")}>
-          <div className="row wide">
+          <div className={clsx("row", "wide", styles.row)}>
             <RoomItem />
             <RoomItem />
             <RoomItem />
