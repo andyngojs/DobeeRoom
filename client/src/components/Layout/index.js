@@ -16,11 +16,10 @@ import {
 } from "../../redux/actions";
 
 export default function Layout() {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [hiddenSideBar, setHiddenSideBar] = useState(false);
-  const { pathname } = useLocation();
 
   const handleModalMobile = useCallback(() => {
     setShow(!show);
@@ -36,7 +35,7 @@ export default function Layout() {
   }, [pathname]);
 
   const handleSelectedTab = useMemo(() => {
-    switch (location.pathname) {
+    switch (pathname) {
       case "/":
         dispatch(activeHomeTab);
         break;
@@ -52,7 +51,7 @@ export default function Layout() {
       default:
         dispatch(activeHomeTab);
     }
-  }, [location.pathname, dispatch]);
+  }, [pathname, dispatch]);
 
   return (
     <>

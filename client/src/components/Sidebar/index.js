@@ -1,6 +1,6 @@
-import { memo, useCallback, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { memo } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   HomeOutlined,
   SearchOutlined,
@@ -9,12 +9,6 @@ import {
 } from "@ant-design/icons";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
-import {
-  activeHomeTab,
-  activeSearchTab,
-  activeUserTab,
-  activeAboutTab,
-} from "../../redux/actions";
 import {
   isActiveHomeSelector,
   isActiveSearchSelector,

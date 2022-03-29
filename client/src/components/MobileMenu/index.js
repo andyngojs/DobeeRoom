@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
@@ -9,7 +9,6 @@ import {
   ContainerOutlined,
 } from "@ant-design/icons";
 import styles from "./MobileMenu.module.scss";
-
 import {
   isActiveHomeSelector,
   isActiveSearchSelector,
