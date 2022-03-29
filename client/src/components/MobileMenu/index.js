@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { memo, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import clsx from "clsx";
 import {
-  PlusOutlined,
   HomeOutlined,
   SearchOutlined,
   UserOutlined,
   ContainerOutlined,
 } from "@ant-design/icons";
 import styles from "./MobileMenu.module.scss";
-import {
-  activeHomeTab,
-  activeSearchTab,
-  activeUserTab,
-  activeAboutTab,
-} from "../../redux/actions";
+
 import {
   isActiveHomeSelector,
   isActiveSearchSelector,
@@ -23,40 +17,11 @@ import {
   isActiveAboutSelector,
 } from "../../redux/selectors";
 
-export default function MobileMenu() {
-  const location = useLocation();
-  const dispatch = useDispatch();
+function MobileMenu({ handleSelectedTab }) {
   const isActiveHome = useSelector(isActiveHomeSelector);
   const isActiveSearch = useSelector(isActiveSearchSelector);
   const isActiveUser = useSelector(isActiveUserSelector);
   const isActiveAbout = useSelector(isActiveAboutSelector);
-
-  const handleSelectedTab = useEffect(() => {
-    switch (location.pathname) {
-      case "/":
-        dispatch(activeHomeTab);
-        document.title = "Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/search":
-        dispatch(activeSearchTab);
-        document.title =
-          "Tìm Kiếm Phòng Trọ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/user":
-        dispatch(activeUserTab);
-        document.title =
-          "Trang Cá Nhân | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/about":
-        dispatch(activeAboutTab);
-        document.title =
-          "Giới Thiệu về DobeeRoom | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      default: {
-        dispatch(activeHomeTab);
-      }
-    }
-  }, [location.pathname, dispatch]);
 
   return (
     <div className={clsx(styles.modal)}>
@@ -105,3 +70,5 @@ export default function MobileMenu() {
     </div>
   );
 }
+
+export default memo(MobileMenu);

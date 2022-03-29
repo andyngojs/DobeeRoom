@@ -8,6 +8,7 @@ const initState = {
 export default function sideBarSlice(state = initState, action) {
   switch (action.type) {
     case "activeHomeTab":
+      document.title = "Trang Chủ | DobeeRoom";
       return {
         isActiveHome: true,
         isActiveSearch: false,
@@ -15,6 +16,7 @@ export default function sideBarSlice(state = initState, action) {
         isActiveUser: false,
       };
     case "activeSearchTab":
+      document.title = "Tìm Kiếm Phòng Trọ | DobeeRoom";
       return {
         isActiveHome: false,
         isActiveSearch: true,
@@ -22,6 +24,7 @@ export default function sideBarSlice(state = initState, action) {
         isActiveUser: false,
       };
     case "activeUserTab":
+      document.title = "Trang Cá Nhân | DobeeRoom";
       return {
         isActiveHome: false,
         isActiveSearch: false,
@@ -29,6 +32,7 @@ export default function sideBarSlice(state = initState, action) {
         isActiveUser: true,
       };
     case "activeAboutTab":
+      document.title = "Giới Thiệu về DobeeRoom | DobeeRoom";
       return {
         isActiveHome: false,
         isActiveSearch: false,

@@ -16,13 +16,6 @@ export default function HomePage() {
         <div className={clsx(styles.scrollList, "grid")}>
           <div className={clsx("row", "wide", styles.row)}>
             <RoomItem />
-            <RoomItem />
-            <RoomItem />
-            <RoomItem />
-            <RoomItem />
-            <RoomItem />
-            <RoomItem />
-            <RoomItem />
           </div>
         </div>
       </div>

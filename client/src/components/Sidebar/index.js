@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,40 +22,11 @@ import {
   isActiveAboutSelector,
 } from "../../redux/selectors";
 
-const Siderbar = () => {
-  const location = useLocation();
-  const dispatch = useDispatch();
+const Siderbar = ({ handleSelectedTab }) => {
   const isActiveHome = useSelector(isActiveHomeSelector);
   const isActiveSearch = useSelector(isActiveSearchSelector);
   const isActiveUser = useSelector(isActiveUserSelector);
   const isActiveAbout = useSelector(isActiveAboutSelector);
-
-  const handleSelectedTab = useEffect(() => {
-    switch (location.pathname) {
-      case "/":
-        dispatch(activeHomeTab);
-        document.title = "Trang Chủ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/search":
-        dispatch(activeSearchTab);
-        document.title =
-          "Tìm Kiếm Phòng Trọ | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/user":
-        dispatch(activeUserTab);
-        document.title =
-          "Trang Cá Nhân | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      case "/about":
-        dispatch(activeAboutTab);
-        document.title =
-          "Giới Thiệu về DobeeRoom | DobeeRoom - Hỗ trợ sinh viên tìm nhà trọ";
-        break;
-      default: {
-        dispatch(activeHomeTab);
-      }
-    }
-  }, [location.pathname, dispatch]);
 
   return (
     <div className={clsx(styles.wrapper)}>
@@ -101,4 +72,4 @@ const Siderbar = () => {
   );
 };
 
-export default Siderbar;
+export default memo(Siderbar);
