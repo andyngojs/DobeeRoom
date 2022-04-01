@@ -1,66 +1,29 @@
-import { memo } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  HomeOutlined,
-  SearchOutlined,
-  UserOutlined,
-  ContainerOutlined,
-} from "@ant-design/icons";
+import { memo, useState, useCallback } from "react";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
-import {
-  isActiveHomeSelector,
-  isActiveSearchSelector,
-  isActiveUserSelector,
-  isActiveAboutSelector,
-} from "../../redux/selectors";
+import sidebarNav from "../../constants/sidebarNav";
+import TabItem from "./TabItem";
 
-const Siderbar = ({ handleSelectedTab }) => {
-  const isActiveHome = useSelector(isActiveHomeSelector);
-  const isActiveSearch = useSelector(isActiveSearchSelector);
-  const isActiveUser = useSelector(isActiveUserSelector);
-  const isActiveAbout = useSelector(isActiveAboutSelector);
+const Siderbar = ({ show }) => {
+  const [indexActive, setIndexActive] = useState(0);
+
+  const handleSelected = useCallback((index, item) => {
+    document.title = `${item.section} | DobeeRoom`;
+    setIndexActive(index);
+  }, []);
 
   return (
-    <div className={clsx(styles.wrapper)}>
+    <div className={clsx([styles.wrapper, { [styles.show]: show }])}>
       <ul className={clsx(styles.navbarList)}>
-        <li
-          className={clsx({ [styles.active]: isActiveHome })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/"}>
-            <HomeOutlined />
-            <span> Trang Chủ </span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveSearch })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/search"}>
-            <SearchOutlined />
-            <span> Tìm Kiếm</span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveUser })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/user"}>
-            <UserOutlined />
-            <span> Cá Nhân </span>
-          </Link>
-        </li>
-        <li
-          className={clsx({ [styles.active]: isActiveAbout })}
-          onClick={handleSelectedTab}
-        >
-          <Link to={"/about"}>
-            <ContainerOutlined />
-            <span> Giới Thiệu </span>
-          </Link>
-        </li>
+        {sidebarNav.map((item, index) => (
+          <TabItem
+            key={index}
+            item={item}
+            active={indexActive === index}
+            index={index}
+            handleSelected={() => handleSelected(index, item)}
+          />
+        ))}
       </ul>
     </div>
   );
