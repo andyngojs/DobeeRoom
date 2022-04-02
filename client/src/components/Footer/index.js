@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import clsx from "clsx";
 import styles from "./Footer.module.scss";
 import "../../sass/index.scss";
 import logo from "../../assets/images/iconRound.png";
 
-export default function Footer() {
+function Footer() {
   return (
     <div className={clsx(styles.wrapper)}>
       <div className="grid wide">
@@ -32,3 +32,5 @@ export default function Footer() {
     </div>
   );
 }
+
+export default memo(Footer);

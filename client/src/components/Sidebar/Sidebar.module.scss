@@ -1,4 +1,5 @@
 @import "../../sass/index.scss";
+
 .wrapper {
   --width: 92px;
   display: flex;
@@ -8,7 +9,7 @@
   position: sticky;
   left: 0;
   top: 30px;
-  width: 92px;
+  width: var(--width);
   padding: 0 8px;
 
   .button {
@@ -46,5 +47,44 @@
   .active {
     background-color: $white-grey-color;
     border-radius: 12px;
+  }
+}
+
+@include responsiveStyle(0, 1023px) {
+  .wrapper {
+    background-color: $white-color;
+    width: 60%;
+    position: absolute;
+    top: 66px;
+    left: -100%;
+    bottom: 0;
+    z-index: 99;
+    animation: slideOut 0.5s ease;
+  }
+  .show {
+    left: 0;
+    animation: slideIn 0.5s ease;
+  }
+  .navbarList {
+    margin: 12px 0;
+    padding-right: 12px;
+    width: 100%;
+    height: 100%;
+    .tabItemMobile {
+      display: flex;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: flex-start !important;
+      width: 100% !important;
+      margin-left: 30px;
+      svg {
+        margin-right: 12px;
+      }
+      span {
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+      }
+    }
   }
 }

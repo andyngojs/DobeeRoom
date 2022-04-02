@@ -21,7 +21,7 @@ const Header = ({ handleModalMobile }) => {
 
   const toggleModal = useCallback(() => {
     setShow(!show);
-  });
+  }, [show]);
 
   const handleLogin = useCallback(() => {
     navigate("/login");
