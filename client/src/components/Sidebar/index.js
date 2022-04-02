@@ -1,11 +1,18 @@
-import { memo, useState, useCallback } from "react";
+import { memo, useState, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
 import sidebarNav from "../../constants/sidebarNav";
 import TabItem from "./TabItem";
+import { set, get } from "../../utils/LocalStorage";
 
 const Siderbar = ({ show }) => {
-  const [indexActive, setIndexActive] = useState(0);
+  const [indexActive, setIndexActive] = useState(
+    !!get("indexActive") ? Number(get("indexActive")) : 0,
+  );
+
+  useEffect(() => {
+    set("indexActive", indexActive);
+  }, [indexActive]);
 
   const handleSelected = useCallback((index, item) => {
     document.title = `${item.section} | DobeeRoom`;

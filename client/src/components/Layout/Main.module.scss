@@ -9,14 +9,6 @@
     flex-shrink: 0;
     @include responsiveStyle(0, 1023px) {
       display: block;
-      position: fixed;
-      right: 0;
-      left: 0;
-      top: 0;
-      bottom: 0;
-
-      z-index: 9;
-      animation: fadeIn 0.5s ease;
     }
   }
 
@@ -29,13 +21,17 @@
       padding: 0 32px;
     }
   }
-  .hiddenSidebar {
-    display: none;
-  }
 }
 
 @include responsiveStyle(0, 1023px) {
   .showMasked {
     background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+    animation: fadeIn 0.5s ease;
   }
 }

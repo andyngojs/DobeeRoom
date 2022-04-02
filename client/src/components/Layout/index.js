@@ -28,12 +28,7 @@ export default function Layout() {
   return (
     <>
       <Header handleModalMobile={handleModalMobile} />
-      <div
-        className={clsx([
-          styles.withSidebar,
-          { [styles.hiddenSideBar]: hiddenSideBar },
-        ])}
-      >
+      <div className={clsx([styles.withSidebar])}>
         <div
           className={clsx([
             styles.sideBarWrapper,
