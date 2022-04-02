@@ -31,6 +31,7 @@ const Siderbar = ({ handleSelectedTab }) => {
         >
           <Link to={"/"}>
             <HomeOutlined />
+
             <span> Trang Chủ </span>
           </Link>
         </li>
