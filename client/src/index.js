@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { QueryClientProvider, QueryClient } from "react-query";
 import "./index.scss";
 import App from "./App";
-import store from "./redux/store";
 import "antd/dist/antd.min.css";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <App />
-    </Provider>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root"),
 );

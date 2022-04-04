@@ -4,7 +4,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import passport from 'passport';
 import userRouter from './routes/users.js';
 
 dotenv.config();
@@ -21,8 +20,6 @@ app.use(cookieSession({
     keys: ['dobeeroom'],
     maximumAge: 24 * 60 * 60 * 100
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/api', userRouter);
 

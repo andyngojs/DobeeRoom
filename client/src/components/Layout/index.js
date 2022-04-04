@@ -6,6 +6,7 @@ import Header from "../Header";
 import Siderbar from "../Sidebar";
 import MainRouting from "./Main.routing";
 import Footer from "../Footer";
+import AuthProvider from "../../Contexts/AuthProvider";
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -27,21 +28,23 @@ export default function Layout() {
 
   return (
     <>
-      <Header handleModalMobile={handleModalMobile} />
-      <div className={clsx([styles.withSidebar])}>
-        <div
-          className={clsx([
-            styles.sideBarWrapper,
-            { [styles.showMasked]: show },
-          ])}
-        >
-          <Siderbar show={show} />
+      <AuthProvider>
+        <Header handleModalMobile={handleModalMobile} />
+        <div className={clsx([styles.withSidebar])}>
+          <div
+            className={clsx([
+              styles.sideBarWrapper,
+              { [styles.showMasked]: show },
+            ])}
+          >
+            <Siderbar show={show} />
+          </div>
+          <div className={clsx(styles.contentWrapper)}>
+            <MainRouting />
+          </div>
         </div>
-        <div className={clsx(styles.contentWrapper)}>
-          <MainRouting />
-        </div>
-      </div>
-      <Footer />
+        <Footer />
+      </AuthProvider>
     </>
   );
 }

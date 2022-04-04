@@ -10,12 +10,14 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-        try {
-                const newUser = req.body;
-                const user =  new UserModel(newUser);
+        const newUser = req.body;
+        const userCurrent = await UserModel.find({ email: newUser.email, providerId: newUser.providerId })
+        console.log(!userCurrent)
+        if (!userCurrent) {
+                const user = new UserModel(req.body);
                 await user.save();
-                res.status(200).json(user);
-        } catch (err) {
-                res.status(500).json({ message: err });
+                res.json({ message: 'successfully' })
+        } else {
+                res.json({ message: 'Failure' })
         }
 };

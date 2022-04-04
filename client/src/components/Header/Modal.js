@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Typography, Divider } from "antd";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { remove } from "../../utils/LocalStorage";
+import { clearLocal } from "../../utils/LocalStorage";
 import styles from "./Header.module.scss";
 
 const { Text } = Typography;
@@ -13,7 +13,7 @@ const Modal = () => {
 
   const handleLogOut = () => {
     signOut(auth).then(() => {
-      remove("INFOR");
+      clearLocal();
       navigate("/login");
     });
   };

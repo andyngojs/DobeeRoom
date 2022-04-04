@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +7,9 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
-  onAuthStateChanged,
 } from "firebase/auth";
 import styles from "./SigninButton.module.scss";
-import { setUser, getUserCurrent } from "../../redux/actions";
+import { setUser } from "../../redux/actions";
 import { auth } from "../../firebase/config";
 
 const fbProvider = new FacebookAuthProvider();
@@ -19,21 +18,6 @@ const ggProvider = new GoogleAuthProvider();
 const SigninButton = ({ name }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(
-          getUserCurrent({
-            name: user.displayName,
-            email: user.email,
-            accessToken: user.accessToken,
-          }),
-        );
-        navigate("/");
-      }
-    });
-  }, [navigate, dispatch]);
 
   const handleLoginFacebook = async (auth, provider) => {
     await signInWithPopup(auth, provider)
@@ -50,6 +34,7 @@ const SigninButton = ({ name }) => {
             providerId: credential.providerId,
           }),
         );
+        navigate("/");
       })
       .catch((err) => {
         console.log(`Code: ${err.code}, Message: ${err.message}`);
@@ -71,6 +56,7 @@ const SigninButton = ({ name }) => {
             providerId: credential.providerId,
           }),
         );
+        navigate("/");
       })
       .catch((err) => {
         console.log(`Code: ${err.code}, Message: ${err.message}`);
