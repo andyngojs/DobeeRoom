@@ -1,6 +1,5 @@
 import { memo } from "react";
 import clsx from "clsx";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FacebookFilled, GoogleCircleFilled } from "@ant-design/icons";
 import {
@@ -9,32 +8,33 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import styles from "./SigninButton.module.scss";
-import { setUser } from "../../redux/actions";
 import { auth } from "../../firebase/config";
+import { createUser } from "../../api";
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();
 
 const SigninButton = ({ name }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleLoginFacebook = async (auth, provider) => {
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
         const credential = FacebookAuthProvider.credentialFromResult(result);
-        dispatch(
-          setUser({
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            phone: user.phoneNumber,
-            accessToken: credential.accessToken,
-            providerId: credential.providerId,
-          }),
-        );
-        navigate("/");
+        createUser({
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber,
+          accessToken: credential.accessToken,
+          providerId: credential.providerId,
+        }).then((res) => {
+          if (res.status === 200) {
+            console.log("Login Success!");
+            navigate("/");
+          }
+        });
       })
       .catch((err) => {
         console.log(`Code: ${err.code}, Message: ${err.message}`);
@@ -46,17 +46,19 @@ const SigninButton = ({ name }) => {
       .then((result) => {
         const user = result.user;
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        dispatch(
-          setUser({
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            phone: user.phoneNumber,
-            accessToken: credential.accessToken,
-            providerId: credential.providerId,
-          }),
-        );
-        navigate("/");
+        createUser({
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber,
+          accessToken: credential.accessToken,
+          providerId: credential.providerId,
+        }).then((res) => {
+          if (res.status === 200) {
+            console.log("Login Success!");
+            navigate("/");
+          }
+        });
       })
       .catch((err) => {
         console.log(`Code: ${err.code}, Message: ${err.message}`);

@@ -1,5 +1,3 @@
-import { set } from "../../utils/LocalStorage";
-
 const initState = {
   id: "",
   name: "",

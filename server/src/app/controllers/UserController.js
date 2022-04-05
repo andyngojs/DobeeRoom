@@ -11,13 +11,13 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
         const newUser = req.body;
-        const userCurrent = await UserModel.find({ email: newUser.email, providerId: newUser.providerId })
-        console.log(!userCurrent)
-        if (!userCurrent) {
+        const userCurrent = await UserModel.findOne({ email: newUser.email, providerId: newUser.providerId });
+        console.log(userCurrent);
+        if (userCurrent) {
+                res.json({ message: 'user existed', data: userCurrent })
+        } else {
+                res.json({ message: 'user not exist', data: newUser })
                 const user = new UserModel(req.body);
                 await user.save();
-                res.json({ message: 'successfully' })
-        } else {
-                res.json({ message: 'Failure' })
         }
 };
