@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { memo, useCallback, useState } from "react";
 import clsx from "clsx";
 import styles from "./Main.module.scss";
 import Header from "../Header";
@@ -8,23 +7,12 @@ import MainRouting from "./Main.routing";
 import Footer from "../Footer";
 import AuthProvider from "../../Contexts/AuthProvider";
 
-export default function Layout() {
-  const { pathname } = useLocation();
+function Layout() {
   const [show, setShow] = useState(false);
-  const [hiddenSideBar, setHiddenSideBar] = useState(false);
 
   const handleModalMobile = useCallback(() => {
     setShow(!show);
   }, [show]);
-
-  useEffect(() => {
-    if (pathname === "/new-post") {
-      setHiddenSideBar(true);
-    }
-    return () => {
-      setHiddenSideBar(false);
-    };
-  }, [pathname]);
 
   return (
     <>
@@ -48,3 +36,5 @@ export default function Layout() {
     </>
   );
 }
+
+export default memo(Layout);

@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [userInfo, setUserInfo] = useState({});
   const { data, isLoading } = useQuery(
     "users",
@@ -20,7 +21,7 @@ export default function AuthProvider({ children }) {
   );
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         if (data !== undefined) {
           const userCurrent = data.data.find(
@@ -30,11 +31,24 @@ export default function AuthProvider({ children }) {
         }
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, [data]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadingData(false);
+      console.log("mounting...");
+    }, 1000);
+    return () => {
+      setIsLoadingData(true);
+    };
+  }, []);
 
   return (
     <>
-      {isLoading ? (
+      {isLoadingData ? (
         <Loading />
       ) : (
         <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

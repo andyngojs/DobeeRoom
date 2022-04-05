@@ -7,7 +7,7 @@ export default function Loading() {
   return (
     <div className={clsx(styles.container)}>
       <div className={clsx(styles.spin)}>
-        <Spin size="large" tip="Loading..." />
+        <Spin size="large" />
         <h2 className={clsx(styles.title)}>
           DobeeRoom - Hỗ trợ sinh viên tìm kiếm nhà trọ
         </h2>
