@@ -31,7 +31,6 @@ const SigninButton = ({ name }) => {
           providerId: credential.providerId,
         }).then((res) => {
           if (res.status === 200) {
-            console.log("Login Success!");
             navigate("/");
           }
         });
@@ -55,7 +54,6 @@ const SigninButton = ({ name }) => {
           providerId: credential.providerId,
         }).then((res) => {
           if (res.status === 200) {
-            console.log("Login Success!");
             navigate("/");
           }
         });

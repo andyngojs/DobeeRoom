@@ -10,7 +10,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [userInfo, setUserInfo] = useState({});
-  const { data, isLoading } = useQuery(
+  const { data } = useQuery(
     "users",
     async () =>
       await getUser().then((res) => {
@@ -39,7 +39,6 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     setTimeout(() => {
       setIsLoadingData(false);
-      console.log("mounting...");
     }, 1000);
     return () => {
       setIsLoadingData(true);

@@ -1,0 +1,28 @@
+@import "../../../sass/index.scss";
+
+.formWrapper {
+  height: 100%;
+}
+
+.headingLabel {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+.boxForm {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.rowForm {
+  margin: 14px 0;
+}
+
+.utilitiesHeading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
