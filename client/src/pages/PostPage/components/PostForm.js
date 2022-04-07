@@ -1,40 +1,63 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import clsx from "clsx";
-import {
-  Select,
-  Input,
-  Row,
-  Col,
-  InputNumber,
-  Checkbox,
-  Upload,
-  Modal,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Input, Row, Col, InputNumber, Checkbox, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import Select from "react-select";
 import styles from "./PostForm.module.scss";
 import { utilities } from "../../../constants/utilitiesForm";
-import { FormContext } from "../../../Contexts/FormProvider";
+import { typeOptions } from "../../../constants/typeRoom";
 
-const { Option } = Select;
+export default function PostForm({ value }) {
+  const {
+    state,
+    handleRoomPrice,
+    handleAreaRoom,
+    handleElectronPrice,
+    handlePhoneChange,
+    handleWaterPrice,
+    locationValue,
+    onCitySelect,
+    onDistrictSelect,
+    onWardSelect,
+    handleTypeRoom,
+    handleAddressChange,
+    handleDescriptionChange,
+  } = value;
 
-export default function PostForm() {
+  const { roomType, description } = state;
+
   return (
     <div className={clsx(styles.formWrapper)}>
       <Row gutter={16} className={clsx(styles.rowForm)}>
-        <Col span={8} className={clsx(styles.boxForm)}>
+        <Col span={6} className={clsx(styles.boxForm)}>
           <label htmlFor="roomType" className={clsx(styles.headingLabel)}>
             Loại phòng
           </label>
-          <Select id="roomType" placeholder="Chọn loại phòng trọ" allowClear>
-            <Option value="Nhà trọ & phòng trọ">Nhà trọ & phòng trọ</Option>
-            <Option value="Chung cư mini">Chung cư mini</Option>
-            <Option value="Tìm người ở ghép">Tìm người ở ghép</Option>
-          </Select>
+          <Select
+            defaultValue={roomType}
+            options={typeOptions}
+            placeholder="Chọn loại phòng trọ"
+            onChange={(e) => handleTypeRoom(e)}
+          />
         </Col>
-        <Location />
+        <LocationForm
+          locationValue={locationValue}
+          onCitySelect={onCitySelect}
+          onDistrictSelect={onDistrictSelect}
+          onWardSelect={onWardSelect}
+          handleAddressChange={handleAddressChange}
+          state={state}
+        />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
-        <Information />
+        <InformationForm
+          handleRoomPrice={handleRoomPrice}
+          handleElectronPrice={handleElectronPrice}
+          handleWaterPrice={handleWaterPrice}
+          handlePhoneChange={handlePhoneChange}
+          handleAreaRoom={handleAreaRoom}
+          state={state}
+        />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
         <Col span={12} style={{ margin: "12px 0" }}>
@@ -42,43 +65,99 @@ export default function PostForm() {
           <Checkbox.Group options={utilities} />
         </Col>
         <Col span={12}>
-          <h3>Chọn Ảnh nổi bật</h3>
+          <label htmlFor="description" className={clsx(styles.headingLabel)}>
+            Mô tả
+          </label>
+          <Input.TextArea
+            id="description"
+            placeholder="Nhập mô tả phòng trọ"
+            allowClear
+            value={description}
+            onChange={(e) => handleDescriptionChange(e)}
+          />
         </Col>
+      </Row>
+      <Row gutter={16} className={clsx(styles.rowForm)}>
+        <PhotoForm />
       </Row>
     </div>
   );
 }
 
-function Location() {
+function LocationForm(props) {
+  const {
+    locationValue,
+    onCitySelect,
+    onDistrictSelect,
+    onWardSelect,
+    handleAddressChange,
+    state,
+  } = props;
+
+  const {
+    cityOptions,
+    districtOptions,
+    wardOptions,
+    selectedCity,
+    selectedDistrict,
+    selectedWard,
+  } = locationValue;
+
+  const { address } = state;
+
   return (
     <>
-      <Col span={8} className={clsx(styles.boxForm)}>
+      <Col span={12} className={clsx(styles.boxForm)}>
         <label className={clsx(styles.headingLabel)}>Địa chỉ</label>
-        <Input.Group compact>
-          <Select defaultValue="Hà Nội">
-            <Option value="hanoi">Hà Nội</Option>
-          </Select>
-          <Select defaultValue="Chọn Quận/huyện">
-            <Option value="Option2-1">Option2-1</Option>
-            <Option value="Option2-2">Option2-2</Option>
-          </Select>
-          <Select defaultValue="Chọn Phường/xã">
-            <Option value="Option2-1">Option2-1</Option>
-            <Option value="Option2-2">Option2-2</Option>
-          </Select>
-        </Input.Group>
+        <div className={clsx(styles.selectLocation)}>
+          <Select
+            className={clsx(styles.selectItem)}
+            name="cityId"
+            placeholder="Tỉnh/Thành"
+            defaultValue={selectedCity}
+            key={`cityId_${selectedCity?.value}`}
+            isDisabled={cityOptions.length === 0}
+            options={cityOptions}
+            onChange={(option) => onCitySelect(option)}
+          />
+          <Select
+            className={clsx(styles.selectItem)}
+            name="districtId"
+            placeholder="Quận/Huyện"
+            key={`districtId_${selectedDistrict?.value}`}
+            isDisabled={districtOptions.length === 0}
+            options={districtOptions}
+            onChange={(option) => onDistrictSelect(option)}
+            defaultValue={selectedDistrict}
+          />
+          <Select
+            className={clsx(styles.selectItem)}
+            name="wardId"
+            placeholder="Phường/Xã"
+            key={`wardId_${selectedWard?.value}`}
+            isDisabled={wardOptions.length === 0}
+            options={wardOptions}
+            onChange={(option) => onWardSelect(option)}
+            defaultValue={selectedWard}
+          />
+        </div>
       </Col>
-      <Col span={8} className={clsx(styles.boxForm)}>
+      <Col span={6} className={clsx(styles.boxForm)}>
         <label htmlFor="detailAddress" className={clsx(styles.headingLabel)}>
           Địa chỉ chi tiết
         </label>
-        <Input placeholder="Nhập địa chỉ chi tiết..." id="detailAddress" />
+        <Input
+          placeholder="Nhập địa chỉ chi tiết..."
+          id="detailAddress"
+          value={address}
+          onChange={(e) => handleAddressChange(e)}
+        />
       </Col>
     </>
   );
 }
 
-function Information() {
+function InformationForm(props) {
   const {
     state,
     handleAreaRoom,
@@ -86,7 +165,7 @@ function Information() {
     handlePhoneChange,
     handleRoomPrice,
     handleWaterPrice,
-  } = useContext(FormContext);
+  } = props;
 
   const { roomPrice, electronPrice, waterPrice, areaRoom, phone } = state;
 
@@ -128,7 +207,7 @@ function Information() {
         <label htmlFor="areaRoom" className={clsx(styles.headingLabel)}>
           Diện tích
         </label>
-        <InputNumber
+        <Input
           id="areaRoom"
           addonAfter={"m2"}
           placeholder="Nhập diện tích phòng"
@@ -146,6 +225,29 @@ function Information() {
           onChange={(e) => handlePhoneChange(e)}
           placeholder="Nhập số điện thoại"
         />
+      </Col>
+    </>
+  );
+}
+
+function PhotoForm() {
+  return (
+    <>
+      <Col span={12}>
+        <h3>Chọn ảnh nổi bật</h3>
+        <Upload>
+          <Button>
+            <UploadOutlined /> Chọn 1 ảnh nổi bật
+          </Button>
+        </Upload>
+      </Col>
+      <Col span={12}>
+        <h3>Chọn ảnh chi tiết</h3>
+        <Upload>
+          <Button>
+            <UploadOutlined /> Chọn nhiều ảnh chi tiết
+          </Button>
+        </Upload>
       </Col>
     </>
   );

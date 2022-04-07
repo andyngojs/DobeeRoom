@@ -18,11 +18,23 @@
 }
 
 .rowForm {
-  margin: 14px 0;
+  padding: 14px 0;
 }
 
 .utilitiesHeading {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 14px;
+}
+
+.selectLocation {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+
+  .selectItem {
+    margin-right: 4px;
+    width: 33.3333%;
+  }
 }
