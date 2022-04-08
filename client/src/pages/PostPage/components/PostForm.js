@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
-import { Input, Row, Col, InputNumber, Checkbox, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Input, Row, Col, Checkbox } from "antd";
 import Select from "react-select";
 import styles from "./PostForm.module.scss";
-import { utilities } from "../../../constants/utilitiesForm";
+import { utilitiesData } from "../../../constants/utilitiesForm";
 import { typeOptions } from "../../../constants/typeRoom";
 
 export default function PostForm({ value }) {
@@ -22,9 +21,14 @@ export default function PostForm({ value }) {
     handleTypeRoom,
     handleAddressChange,
     handleDescriptionChange,
+    handleCheckUtil,
+    handleAllCheck,
+    isCheckAll,
+    handleUploadThumbnail,
+    handleUploadMulti,
   } = value;
 
-  const { roomType, description } = state;
+  const { roomType, description, utilities } = state;
 
   return (
     <div className={clsx(styles.formWrapper)}>
@@ -60,9 +64,19 @@ export default function PostForm({ value }) {
         />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
-        <Col span={12} style={{ margin: "12px 0" }}>
-          <h3 className={clsx(styles.utilitiesHeading)}>Các Tiện ích</h3>
-          <Checkbox.Group options={utilities} />
+        <Col span={12} style={{ margin: "6px 0" }}>
+          <div className={clsx(styles.headingCheck)}>
+            <h3 className={clsx(styles.headingLabel)}>Các Tiện ích</h3>
+            <Checkbox checked={isCheckAll} onChange={(e) => handleAllCheck(e)}>
+              Chọn Tất Cả
+            </Checkbox>
+          </div>
+          <Checkbox.Group
+            options={utilitiesData}
+            value={utilities}
+            className={clsx(styles.checkboxUtil)}
+            onChange={(e) => handleCheckUtil(e)}
+          />
         </Col>
         <Col span={12}>
           <label htmlFor="description" className={clsx(styles.headingLabel)}>
@@ -74,11 +88,16 @@ export default function PostForm({ value }) {
             allowClear
             value={description}
             onChange={(e) => handleDescriptionChange(e)}
+            rows={6}
           />
         </Col>
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
-        <PhotoForm />
+        <PhotoForm
+          handleUploadMulti={handleUploadMulti}
+          handleUploadThumbnail={handleUploadThumbnail}
+          state={state}
+        />
       </Row>
     </div>
   );
@@ -230,24 +249,54 @@ function InformationForm(props) {
   );
 }
 
-function PhotoForm() {
+function PhotoForm(props) {
+  const { handleUploadThumbnail, state, handleUploadMulti } = props;
+
+  const { thumbnailImg, detailImgs } = state;
+
+  useEffect(() => {
+    return () => {
+      thumbnailImg && URL.revokeObjectURL(thumbnailImg);
+      detailImgs && URL.revokeObjectURL(detailImgs);
+    };
+  }, [thumbnailImg, detailImgs]);
+
   return (
     <>
       <Col span={12}>
-        <h3>Chọn ảnh nổi bật</h3>
-        <Upload>
-          <Button>
-            <UploadOutlined /> Chọn 1 ảnh nổi bật
-          </Button>
-        </Upload>
+        <h3 className={clsx(styles.headingLabel)}>Chọn ảnh nổi bật</h3>
+        <input
+          type={"file"}
+          className={clsx(styles.btnUpload)}
+          onChange={(e) => handleUploadThumbnail(e)}
+          placeholder="Chọn ảnh chi tiết"
+        />
+        <div className={clsx(styles.previewImg)}>
+          <img
+            src={thumbnailImg}
+            className={clsx(styles.imgThumbnail)}
+            alt=""
+          />
+        </div>
       </Col>
       <Col span={12}>
-        <h3>Chọn ảnh chi tiết</h3>
-        <Upload>
-          <Button>
-            <UploadOutlined /> Chọn nhiều ảnh chi tiết
-          </Button>
-        </Upload>
+        <h3 className={clsx(styles.headingLabel)}>Chọn ảnh chi tiết</h3>
+        <input
+          type={"file"}
+          className={clsx(styles.btnUpload)}
+          multiple
+          onChange={(e) => handleUploadMulti(e)}
+        />
+        <div className={clsx(styles.previewImg)}>
+          {detailImgs.map((item, index) => (
+            <img
+              src={item.thumbnailUrl}
+              className={clsx(styles.imgDetail)}
+              key={index}
+              alt=""
+            />
+          ))}
+        </div>
       </Col>
     </>
   );

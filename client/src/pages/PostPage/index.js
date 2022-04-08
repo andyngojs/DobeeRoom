@@ -5,10 +5,12 @@ import { Divider } from "antd";
 import styles from "./NewPost.module.scss";
 import clsx from "clsx";
 import useLocationForm from "../../hooks/useLocationForm";
+import { utilitiesData } from "../../constants/utilitiesForm";
 
 export default function PostPage() {
   const { locationValue, onCitySelect, onDistrictSelect, onWardSelect } =
     useLocationForm(false);
+  const [isCheckAll, setIsCheckAll] = useState(false);
   const [state, setState] = useState({
     title: "",
     roomPrice: "",
@@ -20,6 +22,9 @@ export default function PostPage() {
     address: "",
     addressHC: "",
     description: "",
+    utilities: [],
+    thumbnailImg: "",
+    detailImgs: [],
   });
   const regexNumber = /^-?\d*(\.\d*)?$/;
 
@@ -28,7 +33,7 @@ export default function PostPage() {
   useEffect(() => {
     setState({
       ...state,
-      addressHC: `${wardLabel}, ${districtLabel}, ${cityLabel}`,
+      addressHC: `${wardLabel} ${districtLabel} ${cityLabel}`,
     });
   }, [districtLabel, wardLabel]);
 
@@ -138,6 +143,51 @@ export default function PostPage() {
     });
   };
 
+  const handleAllCheck = (e) => {
+    setIsCheckAll(e.target.checked);
+    setState({
+      ...state,
+      utilities: e.target.checked ? utilitiesData : [],
+    });
+  };
+
+  const handleCheckUtil = (e) => {
+    setState({
+      ...state,
+      utilities: e,
+    });
+  };
+
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  const handleUploadThumbnail = async (e) => {
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    setState({
+      ...state,
+      thumbnailImg: url,
+    });
+  };
+
+  const handleUploadMulti = (e) => {
+    const files = [...e.target.files];
+    const newImgs = files.map((item, index) => {
+      const url = URL.createObjectURL(item);
+      return { thumbnailUrl: url };
+    });
+    setState({
+      ...state,
+      detailImgs: newImgs,
+    });
+  };
+
   const values = {
     state,
     handleRoomPrice,
@@ -152,6 +202,11 @@ export default function PostPage() {
     handleTypeRoom,
     handleAddressChange,
     handleDescriptionChange,
+    handleCheckUtil,
+    handleAllCheck,
+    isCheckAll,
+    handleUploadThumbnail,
+    handleUploadMulti,
   };
 
   return (
