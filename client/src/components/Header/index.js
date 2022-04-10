@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useContext } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Button, Typography } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
@@ -6,14 +6,14 @@ import clsx from "clsx";
 import styles from "./Header.module.scss";
 import logoFull from "../../assets/images/dobeeroom.svg";
 import Modal from "./Modal";
-import { AuthContext } from "../../Contexts/AuthProvider";
+import useAuthen from "../../hooks/useAuthen";
 
 const { Text } = Typography;
 
 const Header = ({ handleModalMobile }) => {
+  const { data } = useAuthen();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const userCurrentInfo = useContext(AuthContext);
 
   const toggleModal = useCallback(() => {
     setShow(!show);
@@ -22,6 +22,10 @@ const Header = ({ handleModalMobile }) => {
   const handleLogin = useCallback(() => {
     navigate("/login");
   }, [navigate]);
+
+  useEffect(() => {
+    console.log("3. time: ", data);
+  }, [data]);
 
   return (
     <div className={clsx(styles.wrapper)}>
@@ -39,7 +43,7 @@ const Header = ({ handleModalMobile }) => {
       >
         <MenuOutlined />
       </div>
-      {!!userCurrentInfo.accessToken ? (
+      {data && data?.accessToken ? (
         <div className={clsx(styles.action)} onClick={toggleModal}>
           <Avatar
             className={clsx(styles.imgAvatar)}
@@ -47,16 +51,16 @@ const Header = ({ handleModalMobile }) => {
             gap={2}
             size={"medium"}
           >
-            {userCurrentInfo.name.charAt(0)}
+            {data.name.charAt(0)}
           </Avatar>
-          <Text className={clsx(styles.nameUser)}>{userCurrentInfo.name}</Text>
+          <Text className={clsx(styles.nameUser)}>{data.name}</Text>
         </div>
       ) : (
         <Button
           type="primary"
           shape="round"
           size={"large"}
-          onClick={() => handleLogin()}
+          onClick={handleLogin}
         >
           Đăng Nhập
         </Button>
@@ -66,4 +70,4 @@ const Header = ({ handleModalMobile }) => {
   );
 };
 
-export default memo(Header);
+export default Header;

@@ -26,6 +26,7 @@ export default function PostForm({ value }) {
     isCheckAll,
     handleUploadThumbnail,
     handleUploadMulti,
+    errors,
   } = value;
 
   const { roomType, description, utilities } = state;
@@ -43,6 +44,9 @@ export default function PostForm({ value }) {
             placeholder="Chọn loại phòng trọ"
             onChange={(e) => handleTypeRoom(e)}
           />
+          {errors.roomType && (
+            <span className={clsx(styles.error)}>{errors.roomType}</span>
+          )}
         </Col>
         <LocationForm
           locationValue={locationValue}
@@ -51,6 +55,7 @@ export default function PostForm({ value }) {
           onWardSelect={onWardSelect}
           handleAddressChange={handleAddressChange}
           state={state}
+          errors={errors}
         />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -61,6 +66,7 @@ export default function PostForm({ value }) {
           handlePhoneChange={handlePhoneChange}
           handleAreaRoom={handleAreaRoom}
           state={state}
+          errors={errors}
         />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -89,7 +95,11 @@ export default function PostForm({ value }) {
             value={description}
             onChange={(e) => handleDescriptionChange(e)}
             rows={6}
+            name="description"
           />
+          {errors.description && (
+            <span className={clsx(styles.error)}>{errors.description}</span>
+          )}
         </Col>
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -97,6 +107,7 @@ export default function PostForm({ value }) {
           handleUploadMulti={handleUploadMulti}
           handleUploadThumbnail={handleUploadThumbnail}
           state={state}
+          errors={errors}
         />
       </Row>
     </div>
@@ -111,6 +122,7 @@ function LocationForm(props) {
     onWardSelect,
     handleAddressChange,
     state,
+    errors,
   } = props;
 
   const {
@@ -122,7 +134,7 @@ function LocationForm(props) {
     selectedWard,
   } = locationValue;
 
-  const { address } = state;
+  const { address, addressHC } = state;
 
   return (
     <>
@@ -131,7 +143,6 @@ function LocationForm(props) {
         <div className={clsx(styles.selectLocation)}>
           <Select
             className={clsx(styles.selectItem)}
-            name="cityId"
             placeholder="Tỉnh/Thành"
             defaultValue={selectedCity}
             key={`cityId_${selectedCity?.value}`}
@@ -141,7 +152,6 @@ function LocationForm(props) {
           />
           <Select
             className={clsx(styles.selectItem)}
-            name="districtId"
             placeholder="Quận/Huyện"
             key={`districtId_${selectedDistrict?.value}`}
             isDisabled={districtOptions.length === 0}
@@ -151,7 +161,6 @@ function LocationForm(props) {
           />
           <Select
             className={clsx(styles.selectItem)}
-            name="wardId"
             placeholder="Phường/Xã"
             key={`wardId_${selectedWard?.value}`}
             isDisabled={wardOptions.length === 0}
@@ -160,6 +169,9 @@ function LocationForm(props) {
             defaultValue={selectedWard}
           />
         </div>
+        {errors.addressHC && selectedDistrict !== null && (
+          <span className={clsx(styles.error)}>{errors.addressHC}</span>
+        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label htmlFor="detailAddress" className={clsx(styles.headingLabel)}>
@@ -170,7 +182,11 @@ function LocationForm(props) {
           id="detailAddress"
           value={address}
           onChange={(e) => handleAddressChange(e)}
+          name="address"
         />
+        {errors.address && (
+          <span className={clsx(styles.error)}>{errors.address}</span>
+        )}
       </Col>
     </>
   );
@@ -184,6 +200,7 @@ function InformationForm(props) {
     handlePhoneChange,
     handleRoomPrice,
     handleWaterPrice,
+    errors,
   } = props;
 
   const { roomPrice, electronPrice, waterPrice, areaRoom, phone } = state;
@@ -200,6 +217,9 @@ function InformationForm(props) {
           onChange={(e) => handleRoomPrice(e)}
           placeholder="Nhập giá phòng..."
         />
+        {errors.roomPrice && (
+          <span className={clsx(styles.error)}>{errors.roomPrice}</span>
+        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label htmlFor="electronPrice" className={clsx(styles.headingLabel)}>
@@ -220,6 +240,12 @@ function InformationForm(props) {
             placeholder="Nhập giá nước"
             onChange={(e) => handleWaterPrice(e)}
           />
+          {errors.electronPrice && errors.waterPrice && (
+            <>
+              <span className={clsx(styles.error)}>{errors.electronPrice}</span>
+              <span className={clsx(styles.error)}>{errors.waterPrice}</span>
+            </>
+          )}
         </Input.Group>
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
@@ -233,6 +259,9 @@ function InformationForm(props) {
           value={areaRoom}
           onChange={(e) => handleAreaRoom(e)}
         />
+        {errors.areaRoom && (
+          <span className={clsx(styles.error)}>{errors.areaRoom}</span>
+        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label className={clsx(styles.headingLabel)} htmlFor="phone">
@@ -244,13 +273,16 @@ function InformationForm(props) {
           onChange={(e) => handlePhoneChange(e)}
           placeholder="Nhập số điện thoại"
         />
+        {errors.phone && (
+          <span className={clsx(styles.error)}>{errors.phone}</span>
+        )}
       </Col>
     </>
   );
 }
 
 function PhotoForm(props) {
-  const { handleUploadThumbnail, state, handleUploadMulti } = props;
+  const { handleUploadThumbnail, state, handleUploadMulti, errors } = props;
 
   const { thumbnailImg, detailImgs } = state;
 
@@ -271,6 +303,9 @@ function PhotoForm(props) {
           onChange={(e) => handleUploadThumbnail(e)}
           placeholder="Chọn ảnh chi tiết"
         />
+        {errors.thumbnailImg && (
+          <span className={clsx(styles.error)}>{errors.thumbnailImg}</span>
+        )}
         <div className={clsx(styles.previewImg)}>
           <img
             src={thumbnailImg}

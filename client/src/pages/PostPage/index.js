@@ -6,6 +6,7 @@ import styles from "./NewPost.module.scss";
 import clsx from "clsx";
 import useLocationForm from "../../hooks/useLocationForm";
 import { utilitiesData } from "../../constants/utilitiesForm";
+import Validator from "../../utils/validator";
 
 export default function PostPage() {
   const { locationValue, onCitySelect, onDistrictSelect, onWardSelect } =
@@ -26,7 +27,79 @@ export default function PostPage() {
     thumbnailImg: "",
     detailImgs: [],
   });
+  const [errors, setErrors] = useState({});
   const regexNumber = /^-?\d*(\.\d*)?$/;
+
+  const rules = [
+    {
+      field: "title",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập tiêu đề.",
+    },
+    {
+      field: "roomType",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa chọn loại phòng trọ.",
+    },
+    {
+      field: "address",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập địa chỉ phòng trọ.",
+    },
+    {
+      field: "addressHC",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập địa chỉ phòng trọ.",
+    },
+    {
+      field: "roomPrice",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập giá phòng trọ.",
+    },
+    {
+      field: "electronPrice",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập giá tiền điện.",
+    },
+    {
+      field: "waterPrice",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập giá tiền nước.",
+    },
+    {
+      field: "areaRoom",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập diện tích phòng.",
+    },
+    {
+      field: "phone",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập số điện thoại chủ phòng trọ.",
+    },
+    {
+      field: "description",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa nhập mô tả chi tiết về phòng trọ.",
+    },
+    {
+      field: "thumbnailImg",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa chọn ảnh nổi bật về phòng trọ.",
+    },
+  ];
+
+  const validator = new Validator(rules);
 
   const { cityLabel, districtLabel, wardLabel } = locationValue;
 
@@ -36,10 +109,6 @@ export default function PostPage() {
       addressHC: `${wardLabel} ${districtLabel} ${cityLabel}`,
     });
   }, [districtLabel, wardLabel]);
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   const handleChange = (e) => {
     setState({
@@ -188,6 +257,12 @@ export default function PostPage() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors(validator.validate(state));
+    console.log(state);
+  };
+
   const values = {
     state,
     handleRoomPrice,
@@ -207,11 +282,12 @@ export default function PostPage() {
     isCheckAll,
     handleUploadThumbnail,
     handleUploadMulti,
+    errors,
   };
 
   return (
     <div className={clsx(styles.wrapper)}>
-      <form className={clsx(styles.postForm)}>
+      <form className={clsx(styles.postForm)} onSubmit={handleSubmit}>
         <input
           value={state.title}
           type={"text"}
@@ -219,6 +295,9 @@ export default function PostPage() {
           className={clsx(styles.headingInput)}
           onChange={(e) => handleChange(e)}
         />
+        {errors.title && (
+          <span className={clsx(styles.error)}>{errors.title}</span>
+        )}
         <PostForm value={values} />
         <Divider />
         <button type="submit" className={clsx(styles.btnSubmit)}>

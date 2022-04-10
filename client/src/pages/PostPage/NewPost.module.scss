@@ -33,4 +33,11 @@
       margin-bottom: 20px;
     }
   }
+
+  .error {
+    color: $secondary-color;
+    font-size: 12px;
+    font-weight: 500;
+    display: block;
+  }
 }
