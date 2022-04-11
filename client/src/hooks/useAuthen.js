@@ -7,7 +7,7 @@ import { getUser } from "../api";
 export default function useAuthen() {
   const findUser = useCallback(
     (res) =>
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
             const userCurrent = res.data.find(
@@ -15,6 +15,7 @@ export default function useAuthen() {
             );
             resolve(userCurrent);
           }
+          reject();
         });
       }),
     [],
@@ -24,13 +25,19 @@ export default function useAuthen() {
     "users",
     async () => {
       const res = await getUser();
-      const returnData = await findUser(res);
+      const returnData = await findUser(res)
+        .then((userCurrent) => {
+          return userCurrent;
+        })
+        .catch(() => {
+          console.warn("[Warning] - User Not Login !");
+        });
       return returnData;
     },
     {
-      staleTime: 600000,
+      staleTime: 30 * 60 * 1000,
       cacheTime: 86400,
-      retry: 3,
+      retry: false,
     },
   );
   return {

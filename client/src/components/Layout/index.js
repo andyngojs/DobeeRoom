@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 import styles from "./Main.module.scss";
 import Header from "../Header";

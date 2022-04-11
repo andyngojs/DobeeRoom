@@ -23,10 +23,6 @@ const Header = ({ handleModalMobile }) => {
     navigate("/login");
   }, [navigate]);
 
-  useEffect(() => {
-    console.log("3. time: ", data);
-  }, [data]);
-
   return (
     <div className={clsx(styles.wrapper)}>
       <div className={clsx(styles.logo)}>
