@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
 import userRouter from './routes/users.js';
+import postRouter from './routes/posts.js'
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use(cookieSession({
 }));
 
 app.use('/api', userRouter);
+app.use('/api', postRouter);
 
 mongoose.connect(url, { useUnifiedTopology: true })
     .then(() => {
