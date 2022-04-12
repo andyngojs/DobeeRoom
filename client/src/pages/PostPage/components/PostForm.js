@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import clsx from "clsx";
 import { Input, Row, Col, Checkbox } from "antd";
 import Select from "react-select";
@@ -6,7 +6,7 @@ import styles from "./PostForm.module.scss";
 import { utilitiesData } from "../../../constants/utilitiesForm";
 import { typeOptions } from "../../../constants/typeRoom";
 
-export default function PostForm({ value }) {
+function PostForm({ value }) {
   const {
     state,
     handleRoomPrice,
@@ -42,7 +42,7 @@ export default function PostForm({ value }) {
             defaultValue={roomType}
             options={typeOptions}
             placeholder="Chọn loại phòng trọ"
-            onChange={(e) => handleTypeRoom(e)}
+            onChange={handleTypeRoom}
           />
           {errors.roomType && (
             <span className={clsx(styles.error)}>{errors.roomType}</span>
@@ -81,7 +81,7 @@ export default function PostForm({ value }) {
             options={utilitiesData}
             value={utilities}
             className={clsx(styles.checkboxUtil)}
-            onChange={(e) => handleCheckUtil(e)}
+            onChange={handleCheckUtil}
           />
         </Col>
         <Col span={12}>
@@ -93,7 +93,7 @@ export default function PostForm({ value }) {
             placeholder="Nhập mô tả phòng trọ"
             allowClear
             value={description}
-            onChange={(e) => handleDescriptionChange(e)}
+            onChange={handleDescriptionChange}
             rows={6}
             name="description"
           />
@@ -113,6 +113,8 @@ export default function PostForm({ value }) {
     </div>
   );
 }
+
+export default memo(PostForm);
 
 function LocationForm(props) {
   const {
@@ -181,7 +183,7 @@ function LocationForm(props) {
           placeholder="Nhập địa chỉ chi tiết..."
           id="detailAddress"
           value={address}
-          onChange={(e) => handleAddressChange(e)}
+          onChange={handleAddressChange}
           name="address"
         />
         {errors.address && (
@@ -214,7 +216,7 @@ function InformationForm(props) {
         <Input
           id="room-price"
           value={roomPrice}
-          onChange={(e) => handleRoomPrice(e)}
+          onChange={handleRoomPrice}
           placeholder="Nhập giá phòng..."
         />
         {errors.roomPrice && (
@@ -231,14 +233,14 @@ function InformationForm(props) {
             defaultValue=""
             value={electronPrice}
             placeholder="Nhập giá điện"
-            onChange={(e) => handleElectronPrice(e)}
+            onChange={handleElectronPrice}
           />
           <Input
             style={{ width: "50%" }}
             defaultValue=""
             value={waterPrice}
             placeholder="Nhập giá nước"
-            onChange={(e) => handleWaterPrice(e)}
+            onChange={handleWaterPrice}
           />
           {errors.electronPrice && errors.waterPrice && (
             <>
@@ -257,7 +259,7 @@ function InformationForm(props) {
           addonAfter={"m2"}
           placeholder="Nhập diện tích phòng"
           value={areaRoom}
-          onChange={(e) => handleAreaRoom(e)}
+          onChange={handleAreaRoom}
         />
         {errors.areaRoom && (
           <span className={clsx(styles.error)}>{errors.areaRoom}</span>
@@ -270,7 +272,7 @@ function InformationForm(props) {
         <Input
           id="phone"
           value={phone}
-          onChange={(e) => handlePhoneChange(e)}
+          onChange={handlePhoneChange}
           placeholder="Nhập số điện thoại"
         />
         {errors.phone && (
@@ -300,7 +302,7 @@ function PhotoForm(props) {
         <input
           type={"file"}
           className={clsx(styles.btnUpload)}
-          onChange={(e) => handleUploadThumbnail(e)}
+          onChange={handleUploadThumbnail}
           placeholder="Chọn ảnh chi tiết"
         />
         {errors.thumbnailImg && (
@@ -320,7 +322,7 @@ function PhotoForm(props) {
           type={"file"}
           className={clsx(styles.btnUpload)}
           multiple
-          onChange={(e) => handleUploadMulti(e)}
+          onChange={handleUploadMulti}
         />
         <div className={clsx(styles.previewImg)}>
           {detailImgs.map((item, index) => (

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
 import styles from "./NewPost.module.scss";
@@ -28,7 +27,11 @@ export default function PostPage() {
     detailImgs: [],
   });
   const [errors, setErrors] = useState({});
-  const regexNumber = /^-?\d*(\.\d*)?$/;
+  const [errorTitle, setErrorTitle] = useState({});
+
+  const regexNumber = useMemo(() => {
+    return /^-?\d*(\.\d*)?$/;
+  }, []);
 
   const rules = [
     {
@@ -110,12 +113,15 @@ export default function PostPage() {
     });
   }, [districtLabel, wardLabel]);
 
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      title: e.target.value,
-    });
-  };
+  const handleChange = useCallback(
+    (e) => {
+      setState({
+        ...state,
+        title: e.target.value,
+      });
+    },
+    [state],
+  );
 
   useEffect(() => {
     if (state.title.length > 1) {
@@ -125,107 +131,136 @@ export default function PostPage() {
     }
   }, [state.title]);
 
-  const handleTypeRoom = (e) => {
-    setState({
-      ...state,
-      roomType: e.value,
-    });
-  };
-
-  const handleAddressChange = (e) => {
-    setState({
-      ...state,
-      address: e.target.value,
-    });
-  };
-
-  const handleRoomPrice = (e) => {
-    if (
-      (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
-      e.target.value === "" ||
-      e.target.value === "-"
-    ) {
+  const handleTypeRoom = useCallback(
+    (e) => {
       setState({
         ...state,
-        roomPrice: e.target.value,
+        roomType: e.value,
       });
-    }
-  };
+    },
+    [state],
+  );
 
-  const handleElectronPrice = (e) => {
-    if (
-      (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
-      e.target.value === "" ||
-      e.target.value === "-"
-    ) {
+  const handleAddressChange = useCallback(
+    (e) => {
       setState({
         ...state,
-        electronPrice: e.target.value,
+        address: e.target.value,
       });
-    }
-  };
+    },
+    [state],
+  );
 
-  const handleWaterPrice = (e) => {
-    if (
-      (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
-      e.target.value === "" ||
-      e.target.value === "-"
-    ) {
+  const handleRoomPrice = useCallback(
+    (e) => {
+      if (
+        (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
+        e.target.value === "" ||
+        e.target.value === "-"
+      ) {
+        setState({
+          ...state,
+          roomPrice: e.target.value,
+        });
+      }
+    },
+    [state, regexNumber],
+  );
+
+  const handleElectronPrice = useCallback(
+    (e) => {
+      if (
+        (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
+        e.target.value === "" ||
+        e.target.value === "-"
+      ) {
+        setState({
+          ...state,
+          electronPrice: e.target.value,
+        });
+      }
+    },
+    [state, regexNumber],
+  );
+
+  const handleWaterPrice = useCallback(
+    (e) => {
+      if (
+        (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
+        e.target.value === "" ||
+        e.target.value === "-"
+      ) {
+        setState({
+          ...state,
+          waterPrice: e.target.value,
+        });
+      }
+    },
+    [state, regexNumber],
+  );
+
+  const handlePhoneChange = useCallback(
+    (e) => {
+      if (
+        (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
+        e.target.value === "" ||
+        e.target.value === "-"
+      ) {
+        setState({
+          ...state,
+          phone: e.target.value,
+        });
+      }
+    },
+    [state, regexNumber],
+  );
+
+  const handleAreaRoom = useCallback(
+    (e) => {
+      if (
+        (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
+        e.target.value === "" ||
+        e.target.value === "-"
+      ) {
+        setState({
+          ...state,
+          areaRoom: e.target.value,
+        });
+      }
+    },
+    [state, regexNumber],
+  );
+
+  const handleDescriptionChange = useCallback(
+    (e) => {
       setState({
         ...state,
-        waterPrice: e.target.value,
+        description: e.target.value,
       });
-    }
-  };
+    },
+    [state],
+  );
 
-  const handlePhoneChange = (e) => {
-    if (
-      (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
-      e.target.value === "" ||
-      e.target.value === "-"
-    ) {
+  const handleAllCheck = useCallback(
+    (e) => {
+      setIsCheckAll(e.target.checked);
       setState({
         ...state,
-        phone: e.target.value,
+        utilities: e.target.checked ? utilitiesData : [],
       });
-    }
-  };
+    },
+    [state],
+  );
 
-  const handleAreaRoom = (e) => {
-    if (
-      (!isNaN(e.target.value) && regexNumber.test(e.target.value)) ||
-      e.target.value === "" ||
-      e.target.value === "-"
-    ) {
+  const handleCheckUtil = useCallback(
+    (e) => {
       setState({
         ...state,
-        areaRoom: e.target.value,
+        utilities: e,
       });
-    }
-  };
-
-  const handleDescriptionChange = (e) => {
-    console.log(e.target.value);
-    setState({
-      ...state,
-      description: e.target.value,
-    });
-  };
-
-  const handleAllCheck = (e) => {
-    setIsCheckAll(e.target.checked);
-    setState({
-      ...state,
-      utilities: e.target.checked ? utilitiesData : [],
-    });
-  };
-
-  const handleCheckUtil = (e) => {
-    setState({
-      ...state,
-      utilities: e,
-    });
-  };
+    },
+    [state],
+  );
 
   function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -236,31 +271,56 @@ export default function PostPage() {
     });
   }
 
-  const handleUploadThumbnail = async (e) => {
-    const file = e.target.files[0];
-    const url = URL.createObjectURL(file);
-    setState({
-      ...state,
-      thumbnailImg: url,
-    });
-  };
+  const handleUploadThumbnail = useCallback(
+    (e) => {
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      setState({
+        ...state,
+        thumbnailImg: url,
+      });
+    },
+    [state],
+  );
 
-  const handleUploadMulti = (e) => {
-    const files = [...e.target.files];
-    const newImgs = files.map((item, index) => {
-      const url = URL.createObjectURL(item);
-      return { thumbnailUrl: url };
-    });
-    setState({
-      ...state,
-      detailImgs: newImgs,
-    });
-  };
+  const handleUploadMulti = useCallback(
+    (e) => {
+      const files = [...e.target.files];
+      const newImgs = files.map((item, index) => {
+        const url = URL.createObjectURL(item);
+        return { thumbnailUrl: url };
+      });
+      setState({
+        ...state,
+        detailImgs: newImgs,
+      });
+    },
+    [state],
+  );
+
+  const blurValid = useCallback(() => {
+    setErrorTitle(validator.validate(state));
+  }, [state, validator]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validator.validate(state));
-    console.log(state);
+    setErrorTitle(validator.validate(state));
+    setState({
+      title: "",
+      roomPrice: "",
+      electronPrice: "",
+      waterPrice: "",
+      areaRoom: "",
+      phone: "",
+      roomType: "",
+      address: "",
+      addressHC: "",
+      description: "",
+      utilities: [],
+      thumbnailImg: "",
+      detailImgs: [],
+    });
   };
 
   const values = {
@@ -293,10 +353,11 @@ export default function PostPage() {
           type={"text"}
           placeholder="Tiêu đề"
           className={clsx(styles.headingInput)}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
+          onBlur={blurValid}
         />
-        {errors.title && (
-          <span className={clsx(styles.error)}>{errors.title}</span>
+        {errorTitle.title && (
+          <span className={clsx(styles.error)}>{errorTitle.title}</span>
         )}
         <PostForm value={values} />
         <Divider />
