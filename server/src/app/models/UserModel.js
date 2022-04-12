@@ -13,18 +13,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    status: {
-        type: String,
-        required: true,
-        default: 0
-    },
     phone: {
         type: String,
         required: false,
-    },
-    address: {
-        type: String,
-        required: false
     },
     university: {
         type: String,
