@@ -1,1 +1,1 @@
-export const userInforSelector = (state) => state.auths;
+export const postState$ = (state) => state.post;

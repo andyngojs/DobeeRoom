@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import authSlice from "../components/SigninButton/authSlice";
+import { postSlice } from "./slices/postSlice";
 
 const rootReducer = combineReducers({
-  auths: authSlice,
+  post: postSlice,
 });
 
 export default rootReducer;

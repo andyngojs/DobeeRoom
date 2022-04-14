@@ -12,7 +12,7 @@ export default function MainRouting() {
       <Route path={"/search"} element={<SearchPage />} />
       <Route path={"/user"} element={<UserPage />} />
       <Route path={"/about"} element={<AboutPage />} />
-      <Route path="/new-post" element={<PostPage />} />
+      <Route path={"/new-post"} element={<PostPage />} />
     </Routes>
   );
 }

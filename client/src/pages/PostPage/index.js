@@ -1,13 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./NewPost.module.scss";
 import clsx from "clsx";
 import useLocationForm from "../../hooks/useLocationForm";
 import { utilitiesData } from "../../constants/utilitiesForm";
 import Validator from "../../utils/validator";
+import useAuthen from "../../hooks/useAuthen";
+import { createPostRequest } from "../../redux/actions";
+import { postState$ } from "../../redux/selectors";
 
-export default function PostPage() {
+function PostPage() {
+  const dispatch = useDispatch();
+  const { post, isSuccess, isError } = useSelector(postState$);
+  const { data } = useAuthen();
   const { locationValue, onCitySelect, onDistrictSelect, onWardSelect } =
     useLocationForm(false);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -106,22 +113,12 @@ export default function PostPage() {
 
   const { cityLabel, districtLabel, wardLabel } = locationValue;
 
-  useEffect(() => {
+  useCallback(() => {
     setState({
       ...state,
       addressHC: `${wardLabel} ${districtLabel} ${cityLabel}`,
     });
   }, [districtLabel, wardLabel]);
-
-  const handleChange = useCallback(
-    (e) => {
-      setState({
-        ...state,
-        title: e.target.value,
-      });
-    },
-    [state],
-  );
 
   useEffect(() => {
     if (state.title.length > 1) {
@@ -298,30 +295,33 @@ export default function PostPage() {
     [state],
   );
 
-  const blurValid = useCallback(() => {
-    setErrorTitle(validator.validate(state));
-  }, [state, validator]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors(validator.validate(state));
-    setErrorTitle(validator.validate(state));
-    setState({
-      title: "",
-      roomPrice: "",
-      electronPrice: "",
-      waterPrice: "",
-      areaRoom: "",
-      phone: "",
-      roomType: "",
-      address: "",
-      addressHC: "",
-      description: "",
-      utilities: [],
-      thumbnailImg: "",
-      detailImgs: [],
-    });
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setErrors(validator.validate(state));
+      setErrorTitle(validator.validate(state));
+      dispatch(
+        createPostRequest({
+          title: state.title,
+          type_room: state.roomType,
+          address: state.addressHC,
+          detail_address: state.address,
+          price_room: state.roomPrice,
+          price_electron: state.electronPrice,
+          price_water: state.waterPrice,
+          area_room: state.areaRoom,
+          phone: state.phone,
+          utils: state.utilities,
+          thumbnail_img: state.thumbnailImg,
+          detail_img: state.detailImgs,
+          description: state.description,
+          status: 0,
+          created_by: data._id,
+        }),
+      );
+    },
+    [state, dispatch],
+  );
 
   const values = {
     state,
@@ -347,24 +347,35 @@ export default function PostPage() {
 
   return (
     <div className={clsx(styles.wrapper)}>
-      <form className={clsx(styles.postForm)} onSubmit={handleSubmit}>
+      <form className={clsx(styles.postForm)} autoComplete="false">
         <input
           value={state.title}
           type={"text"}
           placeholder="Tiêu đề"
           className={clsx(styles.headingInput)}
-          onChange={handleChange}
-          onBlur={blurValid}
+          onChange={(e) =>
+            setState({
+              ...state,
+              title: e.target.value,
+            })
+          }
+          onBlur={() => setErrorTitle(validator.validate(state))}
         />
         {errorTitle.title && (
           <span className={clsx(styles.error)}>{errorTitle.title}</span>
         )}
         <PostForm value={values} />
         <Divider />
-        <button type="submit" className={clsx(styles.btnSubmit)}>
+        <button
+          type="submit"
+          className={clsx(styles.btnSubmit)}
+          onClick={handleSubmit}
+        >
           Đăng Bài
         </button>
       </form>
     </div>
   );
 }
+
+export default memo(PostPage);

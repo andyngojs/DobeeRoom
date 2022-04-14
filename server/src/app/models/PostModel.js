@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    addressHC: {
+    detail_address: {
         type: String,
         required: true
     },
@@ -41,11 +41,11 @@ const postSchema = new mongoose.Schema({
     },
     thumbnail_img: {
         type: String,
-        required: true
+        required: false
     },
     detail_img: {
         type: Array,
-        required: true
+        required:false
     },
     description: {
         type: String,
@@ -53,10 +53,9 @@ const postSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        required: true,
         default: 0
     },
-    create_by: {
+    created_by: {
         type: String,
         required: true
     }

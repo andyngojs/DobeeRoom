@@ -194,6 +194,8 @@ function LocationForm(props) {
   );
 }
 
+memo(LocationForm);
+
 function InformationForm(props) {
   const {
     state,
@@ -283,6 +285,8 @@ function InformationForm(props) {
   );
 }
 
+memo(InformationForm);
+
 function PhotoForm(props) {
   const { handleUploadThumbnail, state, handleUploadMulti, errors } = props;
 
@@ -338,3 +342,5 @@ function PhotoForm(props) {
     </>
   );
 }
+
+memo(PhotoForm);

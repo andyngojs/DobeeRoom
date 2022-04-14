@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { PATHS } from "../constants/paths";
 
@@ -59,56 +59,61 @@ export default function useLocationForm(shouldFetchInitialLocation) {
     }
   }, []);
 
-  useEffect(() => {
-    (async function () {
-      if (!selectedCity) return;
-      const options = await fetchLocationOptions(
-        FETCH_TYPES.DISTRICTS,
-        selectedCity.value,
-      );
-      setLocationValue({ ...locationValue, districtOptions: options });
-    })();
+  useEffect(async () => {
+    if (!selectedCity) return;
+    const options = await fetchLocationOptions(
+      FETCH_TYPES.DISTRICTS,
+      selectedCity.value,
+    );
+    setLocationValue({ ...locationValue, districtOptions: options });
   }, [selectedCity]);
 
-  useEffect(() => {
-    (async function () {
-      if (!selectedDistrict) return;
-      const options = await fetchLocationOptions(
-        FETCH_TYPES.WARDS,
-        selectedDistrict.value,
-      );
-      setLocationValue({ ...locationValue, wardOptions: options });
-    })();
+  useEffect(async () => {
+    if (!selectedDistrict) return;
+    const options = await fetchLocationOptions(
+      FETCH_TYPES.WARDS,
+      selectedDistrict.value,
+    );
+    setLocationValue({ ...locationValue, wardOptions: options });
   }, [selectedDistrict]);
 
-  function onCitySelect(option) {
-    setLocationValue({
-      ...locationValue,
-      districtOptions: [],
-      wardOptions: [],
-      selectedCity: option,
-      selectedDistrict: null,
-      selectedWard: null,
-    });
-  }
+  const onCitySelect = useCallback(
+    (option) => {
+      setLocationValue({
+        ...locationValue,
+        districtOptions: [],
+        wardOptions: [],
+        selectedCity: option,
+        selectedDistrict: null,
+        selectedWard: null,
+      });
+    },
+    [locationValue],
+  );
 
-  function onDistrictSelect(option) {
-    setLocationValue({
-      ...locationValue,
-      wardOptions: [],
-      selectedDistrict: option,
-      selectedWard: null,
-      districtLabel: option.label,
-    });
-  }
+  const onDistrictSelect = useCallback(
+    (option) => {
+      setLocationValue({
+        ...locationValue,
+        wardOptions: [],
+        selectedDistrict: option,
+        selectedWard: null,
+        districtLabel: option.label,
+      });
+    },
+    [locationValue],
+  );
 
-  function onWardSelect(option) {
-    setLocationValue({
-      ...locationValue,
-      selectedWard: option,
-      wardLabel: option.label,
-    });
-  }
+  const onWardSelect = useCallback(
+    (option) => {
+      setLocationValue({
+        ...locationValue,
+        selectedWard: option,
+        wardLabel: option.label,
+      });
+    },
+    [locationValue],
+  );
 
   return {
     locationValue,

@@ -1,9 +1,21 @@
-import { takeLatest } from "redux-saga/effects";
-import { setUser } from "../actions";
-import { createUser } from "../../api";
+import { takeLatest, call, put } from "redux-saga/effects";
+import { createPost } from "../../api";
+import {
+  createPostRequest,
+  createPostSuccess,
+  createPostFailure,
+} from "../actions";
 
-export function* createUserSaga(action) {}
+function* createPostSaga(action) {
+  try {
+    const post = yield call(createPost, action.payload);
+    yield put(createPostSuccess(post.data));
+  } catch (error) {
+    console.log(error);
+    yield put(createPostFailure(error));
+  }
+}
 
 export default function* rootSaga() {
-  yield takeLatest(setUser().type, createUserSaga);
+  yield takeLatest(createPostRequest, createPostSaga);
 }
