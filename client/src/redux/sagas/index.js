@@ -8,10 +8,13 @@ import {
 
 function* createPostSaga(action) {
   try {
-    const post = yield call(createPost, action.payload);
-    yield put(createPostSuccess(post.data));
+    const post = yield createPost(action.payload).then((res) => {
+      if (res.status === 200) {
+        return res.data.post;
+      }
+    });
+    yield put(createPostSuccess(post));
   } catch (error) {
-    console.log(error);
     yield put(createPostFailure(error));
   }
 }

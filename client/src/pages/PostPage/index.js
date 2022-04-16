@@ -10,6 +10,7 @@ import Validator from "../../utils/validator";
 import useAuthen from "../../hooks/useAuthen";
 import { createPostRequest } from "../../redux/actions";
 import { postState$ } from "../../redux/selectors";
+import { createPost, uploadFileMultiple, uploadFileSingle } from "../../api";
 
 function PostPage() {
   const dispatch = useDispatch();
@@ -100,12 +101,6 @@ function PostPage() {
       method: "isEmpty",
       validWhen: false,
       message: "❗Bạn chưa nhập mô tả chi tiết về phòng trọ.",
-    },
-    {
-      field: "thumbnailImg",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa chọn ảnh nổi bật về phòng trọ.",
     },
   ];
 
@@ -259,37 +254,32 @@ function PostPage() {
     [state],
   );
 
-  function getBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  }
-
   const handleUploadThumbnail = useCallback(
-    (e) => {
+    async (e) => {
       const file = e.target.files[0];
-      const url = URL.createObjectURL(file);
-      setState({
-        ...state,
-        thumbnailImg: url,
+      const fd = new FormData();
+      fd.append("file-single", file);
+      await uploadFileSingle(fd).then((res) => {
+        setState({
+          ...state,
+          thumbnailImg: res.data.data,
+        });
       });
     },
     [state],
   );
 
   const handleUploadMulti = useCallback(
-    (e) => {
-      const files = [...e.target.files];
-      const newImgs = files.map((item, index) => {
-        const url = URL.createObjectURL(item);
-        return { thumbnailUrl: url };
-      });
-      setState({
-        ...state,
-        detailImgs: newImgs,
+    async (e) => {
+      const fd = new FormData();
+      for (let i = 0; i < e.target.files.length; i++) {
+        fd.append("file-multiple", e.target.files[i]);
+      }
+      await uploadFileMultiple(fd).then((res) => {
+        setState({
+          ...state,
+          detailImgs: res.data.data,
+        });
       });
     },
     [state],
@@ -320,7 +310,7 @@ function PostPage() {
         }),
       );
     },
-    [state, dispatch],
+    [state],
   );
 
   const values = {
@@ -347,7 +337,11 @@ function PostPage() {
 
   return (
     <div className={clsx(styles.wrapper)}>
-      <form className={clsx(styles.postForm)} autoComplete="false">
+      <form
+        className={clsx(styles.postForm)}
+        encType="multipart/form-data"
+        autoComplete="false"
+      >
         <input
           value={state.title}
           type={"text"}

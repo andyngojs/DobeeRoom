@@ -292,13 +292,6 @@ function PhotoForm(props) {
 
   const { thumbnailImg, detailImgs } = state;
 
-  useEffect(() => {
-    return () => {
-      thumbnailImg && URL.revokeObjectURL(thumbnailImg);
-      detailImgs && URL.revokeObjectURL(detailImgs);
-    };
-  }, [thumbnailImg, detailImgs]);
-
   return (
     <>
       <Col span={12}>
@@ -308,13 +301,14 @@ function PhotoForm(props) {
           className={clsx(styles.btnUpload)}
           onChange={handleUploadThumbnail}
           placeholder="Chọn ảnh chi tiết"
+          name="file-single"
         />
         {errors.thumbnailImg && (
           <span className={clsx(styles.error)}>{errors.thumbnailImg}</span>
         )}
         <div className={clsx(styles.previewImg)}>
           <img
-            src={thumbnailImg}
+            src={`http://localhost:5000/${thumbnailImg}`}
             className={clsx(styles.imgThumbnail)}
             alt=""
           />
@@ -327,11 +321,12 @@ function PhotoForm(props) {
           className={clsx(styles.btnUpload)}
           multiple
           onChange={handleUploadMulti}
+          name="file-multiple"
         />
         <div className={clsx(styles.previewImg)}>
           {detailImgs.map((item, index) => (
             <img
-              src={item.thumbnailUrl}
+              src={`http://localhost:5000/${item}`}
               className={clsx(styles.imgDetail)}
               key={index}
               alt=""

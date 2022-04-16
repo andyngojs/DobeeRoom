@@ -53,8 +53,7 @@ export default function useLocationForm(shouldFetchInitialLocation) {
       setLocationValue({
         ...locationValue,
         cityOptions: newOption,
-        selectedCity: newOption.find((c) => c.value === 297),
-        cityLabel: newOption.find((c) => c.value === 297).label,
+        // selectedCity: newOption.find((c) => c.value === 297),
       });
     }
   }, []);
@@ -86,6 +85,7 @@ export default function useLocationForm(shouldFetchInitialLocation) {
         selectedCity: option,
         selectedDistrict: null,
         selectedWard: null,
+        cityLabel: option.label,
       });
     },
     [locationValue],
