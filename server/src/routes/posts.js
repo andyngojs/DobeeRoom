@@ -1,9 +1,13 @@
 import express from 'express';
-import {createPost, getPost} from "../app/controllers/PostController.js";
+import multer from 'multer'
+import {createPost, getPost, uploadFile} from "../app/controllers/PostController.js";
 
-const route = express.Router();
+const router = express.Router();
+const upload = multer({ dest: 'public/uploads/'});
 
-route.get('/posts', getPost)
-route.post('/post', createPost)
+router.get('/posts', getPost);
+router.post('/post', createPost);
 
-export default route
+router.post('/upload', upload.single('file-single'), uploadFile)
+
+export default router
