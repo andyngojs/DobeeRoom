@@ -103,18 +103,24 @@ function PostPage() {
       validWhen: false,
       message: "❗Bạn chưa nhập mô tả chi tiết về phòng trọ.",
     },
+    {
+      field: "thumbnailImg",
+      method: "isEmpty",
+      validWhen: false,
+      message: "❗Bạn chưa tải ảnh nổi bật.",
+    },
   ];
 
   const validator = new Validator(rules);
 
   const { cityLabel, districtLabel, wardLabel } = locationValue;
 
-  useCallback(() => {
+  useEffect(() => {
     setState({
       ...state,
-      addressHC: `${wardLabel} ${districtLabel} ${cityLabel}`,
+      addressHC: `${wardLabel}, ${districtLabel}, ${cityLabel}`,
     });
-  }, [districtLabel, wardLabel]);
+  }, [districtLabel, wardLabel, cityLabel]);
 
   useEffect(() => {
     if (state.title.length > 1) {
@@ -290,7 +296,6 @@ function PostPage() {
     (e) => {
       e.preventDefault();
       setErrors(validator.validate(state));
-      setErrorTitle(validator.validate(state));
       dispatch(
         createPostActions.createPostRequest({
           title: state.title,
@@ -310,6 +315,21 @@ function PostPage() {
           created_by: data._id,
         }),
       );
+      setState({
+        title: "",
+        roomPrice: "",
+        electronPrice: "",
+        waterPrice: "",
+        areaRoom: "",
+        phone: "",
+        roomType: "",
+        address: "",
+        addressHC: "",
+        description: "",
+        utilities: [],
+        thumbnailImg: "",
+        detailImgs: [],
+      });
     },
     [state],
   );
