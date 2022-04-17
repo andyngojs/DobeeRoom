@@ -1,24 +1,24 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { createPost } from "../../api";
-import {
-  createPostRequest,
-  createPostSuccess,
-  createPostFailure,
-} from "../actions";
+import { createPostActions } from "../actions";
+
+const { createPostSuccess, createPostFailure } = createPostActions;
 
 function* createPostSaga(action) {
   try {
-    const post = yield createPost(action.payload).then((res) => {
-      if (res.status === 200) {
-        return res.data.post;
-      }
-    });
-    yield put(createPostSuccess(post));
+    const res = yield call(createPost, action.payload);
+    yield put(createPostSuccess(res.data.post));
   } catch (error) {
     yield put(createPostFailure(error));
   }
 }
 
-export default function* rootSaga() {
-  yield takeLatest(createPostRequest, createPostSaga);
+function* rootSaga() {
+  yield takeEvery(
+    (action) =>
+      action.type === "createPostRequest" && Object.keys(action).length === 2,
+    createPostSaga,
+  );
 }
+
+export default rootSaga;

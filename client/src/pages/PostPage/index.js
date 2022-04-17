@@ -2,19 +2,20 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import styles from "./NewPost.module.scss";
 import clsx from "clsx";
 import useLocationForm from "../../hooks/useLocationForm";
 import { utilitiesData } from "../../constants/utilitiesForm";
 import Validator from "../../utils/validator";
 import useAuthen from "../../hooks/useAuthen";
-import { createPostRequest } from "../../redux/actions";
+import { createPostActions } from "../../redux/actions";
 import { postState$ } from "../../redux/selectors";
 import { createPost, uploadFileMultiple, uploadFileSingle } from "../../api";
 
 function PostPage() {
   const dispatch = useDispatch();
-  const { post, isSuccess, isError } = useSelector(postState$);
+  const { isSuccess, isError } = useSelector(postState$);
   const { data } = useAuthen();
   const { locationValue, onCitySelect, onDistrictSelect, onWardSelect } =
     useLocationForm(false);
@@ -291,7 +292,7 @@ function PostPage() {
       setErrors(validator.validate(state));
       setErrorTitle(validator.validate(state));
       dispatch(
-        createPostRequest({
+        createPostActions.createPostRequest({
           title: state.title,
           type_room: state.roomType,
           address: state.addressHC,
@@ -312,6 +313,20 @@ function PostPage() {
     },
     [state],
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Đã đăng bài thành công!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [isSuccess]);
 
   const values = {
     state,
@@ -337,6 +352,17 @@ function PostPage() {
 
   return (
     <div className={clsx(styles.wrapper)}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <form
         className={clsx(styles.postForm)}
         encType="multipart/form-data"

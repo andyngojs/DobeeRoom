@@ -1,5 +1,3 @@
-import { createPostSuccess, createPostFailure } from "../actions";
-
 const initState = {
   isError: false,
   isSuccess: false,
@@ -8,13 +6,13 @@ const initState = {
 
 export const postSlice = (state = initState, action) => {
   switch (action.type) {
-    case createPostSuccess.type:
+    case "createPostSuccess":
       return {
         ...state,
         isSuccess: true,
-        post: { ...state.post, ...action.payload },
+        post: action.payload,
       };
-    case createPostFailure.type:
+    case "createPostFailure":
       return {
         ...state,
         isError: true,

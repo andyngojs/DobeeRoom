@@ -1,4 +1,4 @@
-const createPost = {
+export const createPostActions = {
   createPostRequest: (payload) => ({
     type: "createPostRequest",
     payload,
@@ -12,6 +12,3 @@ const createPost = {
     payload,
   }),
 };
-
-export const { createPostRequest, createPostSuccess, createPostFailure } =
-  createPost;
