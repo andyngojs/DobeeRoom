@@ -1,4 +1,5 @@
 # WebApp support students finding room
+
 Start Time: 11/3/2022 <br>
 Completed Time: 
 
@@ -12,6 +13,11 @@ This is my graduate project. A web app support students finding room on the plat
 
 ### Develop by:
 Dong Ngo (AndyngoJs)
+
+### Mentors
+Nguyễn Thịnh 
+
+Nguyễn Minh
 
 ### Tutorial Teacher
 Pham Tien Huy
