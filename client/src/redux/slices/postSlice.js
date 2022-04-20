@@ -2,10 +2,22 @@ const initState = {
   isError: false,
   isSuccess: false,
   post: {},
+  postPublic: [],
+  message: "",
 };
 
-export const postSlice = (state = initState, action) => {
+const postSlice = (state = initState, action) => {
   switch (action.type) {
+    case "getPostSuccess":
+      return {
+        ...state,
+        postPublic: action.payload,
+      };
+    case "getPostFailure":
+      return {
+        ...state,
+        message: action.payload,
+      };
     case "createPostSuccess":
       return {
         ...state,
@@ -21,3 +33,5 @@ export const postSlice = (state = initState, action) => {
       return state;
   }
 };
+
+export default postSlice

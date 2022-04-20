@@ -1,16 +1,17 @@
 import React from "react";
 import clsx from "clsx";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import moment from "moment";
+import { HeartOutlined } from "@ant-design/icons";
 import styles from "./RoomItem.module.scss";
 
-export default function RoomItem() {
+export default function RoomItem({ post }) {
   return (
-    <div className={clsx("col c-12 m-4 l-3")}>
+    <div className={clsx("col", "c-12", "m-4", "l-3", styles.col)}>
       <div className={clsx(styles.wrapper)}>
         <div className={clsx(styles.imgRoom)}>
           <img
-            src="http://nganhangnhatro.hou.edu.vn/public/images/anhphongtro/AnhPhongTro-NguynThyLinh9751643180681/avata-NguynThyLinh97516431806811643602830.jpg"
-            alt="room 1"
+            src={`http://localhost:5000/${post.thumbnail_img}`}
+            alt=""
             className={clsx(styles.img)}
           />
           <div className={clsx(styles.btnDetail)}>
@@ -18,19 +19,21 @@ export default function RoomItem() {
           </div>
         </div>
         <div className={clsx(styles.previewDetail)}>
-          <span style={{ fontSize: "11px" }}>Nhà trọ & phòng trọ</span>
-          <h2 className={clsx(styles.heading)}>
-            Cho thuê phòng trọ giá rẻ sinh viên.
-          </h2>
-          <p className={clsx(styles.area)}>Diện tích: 19m2</p>
-          <p className={clsx(styles.address)}>
-            Phường Lĩnh Nam - quận Hoàng Mai
-          </p>
-          <h4 className={clsx(styles.cost)}>Giá Phòng: 2.000.000 VNĐ</h4>
+          <span className={clsx(styles.label)} > {post.type_room} </span>
+          <h2 className={clsx(styles.heading)}>{post.title}</h2>
+          <p className={clsx(styles.area)}>Diện tích: {post.area_room} m2 </p>
+          <p className={clsx(styles.address)}>{post.address}</p>
+          <h4 className={clsx(styles.cost)}>
+            Giá Phòng: {post.price_room} VNĐ
+          </h4>
           <div className={clsx(styles.cardFooter)}>
             <div className={clsx(styles.timeline)}>
-              <p>Ngày Đăng: 22/03/2022 12:09</p>
-              <p> Dong Ngo </p>
+              <p>
+                Ngày Đăng: {moment(post.createdAt).format("HH:MM DD MMM,YYYY")}{" "}
+              </p>
+              <p style={{ fontSize: 14, fontWeight: 600 }} > Người đăng: 
+                { post.created_by }
+              </p>
             </div>
             <div className={clsx(styles.action)}>
               <HeartOutlined />

@@ -1,9 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import styles from "./Home.module.scss";
 import Slideshow from "../../components/Slideshow";
 import RoomItem from "./components/RoomItem";
+import { getPostAction } from "../../redux/actions";
+import { postPublicSelector } from "../../redux/selectors";
 
 export default function HomePage() {
+  const dispatch = useDispatch()
+  const postPublic = useSelector(postPublicSelector)
+
+  useEffect(() => {
+    dispatch(getPostAction.getPostRequest())
+  }, [])
+
   return (
     <div style={{ maxWidth: "1920px" }}>
       <div className={clsx(styles.slideshow)}>
@@ -15,7 +26,9 @@ export default function HomePage() {
         </div>
         <div className={clsx(styles.scrollList, "grid")}>
           <div className={clsx("row", "wide", styles.row)}>
-            <RoomItem />
+            {postPublic.map((item, index) => (
+              <RoomItem post={item} key={index} />
+            ))}
           </div>
         </div>
       </div>

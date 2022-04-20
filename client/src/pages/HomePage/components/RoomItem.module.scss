@@ -1,19 +1,24 @@
 @import "../../../sass/index.scss";
 
+.col {
+  margin-bottom: 14px;
+}
+
 .wrapper {
   flex-shrink: 0;
-  margin-bottom: 20px;
   overflow: hidden;
   background-color: $white-color;
-  box-shadow: 0 4px 8px $greyish-color;
-  border-radius: 8px;
-  cursor: pointer;
+  box-shadow: 4px 4px 8px $greyish-color;
+  border-radius: 6px;
+  border: 1px solid $white-grey-color;
+  min-height: 100%;
 
   .imgRoom {
-    width: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    object-fit: contain;
     text-align: center;
     position: relative;
+    cursor: pointer;
 
     .btnDetail {
       position: absolute;
@@ -27,6 +32,9 @@
       padding: 12px 10px;
       transform: translateY(90px);
       opacity: 0;
+    }
+    .img {
+      width: 100%;
     }
   }
 
@@ -42,37 +50,54 @@
   }
 
   .previewDetail {
-    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 4px 6px;
+    margin-top: 8px;
+    .label {
+      width: 50%;
+      background-color: $primary-light-color;
+      border-radius: 4px;
+      color: $white-color;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 4px;
+    }
     .heading {
       color: $text-color;
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-top: 12px;
     }
     .area {
-      font-size: 12px;
+      font-size: 14px;
       color: $text-color;
+      font-weight: 500;
     }
     .address {
-      font-size: 12px;
+      font-size: 14px;
       color: $text-color;
+      font-weight: 500;
     }
     .cost {
       font-size: 18px;
-      color: $primary-color;
+      color: $primary-dark-color;
     }
   }
 
   .cardFooter {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 12px;
-    height: 72px;
+    width: 100%;
     .timeline {
-      margin: auto 0;
+      font-weight: 600;
       font-size: 12px;
     }
     .action {
-      height: 100%;
       flex: 1;
       text-align: center;
       padding-top: 20px;

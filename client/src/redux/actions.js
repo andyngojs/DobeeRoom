@@ -12,3 +12,17 @@ export const createPostActions = {
     payload,
   }),
 };
+
+export const getPostAction = {
+  getPostRequest: () => ({
+    type: "getPostRequest",
+  }),
+  getPostSuccess: (payload) => ({
+    type: "getPostSuccess",
+    payload,
+  }),
+  getPostFailure: (payload) => ({
+    type: "getPostFailure",
+    payload,
+  }),
+};

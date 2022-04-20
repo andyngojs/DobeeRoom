@@ -41,3 +41,41 @@ export function uploadFiles(req, res) {
         res.json({ message: err });
     }
 }
+
+export const getPostPending = async (req, res) => {
+    try {
+        const postPending = await PostModel.find({ status: 0 });
+        res.json({ message: 'successfully', data: postPending });
+    } catch (err) {
+        res.json({ message: err });
+    }
+}
+export const getPostPublic = async (req, res) => {
+    try {
+        const postPublic = await PostModel.find({ status: 1 });
+        res.json({ message: 'successfully', data: postPublic });
+    } catch (err) {
+        res.json({ message: err });
+    }
+}
+
+export const changeStatus = async (req, res) => {
+    try {
+        const newStatus = req.body.status
+        const findPost = await PostModel.findOneAndUpdate({ _id: req.body.idPost }, { status: newStatus }, {
+            new: true
+        });
+        res.json({ message: 'successfully', data: findPost });
+    } catch (err) {
+        res.json({ message: err });
+    }
+}
+
+export const deletePost = async (req, res) => {
+    try {
+        const oldPost = await PostModel.findOneAndDelete({ _id: req.body.idPost });
+        res.json(oldPost)
+    } catch (err) {
+        res.json({ message: err });
+    }
+}

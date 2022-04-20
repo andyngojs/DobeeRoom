@@ -29,3 +29,4 @@ export const uploadFileMultiple = (payload) => {
     },
   });
 };
+export const getPostPublic = () => axios.get(`${URL_API}/api/posts/public`)

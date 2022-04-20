@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import styles from "./NewPost.module.scss";
 import clsx from "clsx";
@@ -10,12 +10,10 @@ import { utilitiesData } from "../../constants/utilitiesForm";
 import Validator from "../../utils/validator";
 import useAuthen from "../../hooks/useAuthen";
 import { createPostActions } from "../../redux/actions";
-import { postState$ } from "../../redux/selectors";
-import { createPost, uploadFileMultiple, uploadFileSingle } from "../../api";
+import { uploadFileMultiple, uploadFileSingle } from "../../api";
 
 function PostPage() {
   const dispatch = useDispatch();
-  const { isSuccess, isError } = useSelector(postState$);
   const { data } = useAuthen();
   const { locationValue, onCitySelect, onDistrictSelect, onWardSelect } =
     useLocationForm(false);
@@ -37,6 +35,7 @@ function PostPage() {
   });
   const [errors, setErrors] = useState({});
   const [errorTitle, setErrorTitle] = useState({});
+  const [isPosted, setIsPosted] = useState(false);
 
   const regexNumber = useMemo(() => {
     return /^-?\d*(\.\d*)?$/;
@@ -330,12 +329,13 @@ function PostPage() {
         thumbnailImg: "",
         detailImgs: [],
       });
+      setIsPosted(true);
     },
     [state],
   );
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isPosted) {
       toast.success("Đã đăng bài thành công!", {
         position: "top-right",
         autoClose: 5000,
@@ -346,7 +346,10 @@ function PostPage() {
         progress: undefined,
       });
     }
-  }, [isSuccess]);
+    return () => {
+      setIsPosted(false);
+    };
+  }, [isPosted]);
 
   const values = {
     state,

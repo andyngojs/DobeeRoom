@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { postSlice } from "./slices/postSlice";
+import postSlice  from "./slices/postSlice";
 
 const rootReducer = combineReducers({
-  post: postSlice,
+  post: postSlice
 });
 
 export default rootReducer;
