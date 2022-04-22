@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Avatar, Button, Typography } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import clsx from "clsx";
@@ -14,6 +15,7 @@ const Header = ({ handleModalMobile }) => {
   const { data } = useAuthen();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const userData = useSelector(state => state.user)
 
   const toggleModal = useCallback(() => {
     setShow(!show);
@@ -47,9 +49,9 @@ const Header = ({ handleModalMobile }) => {
             gap={2}
             size={"medium"}
           >
-            {data.name.charAt(0)}
+            {  userData.name ? userData.name.charAt(0) : data.name.charAt(0)}
           </Avatar>
-          <Text className={clsx(styles.nameUser)}>{data.name}</Text>
+          <Text className={clsx(styles.nameUser)}>{ userData.name ? userData.name : data.name}</Text>
         </div>
       ) : (
         <Button

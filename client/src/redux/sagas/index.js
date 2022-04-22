@@ -1,6 +1,6 @@
-import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
-import { createPost, getPostPublic, getUser } from "../../api";
-import { createPostActions, getPostAction, getUserAction } from "../actions";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { createPost, createUser, getPostPublic, getUser } from "../../api";
+import { createPostActions, getPostAction, authAction } from "../actions";
 
 const { createPostSuccess, createPostFailure } = createPostActions
 
@@ -30,9 +30,18 @@ function* createPostSaga(action) {
   }
 }
 
+function* authSaga(action) {
+  try {
+    yield put(authAction.authSuccess(action.payload))
+  } catch (error) {
+    yield put(authAction.authFailure(error))
+  }
+}
+
 function* rootSaga() {
-  yield takeLatest((action) => action.type === 'getPostRequest', getPostPublicSaga)
-  yield takeLatest(
+  yield takeEvery((action) => action.type === 'authRequest', authSaga)
+  yield takeEvery((action) => action.type === 'getPostRequest', getPostPublicSaga)
+  yield takeEvery(
     (action) =>
       action.type === 'createPostRequest' && Object.keys(action).length === 2,
     createPostSaga,

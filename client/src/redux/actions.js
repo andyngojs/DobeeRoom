@@ -26,3 +26,18 @@ export const getPostAction = {
     payload,
   }),
 };
+
+export const authAction = {
+  authRequest: (payload) => ({
+    type: 'authRequest',
+    payload
+  }),
+  authSuccess: (payload) => ({
+    type: 'authSuccess',
+    payload
+  }),
+  authFailure: (payload) => ({
+    type: 'authFailure',
+    payload
+  })
+}

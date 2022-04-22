@@ -5,21 +5,18 @@ import { auth } from "../firebase/config";
 import { getUser } from "../api";
 
 export default function useAuthen() {
-  const findUser = useCallback(
-    (res) =>
-      new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const userCurrent = res.data.find(
-              (item) => item.email === user.email,
-            );
-            resolve(userCurrent);
-          }
-          reject();
-        });
-      }),
-    [],
-  );
+  const findUser = (res) =>
+    new Promise((resolve, reject) => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userCurrent = res.data.find(
+            (item) => item.email === user.email,
+          );
+          resolve(userCurrent);
+        }
+        reject();
+      });
+    });
 
   const { data, isLoading } = useQuery(
     "users",
