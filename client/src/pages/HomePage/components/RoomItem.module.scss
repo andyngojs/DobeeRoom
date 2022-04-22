@@ -58,7 +58,7 @@
     margin-top: 8px;
     .label {
       width: 50%;
-      background-color: $primary-light-color;
+      background-color: $primary-color;
       border-radius: 4px;
       color: $white-color;
       font-size: 12px;
@@ -102,6 +102,7 @@
       text-align: center;
       padding-top: 20px;
       font-size: 22px;
+      cursor: pointer;
     }
   }
 }

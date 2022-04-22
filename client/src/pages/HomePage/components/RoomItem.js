@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate  } from 'react-router-dom'
 import clsx from "clsx";
 import moment from "moment";
 import { HeartOutlined } from "@ant-design/icons";
-import styles from "./RoomItem.module.scss";
+import styles from "./RoomItem.module.scss";  
 
 export default function RoomItem({ post }) {
+  const navigate = useNavigate()
+
+
+
   return (
     <div className={clsx("col", "c-12", "m-4", "l-3", styles.col)}>
       <div className={clsx(styles.wrapper)}>
@@ -14,7 +19,7 @@ export default function RoomItem({ post }) {
             alt=""
             className={clsx(styles.img)}
           />
-          <div className={clsx(styles.btnDetail)}>
+          <div className={clsx(styles.btnDetail)} onClick={ () => navigate(`/detail/${post._id}`) } >
             <span>Xem chi tiết</span>
           </div>
         </div>
@@ -24,7 +29,7 @@ export default function RoomItem({ post }) {
           <p className={clsx(styles.area)}>Diện tích: {post.area_room} m2 </p>
           <p className={clsx(styles.address)}>{post.address}</p>
           <h4 className={clsx(styles.cost)}>
-            Giá Phòng: {post.price_room} VNĐ
+            Giá Phòng: {post.price_room && formatVND(post.price_room)} VNĐ
           </h4>
           <div className={clsx(styles.cardFooter)}>
             <div className={clsx(styles.timeline)}>
@@ -44,3 +49,7 @@ export default function RoomItem({ post }) {
     </div>
   );
 }
+
+const formatVND = (amount) => {
+  return amount.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
