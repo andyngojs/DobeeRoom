@@ -28,7 +28,7 @@ const Modal = () => {
           <Link to={"/me/posts"}>Bài đăng của tôi</Link>
         </li>
         <li>
-          <Link to={"/me/bookmarks/post"}>Bài viết đã lưu của tôi</Link>
+          <Link to={"/me/bookmark/posts"}>Bài viết đã lưu</Link>
         </li>
         <Divider type={"horizontal"} style={{ margin: 6 }} />
         <div className={clsx(styles.btnHanle)} onClick={() => handleLogOut()}>

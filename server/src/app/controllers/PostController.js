@@ -1,4 +1,7 @@
+import lodash from "lodash";
 import {PostModel} from "../models/PostModel.js";
+import SavedListModel from "../models/SavedListModel.js";
+
 
 export async function getPost(req, res) {
     try {
@@ -53,12 +56,27 @@ export const getPostPending = async (req, res) => {
 export const getPostPublic = async (req, res) => {
     try {
         const postPublic = await PostModel.find({ status: 1 });
-        res.json({ message: 'successfully', data: postPublic });
+        const listSaved = await SavedListModel.find({ id_user: req.body.idUser })
+        const postPublicId = postPublic.map((post) => (post._id.toString()))
+        const postSavedId = listSaved.map((post) => post.saved_posts)
+        const postSaved = lodash.intersection(postPublicId, ...postSavedId)
+        const newPostPublic = postPublic.map((post) => {
+            if (postSaved.includes(post._id.toString()) && postSavedId.length > 0) {
+                return {
+                    ...post._doc,
+                    isSaved: true
+                }
+            } else {
+                return post
+            }
+        })
+        res.json({ message: 'successfully', data: newPostPublic });
     } catch (err) {
         res.json({ message: err });
     }
 }
 
+// [Feature] Trang Admin
 export const changeStatus = async (req, res) => {
     try {
         const newStatus = req.body.status

@@ -29,4 +29,9 @@ export const uploadFileMultiple = (payload) => {
     },
   });
 };
-export const getPostPublic = () => axios.get(`${URL_API}/api/posts/public`)
+export const getPostPublic = (payload) => axios.post(`${URL_API}/api/posts/public`, payload)
+
+export const getSavedList = (payload) => axios.post(`${URL_API}/api/saved_lists`, payload)
+export const savePost = (payload) => axios.post(`${URL_API}/api/saved_post`, payload)
+export const deleteSavedPost = (payload) => axios.post(`${URL_API}/api/delete_post`, payload)
+

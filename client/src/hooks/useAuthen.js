@@ -1,10 +1,13 @@
 import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { getUser } from "../api";
 
 export default function useAuthen() {
+  const navigate = useNavigate()
+
   const findUser = (res) =>
     new Promise((resolve, reject) => {
       onAuthStateChanged(auth, (user) => {
@@ -28,13 +31,14 @@ export default function useAuthen() {
         })
         .catch(() => {
           console.warn("[Warning] - User Not Login !");
+          navigate('/login')
         });
       return returnData;
     },
     {
       staleTime: 30 * 60 * 1000,
       cacheTime: 86400,
-      retry: false,
+      retry: 2,
     },
   );
   return {

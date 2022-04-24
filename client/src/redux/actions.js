@@ -14,8 +14,9 @@ export const createPostActions = {
 };
 
 export const getPostAction = {
-  getPostRequest: () => ({
+  getPostRequest: (payload) => ({
     type: "getPostRequest",
+    payload
   }),
   getPostSuccess: (payload) => ({
     type: "getPostSuccess",
@@ -26,6 +27,49 @@ export const getPostAction = {
     payload,
   }),
 };
+
+export const getSavedListAction = {
+  getSavedListRequest: (payload) => ({
+    type: 'getSavedListRequest',
+    payload
+  }),
+  getSavedListSuccess: (payload) => ({
+    type: 'getSavedListSuccess',
+    payload
+  }),
+  getSavedListFailure: () => ({
+    type: 'getSavedListFailure'
+  })
+}
+
+export const savePostAction = {
+  savePostRequest: (payload) => ({
+    type:'savePostRequest',
+    payload
+  }),
+  savePostSuccess: (payload) => ({
+    type: 'savePostSuccess',
+    payload
+  }),
+  savePostFailure: (payload) => ({
+    type: 'savePostFailure',
+    payload
+  })
+}
+
+export const deleteSavedPostAction = {
+  deleteSavedPostRequest: (payload) => ({
+    type: 'deleteSavedPostRequest',
+    payload
+  }),
+  deleteSavedPostSuccess: (payload) => ({
+    type: 'deleteSavedPostSuccess',
+    payload
+  }), 
+  deleteSavedPostFailure: () => ({
+    type: 'deleteSavedPostFailure'
+  })
+}
 
 export const authAction = {
   authRequest: (payload) => ({
@@ -41,3 +85,4 @@ export const authAction = {
     payload
   })
 }
+

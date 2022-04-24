@@ -25,7 +25,7 @@ router.get('/posts', getPost);
 router.post('/post', createPost);
 
 router.get('/posts/pending', getPostPending);
-router.get('/posts/public', getPostPublic);
+router.post('/posts/public', getPostPublic);
 router.post('/change-status', changeStatus);
 router.post('/delete-post', deletePost);
 

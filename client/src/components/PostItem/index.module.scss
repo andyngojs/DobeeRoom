@@ -1,0 +1,45 @@
+@import '../../sass/index.scss';
+
+.wrapper {
+  border: 2px solid $white-grey-color;
+  border-radius: 16px;
+  margin-top: 16px;
+  padding: 16px 24px 22px;
+
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .iconAction {
+      color: $gray-color;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+    }
+    .show {
+      display: block;
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    a {
+      color: $text-color;
+      text-decoration: none;
+    }
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+    color: $text-color;
+  }
+
+  .timeline {
+    font-size: 14px;
+    color: $primary-color;
+    font-weight: 600;
+  }
+}

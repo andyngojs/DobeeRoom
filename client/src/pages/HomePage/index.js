@@ -1,13 +1,21 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import styles from "./Home.module.scss";
 import Slideshow from "../../components/Slideshow";
 import RoomItem from "./components/RoomItem";
-import { postPublicSelector } from "../../redux/selectors";
+import { getUser, postPublicSelector } from "../../redux/selectors";
+import { getPostAction } from "../../redux/actions";
+import useAuthen from "../../hooks/useAuthen";
 
 export default function HomePage() {
+  const dispatch = useDispatch()
+  const { data } = useAuthen()
   const postPublic = useSelector(postPublicSelector)
+
+  useEffect(() => {
+    dispatch(getPostAction.getPostRequest({ idUser: data._id }))
+  }, [dispatch])
 
   return (
     <div style={{ maxWidth: "1920px" }}>

@@ -58,6 +58,11 @@ const postSchema = new mongoose.Schema({
     created_by: {
         type: String,
         required: true
+    },
+    isSaved: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 }, { timestamps: true })
 

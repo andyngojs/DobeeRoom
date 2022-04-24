@@ -1,9 +1,12 @@
 import express from 'express';
-import { getSavedLists } from '../app/controllers/SavedListController.js';
+import {deleteSavedPost, getSavedLists, savePost} from '../app/controllers/SavedListController.js';
 
 const router = express.Router()
 
-router.get('/saved_lists', getSavedLists);
+router.post('/saved_lists', getSavedLists);
+router.post('/saved_post', savePost);
+
+router.post('/delete_post', deleteSavedPost)
 
 export default router;
 
