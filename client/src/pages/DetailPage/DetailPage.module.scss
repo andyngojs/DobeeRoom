@@ -126,3 +126,11 @@
     background-color: $white-color;
   }
 }
+
+.btnAction {
+  width: 18%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

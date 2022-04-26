@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import clsx from "clsx";
 import styles from "./Main.module.scss";
 import Header from "../Header";
@@ -41,4 +41,4 @@ function Layout() {
   );
 }
 
-export default memo(Layout);
+export default Layout;

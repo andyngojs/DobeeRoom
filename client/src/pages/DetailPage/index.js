@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import moment from "moment";
 import { Avatar } from "antd";
@@ -11,8 +11,11 @@ import {
 } from "@ant-design/icons";
 import Slider from "react-slick";
 import styles from "./DetailPage.module.scss";
-import { postPublicSelector } from "../../redux/selectors";
 import { API_KEY_MAP } from "../../constants/env";
+import LikedBtn from "../../components/Button/LikedBtn";
+import { postPublicSelector } from "../../redux/selectors";
+import { getPostAction } from "../../redux/actions";
+import useAuthen from "../../hooks/useAuthen";
 
 function ButtonPrevArrow({ className, style, onClick }) {
   return (
@@ -39,13 +42,19 @@ function ButtonNextArrow({ className, style, onClick }) {
 }
 
 export default function DetailPage() {
-  const postPublic = useSelector(postPublicSelector);
+  const { data } = useAuthen();
   const { id } = useParams();
+  const dispatch = useDispatch()
+  const postPublic = useSelector(postPublicSelector);
   const [postItem, setPostItem] = useState({});
 
   useEffect(() => {
     document.title = postItem.title;
   }, [postItem]);
+
+  useEffect(() => {
+    dispatch(getPostAction.getPostRequest({ idUser: data && data._id }))
+  }, [dispatch])
 
   useEffect(() => {
     if (postPublic.length > 0) {
@@ -91,8 +100,8 @@ export default function DetailPage() {
             <Avatar size={46} icon={<UserOutlined />} />
             <div>
               <h2 className={clsx(styles.nameAuthor)}>
-                {" "}
-                {postItem.created_by}{" "}
+                
+                {postItem.created_by}
               </h2>
               <p className={clsx(styles.postedDay)}>
                 Ngày đăng:{"  "}
@@ -122,6 +131,10 @@ export default function DetailPage() {
             Giá phòng: {postItem.price_room && formatVND(postItem.price_room)}{" "}
             VND
           </h3>
+          <div className={clsx(styles.btnAction)} >
+            <LikedBtn post={postItem}  />
+            <span>Yêu Thích</span>
+          </div>
         </div>
       </div>
       <div className={clsx(styles.wrapper2)}>

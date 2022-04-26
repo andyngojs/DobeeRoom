@@ -29,9 +29,29 @@ export const uploadFileMultiple = (payload) => {
     },
   });
 };
-export const getPostPublic = (payload) => axios.post(`${URL_API}/api/posts/public`, payload)
 
-export const getSavedList = (payload) => axios.post(`${URL_API}/api/saved_lists`, payload)
-export const savePost = (payload) => axios.post(`${URL_API}/api/saved_post`, payload)
-export const deleteSavedPost = (payload) => axios.post(`${URL_API}/api/delete_post`, payload)
+export const getTotalPost = () => axios.get(`${URL_API}/api/posts`);
+export const getPostPublic = (payload) =>
+  axios.post(`${URL_API}/api/posts/public`, payload);
+export const getMyPostPending = (payload) =>
+  axios.post(`${URL_API}/api/posts/pending`, payload);
 
+export const getSavedList = (payload) =>
+  axios.post(`${URL_API}/api/saved_lists`, payload);
+export const savePost = (payload) =>
+  axios.post(`${URL_API}/api/saved_post`, payload);
+export const deleteSavedPost = (payload) =>
+  axios.post(`${URL_API}/api/delete_post`, payload);
+
+export const searchPost = ({
+  priceRoom, // number
+  areaRoom, // string
+  address: {
+    city,
+    district,
+    ward
+  }
+}) =>
+  axios.get(
+    `${URL_API}/api/search?p=${priceRoom}&area=${areaRoom}&city=${city}&dict=${district}&ward=${ward}`,
+  );

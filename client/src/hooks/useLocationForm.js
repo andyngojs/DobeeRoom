@@ -56,7 +56,7 @@ export default function useLocationForm(shouldFetchInitialLocation) {
         // selectedCity: newOption.find((c) => c.value === 297),
       });
     }
-  }, []);
+  }, [locationValue.cityLabel]);
 
   useEffect(async () => {
     if (!selectedCity) return;
@@ -65,7 +65,7 @@ export default function useLocationForm(shouldFetchInitialLocation) {
       selectedCity.value,
     );
     setLocationValue({ ...locationValue, districtOptions: options });
-  }, [selectedCity]);
+  }, [selectedCity])
 
   useEffect(async () => {
     if (!selectedDistrict) return;
@@ -78,41 +78,35 @@ export default function useLocationForm(shouldFetchInitialLocation) {
 
   const onCitySelect = useCallback(
     (option) => {
-      setLocationValue({
-        ...locationValue,
-        districtOptions: [],
-        wardOptions: [],
+      setLocationValue((prevState) => ({
+        ...prevState,
         selectedCity: option,
-        selectedDistrict: null,
-        selectedWard: null,
         cityLabel: option.label,
-      });
+      }));
     },
-    [locationValue],
+    [],
   );
 
   const onDistrictSelect = useCallback(
     (option) => {
-      setLocationValue({
-        ...locationValue,
-        wardOptions: [],
+      setLocationValue((prevState) => ({
+        ...prevState,
         selectedDistrict: option,
-        selectedWard: null,
         districtLabel: option.label,
-      });
+      }));
     },
-    [locationValue],
+    [],
   );
 
   const onWardSelect = useCallback(
     (option) => {
-      setLocationValue({
-        ...locationValue,
+      setLocationValue((prevState) => ({
+        ...prevState,
         selectedWard: option,
         wardLabel: option.label,
-      });
+      }));
     },
-    [locationValue],
+    [],
   );
 
   return {

@@ -2,6 +2,7 @@ const initState = {
   post: {},
   postPublic: [],
   message: "",
+  myPostPending: [],
 };
 
 const postSlice = (state = initState, action) => {
@@ -25,9 +26,16 @@ const postSlice = (state = initState, action) => {
       return {
         ...state,
       };
+    case "getPostPendingSuccess":
+      return {
+        ...state,
+        myPostPending: action.payload,
+      };
+    case "getPostPendingFailure":
+      return state;
     default:
       return state;
   }
 };
 
-export default postSlice
+export default postSlice;

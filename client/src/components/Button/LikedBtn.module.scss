@@ -1,0 +1,12 @@
+@import '../../sass/index.scss';
+
+.action {
+  flex: 1;
+  text-align: center;
+  padding-top: 0;
+  font-size: 22px;
+  cursor: pointer;
+}
+.isSaved {
+  color: $primary-color;
+}

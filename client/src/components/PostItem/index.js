@@ -6,12 +6,15 @@ import { DeleteFilled } from "@ant-design/icons";
 import styles from "./index.module.scss";
 
 export default function PostItem({ post, savedList, handleDelete }) {
-   
   return (
     <div className={clsx(styles.wrapper)}>
       <div className={styles.heading} >
         <h3>
-          <Link to={`/detail/${post._id}`}>{post.title} </Link>
+          {
+            post.status === 1 ? 
+              <Link to={`/detail/${post._id}`}>{post.title} </Link>
+            : post.title
+          }
         </h3>
         <span 
         className={clsx([styles.iconAction, { [styles.show]: savedList }])} 
@@ -23,7 +26,7 @@ export default function PostItem({ post, savedList, handleDelete }) {
         <p className={styles.description}> {post.description} </p>
         <p className={styles.timeline}>
           <span>
-            Ngày Đăng: {moment(post.createdAt).startOf("day").fromNow()}
+            Ngày Đăng: {moment(post.createdAt).startOf("hour").fromNow()}
           </span>
         </p>
       </div>

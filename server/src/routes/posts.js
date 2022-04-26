@@ -22,14 +22,19 @@ const store = multer.diskStorage({
 const upload = multer({ storage: store });
 
 router.get('/posts', getPost);
-router.post('/post', createPost);
 
-router.get('/posts/pending', getPostPending);
+// [API] Trang client
+router.post('/post', createPost);
+router.post('/upload', upload.single('file-single'), uploadFile);
+router.post('/uploads', upload.array('file-multiple', 12), uploadFiles);
+
+router.post('/posts/pending', getPostPending);
+
 router.post('/posts/public', getPostPublic);
+
+// [API] Trang Admin
 router.post('/change-status', changeStatus);
 router.post('/delete-post', deletePost);
 
-router.post('/upload', upload.single('file-single'), uploadFile);
-router.post('/uploads', upload.array('file-multiple', 12), uploadFiles);
 
 export default router;

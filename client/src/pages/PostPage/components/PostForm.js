@@ -157,18 +157,18 @@ function LocationForm(props) {
             placeholder="Quận/Huyện"
             key={`districtId_${selectedDistrict?.value}`}
             isDisabled={districtOptions.length === 0}
+            defaultValue={selectedDistrict}
             options={districtOptions}
             onChange={(option) => onDistrictSelect(option)}
-            defaultValue={selectedDistrict}
           />
           <Select
             className={clsx(styles.selectItem)}
             placeholder="Phường/Xã"
             key={`wardId_${selectedWard?.value}`}
             isDisabled={wardOptions.length === 0}
-            options={wardOptions}
-            onChange={(option) => onWardSelect(option)}
             defaultValue={selectedWard}
+            onChange={(option) => onWardSelect(option)}
+            options={wardOptions}
           />
         </div>
         {errors.addressHC && selectedDistrict !== null && (

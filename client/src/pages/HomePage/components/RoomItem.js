@@ -1,25 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import clsx from "clsx";
 import moment from "moment";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import styles from "./RoomItem.module.scss";
-import { savePostAction } from "../../../redux/actions";
-import useAuthen from "../../../hooks/useAuthen";
+import LikedBtn from "../../../components/Button/LikedBtn";
 
 export default function RoomItem({ post }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { data } = useAuthen();
-  const [isSaved, setIsSaved] = useState(false)
-
-  const handleSavePost = () => {
-    dispatch(
-      savePostAction.savePostRequest({ id_user: data._id, id_post: post._id }),
-    );
-    setIsSaved(true)
-  };
 
   return (
     <div className={clsx("col", "c-12", "m-4", "l-3", styles.col)}>
@@ -56,19 +43,7 @@ export default function RoomItem({ post }) {
                 {post.created_by}
               </p>
             </div>
-            {post.isSaved || isSaved ? (
-              <div className={clsx(styles.action, styles.isSaved)}>
-                <HeartFilled />
-              </div>
-            ) : (
-              <div
-                className={clsx(styles.action)}
-                onClick={handleSavePost}
-                alt="Lưu bài viết"
-              >
-                <HeartOutlined />
-              </div>
-            )}
+            <LikedBtn post={post} />
           </div>
         </div>
       </div>

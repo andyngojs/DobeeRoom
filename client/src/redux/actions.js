@@ -1,3 +1,7 @@
+export const logOutAction = {
+  type: 'LOG_OUT'
+}
+
 export const createPostActions = {
   createPostRequest: (payload) => ({
     type: "createPostRequest",
@@ -13,6 +17,7 @@ export const createPostActions = {
   }),
 };
 
+// Trang Home
 export const getPostAction = {
   getPostRequest: (payload) => ({
     type: "getPostRequest",
@@ -86,3 +91,18 @@ export const authAction = {
   })
 }
 
+// [FEATURE] My Post
+export const getPostPending = {
+  getPostPendingRequest: (payload) => ({
+    type: 'getPostPendingRequest',
+    payload
+  }), 
+  getPostPendingSuccess: (payload) => ({
+    type: 'getPostPendingSuccess',
+    payload
+  }),
+  getPostPendingFailure: (payload) => ({
+    type: 'getPostPendingFailure',
+    payload
+  })
+}

@@ -5,15 +5,19 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { clearLocal } from "../../utils/LocalStorage";
 import styles from "./Header.module.scss";
+import { useDispatch } from "react-redux";
+import { logOutAction } from "../../redux/actions";
 
 const { Text } = Typography;
 
 const Modal = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleLogOut = () => {
     signOut(auth).then(() => {
       clearLocal();
+      dispatch(logOutAction)
       navigate("/login");
     });
   };

@@ -1,8 +1,9 @@
 import lodash from "lodash";
 import {PostModel} from "../models/PostModel.js";
 import SavedListModel from "../models/SavedListModel.js";
+import {UserModel} from "../models/UserModel.js";
 
-
+// Trang client và trang admin
 export async function getPost(req, res) {
     try {
         const posts = await PostModel.find();
@@ -12,6 +13,7 @@ export async function getPost(req, res) {
     }
 }
 
+// trang client
 export async function createPost(req, res) {
     try {
         const newPost = req.body;
@@ -47,7 +49,7 @@ export function uploadFiles(req, res) {
 
 export const getPostPending = async (req, res) => {
     try {
-        const postPending = await PostModel.find({ status: 0 });
+        const postPending = await PostModel.find({ status: 0, created_by: req.body.idUser });
         res.json({ message: 'successfully', data: postPending });
     } catch (err) {
         res.json({ message: err });
@@ -56,18 +58,26 @@ export const getPostPending = async (req, res) => {
 export const getPostPublic = async (req, res) => {
     try {
         const postPublic = await PostModel.find({ status: 1 });
+        const users = await UserModel.find()
         const listSaved = await SavedListModel.find({ id_user: req.body.idUser })
         const postPublicId = postPublic.map((post) => (post._id.toString()))
         const postSavedId = listSaved.map((post) => post.saved_posts)
         const postSaved = lodash.intersection(postPublicId, ...postSavedId)
         const newPostPublic = postPublic.map((post) => {
+            const author = users.find(item => item._id.toString() === post.created_by )
             if (postSaved.includes(post._id.toString()) && postSavedId.length > 0) {
                 return {
                     ...post._doc,
-                    isSaved: true
+                    isSaved: true,
+                    created_by: author.name,
+                    created_byID: author._id.toString()
                 }
             } else {
-                return post
+                return {
+                    ...post._doc,
+                    created_by: author.name,
+                    created_byID: author._id.toString()
+                }
             }
         })
         res.json({ message: 'successfully', data: newPostPublic });

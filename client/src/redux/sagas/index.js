@@ -2,8 +2,10 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   createPost,
   deleteSavedPost,
+  getMyPostPending,
   getPostPublic,
   getSavedList,
+  getTotalPost,
   getUser,
   savePost,
 } from "../../api";
@@ -14,6 +16,8 @@ import {
   savePostAction,
   getSavedListAction,
   deleteSavedPostAction,
+  getPostPending,
+  getTotalPostAction,
 } from "../actions";
 
 const { createPostSuccess, createPostFailure } = createPostActions;
@@ -21,15 +25,7 @@ const { createPostSuccess, createPostFailure } = createPostActions;
 function* getPostPublicSaga(action) {
   try {
     const res = yield call(getPostPublic, action.payload);
-    const user = yield call(getUser);
-    const posts = res.data.data.map((post) => {
-      const authorPost = user.data.find((item) => item._id === post.created_by);
-      return {
-        ...post,
-        created_by: authorPost.name,
-      };
-    });
-    yield put(getPostAction.getPostSuccess(posts));
+    yield put(getPostAction.getPostSuccess(res.data.data));
   } catch (error) {
     yield put(getPostAction.getPostFailure(error));
   }
@@ -55,7 +51,9 @@ function* authSaga(action) {
 function* getSavedListSaga(action) {
   try {
     const res = yield call(getSavedList, action.payload);
-    yield put(getSavedListAction.getSavedListSuccess(res.data.saved_list));
+    if (res.status === 200) {
+      yield put(getSavedListAction.getSavedListSuccess(res.data.saved_list));
+    }
   } catch (error) {
     console.log(error);
     yield put(getSavedListAction.getSavedListFailure());
@@ -82,6 +80,15 @@ function* deleteSavedPostSaga(action) {
   }
 }
 
+function* getPostPendingSaga(action) {
+  try {
+    const res = yield call(getMyPostPending, action.payload);
+    yield put(getPostPending.getPostPendingSuccess(res.data.data));
+  } catch (e) {
+    yield put(getPostPending.getPostPendingFailure());
+  }
+}
+
 function* rootSaga() {
   yield takeEvery((action) => action.type === "authRequest", authSaga);
   yield takeEvery(
@@ -94,7 +101,8 @@ function* rootSaga() {
     createPostSaga,
   );
   yield takeEvery(
-    (action) => action.type === "getSavedListRequest" && Object.keys(action).length === 2,
+    (action) =>
+      action.type === "getSavedListRequest" && Object.keys(action).length === 2,
     getSavedListSaga,
   );
   yield takeEvery(
@@ -107,6 +115,12 @@ function* rootSaga() {
       action.type === "deleteSavedPostRequest" &&
       Object.keys(action).length === 2,
     deleteSavedPostSaga,
+  );
+  yield takeEvery(
+    (action) =>
+      action.type === "getPostPendingRequest" &&
+      Object.keys(action).length === 2,
+    getPostPendingSaga,
   );
 }
 

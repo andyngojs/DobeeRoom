@@ -1,0 +1,49 @@
+@import "../../sass/index.scss";
+
+.container {
+  margin-bottom: 48px;
+  padding: 0;
+  margin-left: 46px;
+  .containerTop {
+    margin-bottom: 48px;
+    .heading {
+      font-size: 28px;
+      font-weight: 900;
+      color: $text-color;
+      margin: 18px 0;
+    }
+  }
+  .tabWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid $white-grey-color;
+  }
+  .headingTab {
+    margin-top: 16px;
+    width: 140px;
+    cursor: pointer;
+    .headingTabName {
+      font-size: 16px;
+      font-weight: 400;
+      color: $gray-color;
+      padding-bottom: 14px;
+      text-align: center;
+      text-decoration: none;
+    }
+    &:hover {
+      .headingTabName {
+        color: $text-color;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .active {
+    border-bottom: 2px solid $text-color;
+    .headingTabName {
+      color: $text-color;
+      font-weight: 700;
+    }
+  }
+}

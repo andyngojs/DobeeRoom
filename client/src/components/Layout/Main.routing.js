@@ -6,6 +6,7 @@ import AboutPage from "../../pages/AboutPage";
 import PostPage from "../../pages/PostPage";
 import DetailPage from "../../pages/DetailPage";
 import SavedpostPage from "../../pages/SavedpostPage";
+import MyPost from "../../pages/MyPost";
 
 export default function MainRouting() {
   return (
@@ -17,6 +18,7 @@ export default function MainRouting() {
       <Route path={"/about"} element={<AboutPage />} />
       <Route path={"/new-post"} element={<PostPage />} />
       <Route path={'/me/bookmark/posts'} element={ <SavedpostPage /> } />
+      <Route path={'/me/posts'} element={ <MyPost /> } />
     </Routes>
   );
 }

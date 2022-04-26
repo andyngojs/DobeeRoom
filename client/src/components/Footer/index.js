@@ -3,8 +3,10 @@ import clsx from "clsx";
 import styles from "./Footer.module.scss";
 import "../../sass/index.scss";
 import logo from "../../assets/images/iconRound.png";
+import Config from "../../config";
 
 function Footer() {
+  const config = new Config()
   return (
     <div className={clsx(styles.wrapper)}>
       <div className="grid wide">
@@ -24,7 +26,7 @@ function Footer() {
         <div className="row">
           <div className="col c-12 m-12 l-12">
             <p className={clsx(styles.textFooter)}>
-              © 2022 DobeeRoom - Copyright by AndyngoJs.
+              © 2022 DobeeRoom. { config.getVersion() }
             </p>
           </div>
         </div>

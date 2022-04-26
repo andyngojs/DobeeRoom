@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Avatar, Button, Typography } from "antd";
@@ -68,4 +68,4 @@ const Header = ({ handleModalMobile }) => {
   );
 };
 
-export default Header;
+export default memo(Header);

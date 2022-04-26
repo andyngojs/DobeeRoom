@@ -12,6 +12,9 @@ export default function SavedpostPage() {
   const { data } = useAuthen()
   const savedPosts = useSelector(getSavedPostSelector)
 
+  useEffect(() => {
+    document.title = 'Bài viết đã lưu | DobeeRoom'
+  }, [])
   
   useEffect(() => {
     dispatch(getSavedListAction.getSavedListRequest({ idUser: data._id }))
@@ -22,7 +25,7 @@ export default function SavedpostPage() {
   }, [])
 
   return (
-    <div className={clsx(styles.container)} >
+    <div className={clsx(styles.container)} >.
       <div className={styles.containerTop} >
         <h1 className={clsx(styles.heading)} >Bài đăng đã lưu</h1>
       </div>
