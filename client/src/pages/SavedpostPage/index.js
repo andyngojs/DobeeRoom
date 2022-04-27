@@ -15,6 +15,10 @@ export default function SavedpostPage() {
   useEffect(() => {
     document.title = 'Bài viết đã lưu | DobeeRoom'
   }, [])
+
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
   
   useEffect(() => {
     dispatch(getSavedListAction.getSavedListRequest({ idUser: data._id }))

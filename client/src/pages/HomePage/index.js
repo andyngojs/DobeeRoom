@@ -28,15 +28,11 @@ export default function HomePage() {
           <h1 className={clsx(styles.heading)}>Thông tin phòng trọ</h1>
         </div>
         <div className={clsx(styles.scrollList, "grid")}>
-          {data._id ? (
             <div className={clsx("row", "wide", styles.row)}>
               {postPublic.map((item, index) => (
                 <RoomItem post={item} key={index} />
               ))}
             </div>
-          ) : (
-            <Skeleton active />
-          )}
         </div>
       </div>
     </div>

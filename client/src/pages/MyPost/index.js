@@ -38,7 +38,6 @@ export default function MyPost() {
   }, [])
 
   useEffect(() => {
-    console.log(postPublic)
     const myPost = postPublic.filter(post => post.created_byID === data._id)
     setMyPostPublic(myPost)
   }, [postPublic])

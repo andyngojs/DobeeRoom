@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
@@ -53,6 +54,10 @@ export default function DetailPage() {
   }, [postItem]);
 
   useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
+
+  useEffect(() => {
     dispatch(getPostAction.getPostRequest({ idUser: data && data._id }))
   }, [dispatch])
 
@@ -100,8 +105,9 @@ export default function DetailPage() {
             <Avatar size={46} icon={<UserOutlined />} />
             <div>
               <h2 className={clsx(styles.nameAuthor)}>
-                
-                {postItem.created_by}
+                <Link to={`/user/${postItem.created_byID}`} >
+                  {postItem.created_by}
+                </Link>
               </h2>
               <p className={clsx(styles.postedDay)}>
                 Ngày đăng:{"  "}
