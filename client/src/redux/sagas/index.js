@@ -7,6 +7,7 @@ import {
   getSavedList,
   getTotalPost,
   getUser,
+  getUserByID,
   savePost,
 } from "../../api";
 import {
@@ -18,6 +19,7 @@ import {
   deleteSavedPostAction,
   getPostPending,
   getTotalPostAction,
+  getUserByIDAction,
 } from "../actions";
 
 const { createPostSuccess, createPostFailure } = createPostActions;
@@ -89,6 +91,16 @@ function* getPostPendingSaga(action) {
   }
 }
 
+function* getUserIDSaga(action) {
+  try {
+    const res = yield call(getUserByID, action.payload);
+    yield put(getUserByIDAction.getUserIDSuccess(res.data.user));
+  } catch (error) {
+    console.log(error)
+    yield put(getUserByIDAction.getUserIDFailure())
+  }
+}
+
 function* rootSaga() {
   yield takeEvery((action) => action.type === "authRequest", authSaga);
   yield takeEvery(
@@ -122,6 +134,9 @@ function* rootSaga() {
       Object.keys(action).length === 2,
     getPostPendingSaga,
   );
+  yield takeEvery((action) =>
+  action.type === "getUserIDRequest" &&
+  Object.keys(action).length === 2, getUserIDSaga)
 }
 
 export default rootSaga;

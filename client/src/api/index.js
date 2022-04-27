@@ -46,12 +46,10 @@ export const deleteSavedPost = (payload) =>
 export const searchPost = ({
   priceRoom, // number
   areaRoom, // string
-  address: {
-    city,
-    district,
-    ward
-  }
+  address: { city, district, ward },
 }) =>
   axios.get(
     `${URL_API}/api/search?p=${priceRoom}&area=${areaRoom}&city=${city}&dict=${district}&ward=${ward}`,
   );
+
+export const getUserByID = (payload) => axios.post(`${URL_API}/api/getUser`, payload)

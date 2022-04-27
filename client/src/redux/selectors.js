@@ -3,5 +3,6 @@ export const postPublicSelector = (state) => state.post.postPublic
 
 export const getSavedPostSelector = (state) => state.savedPost.postSaved
 
-
 export const myPostPendingSelector = (state) => state.post.myPostPending
+
+export const getUserCurrSelector = (state) => state.user.userCurr

@@ -20,3 +20,12 @@ export const createUser = async (req, res) => {
                 await user.save();
         }
 };
+
+export const getUserByID = async (req, res) => {
+        try {
+                const user = await UserModel.findOne({ _id: req.body.idUser })
+                res.status(200).json({ message: 'success', user: user })
+        } catch (e) {
+                res.status(500).json({ message: 'Failure' })
+        }
+}

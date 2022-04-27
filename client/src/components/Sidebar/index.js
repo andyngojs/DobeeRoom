@@ -4,12 +4,14 @@ import styles from "./Sidebar.module.scss";
 import sidebarNav from "../../constants/sidebarNav";
 import TabItem from "./TabItem";
 import { set, get } from "../../utils/LocalStorage";
+import useAuthen from "../../hooks/useAuthen";
 
 const Siderbar = ({ show }) => {
   const [indexActive, setIndexActive] = useState(
     !!get("indexActive") ? Number(get("indexActive")) : 0,
   );
-
+  const { data } = useAuthen()
+ 
   useEffect(() => {
     set("indexActive", indexActive);
   }, [indexActive]);
@@ -29,6 +31,7 @@ const Siderbar = ({ show }) => {
             active={indexActive === index}
             index={index}
             handleSelected={() => handleSelected(index, item)}
+            idUser={data._id}
           />
         ))}
       </ul>

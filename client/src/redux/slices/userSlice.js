@@ -1,17 +1,24 @@
-const initState = {}
+const initState = {
+  newUser: {},
+  userCurr: {}
+}
 
 export default function userSlice(state = initState, action) {
   switch (action.type) {
     case 'authSuccess': 
     return {
       ...state,
-      ...action.payload
+      newUser: { ...action.payload }
     }
     case 'authFailure':
+      return state
+    case 'getUserIDSuccess': 
       return {
         ...state,
-        ...action.payload
+        userCurr: action.payload 
       }
+    case 'getUserIDFailure':
+      return state
     default: 
     return state
   }

@@ -106,3 +106,18 @@ export const getPostPending = {
     payload
   })
 }
+
+// Trang user
+export const getUserByIDAction = {
+  getUserIDRequest: (payload) => ({
+    type: 'getUserIDRequest',
+    payload
+  }),
+  getUserIDSuccess: (payload) => ({
+    type: 'getUserIDSuccess',
+    payload
+  }),
+  getUserIDFailure: () => ({
+    type: 'getUserIDFailure'
+  })
+}
