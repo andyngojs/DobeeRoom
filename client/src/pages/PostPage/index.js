@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import styles from "./NewPost.module.scss";
 import clsx from "clsx";
 import useLocationForm from "../../hooks/useLocationForm";
 import { utilitiesData } from "../../constants/utilitiesForm";
-import Validator from "../../utils/validator";
 import useAuthen from "../../hooks/useAuthen";
 import { createPostActions } from "../../redux/actions";
 import { uploadFileMultiple, uploadFileSingle } from "../../api";
@@ -27,99 +26,19 @@ function PostPage() {
     phone: "",
     roomType: "",
     address: "",
-    addressHC: "",
     description: "",
     utilities: [],
     thumbnailImg: "",
     detailImgs: [],
+    cityName: '',
+    districtName: '',
+    wardName: ''
   });
-  const [errors, setErrors] = useState({});
-  const [errorTitle, setErrorTitle] = useState({});
   const [isPosted, setIsPosted] = useState(false);
 
   const regexNumber = useMemo(() => {
     return /^-?\d*(\.\d*)?$/;
   }, []);
-
-  const rules = [
-    {
-      field: "title",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập tiêu đề.",
-    },
-    {
-      field: "roomType",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa chọn loại phòng trọ.",
-    },
-    {
-      field: "address",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập địa chỉ phòng trọ.",
-    },
-    {
-      field: "addressHC",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập địa chỉ phòng trọ.",
-    },
-    {
-      field: "roomPrice",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập giá phòng trọ.",
-    },
-    {
-      field: "electronPrice",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập giá tiền điện.",
-    },
-    {
-      field: "waterPrice",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập giá tiền nước.",
-    },
-    {
-      field: "areaRoom",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập diện tích phòng.",
-    },
-    {
-      field: "phone",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập số điện thoại chủ phòng trọ.",
-    },
-    {
-      field: "description",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa nhập mô tả chi tiết về phòng trọ.",
-    },
-    {
-      field: "thumbnailImg",
-      method: "isEmpty",
-      validWhen: false,
-      message: "❗Bạn chưa tải ảnh nổi bật.",
-    },
-  ];
-
-  const validator = new Validator(rules);
-
-  const { cityLabel, districtLabel, wardLabel } = locationValue;
-
-  useEffect(() => {
-    setState({
-      ...state,
-      addressHC: `${wardLabel}, ${districtLabel}, ${cityLabel}`,
-    });
-  }, [districtLabel, wardLabel, cityLabel]);
 
   useEffect(() => {
     if (state.title.length > 1) {
@@ -129,25 +48,55 @@ function PostPage() {
     }
   }, [state.title]);
 
+  const handleTitleChange = useCallback((e) =>
+    setState((prevState) => ({
+      ...prevState,
+      title: e.target.value,
+    })), [])
+
   const handleTypeRoom = useCallback(
     (e) => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         roomType: e.value,
-      });
+      }));
     },
-    [state],
+    [],
   );
 
   const handleAddressChange = useCallback(
     (e) => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         address: e.target.value,
-      });
+      }));
     },
-    [state],
+    [],
   );
+
+  const handleCityChange = useCallback((option) => {
+    onCitySelect(option)
+    setState((prevState) => ({
+      ...prevState,
+      cityName: option.label
+    }))
+  }, [])
+
+  const handleDistrictChange = useCallback((option) => {
+    onDistrictSelect(option)
+    setState((prevState) => ({
+      ...prevState,
+      districtName: option.label
+    }))
+  }, [])
+
+  const handleWardChange = useCallback((option) => {
+    onWardSelect(option)
+    setState((prevState) => ({
+      ...prevState,
+      wardName: option.label
+    }))
+  }, [])
 
   const handleRoomPrice = useCallback(
     (e) => {
@@ -156,13 +105,13 @@ function PostPage() {
         e.target.value === "" ||
         e.target.value === "-"
       ) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           roomPrice: e.target.value,
-        });
+        }));
       }
     },
-    [state, regexNumber],
+    [],
   );
 
   const handleElectronPrice = useCallback(
@@ -172,13 +121,13 @@ function PostPage() {
         e.target.value === "" ||
         e.target.value === "-"
       ) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           electronPrice: e.target.value,
-        });
+        }));
       }
     },
-    [state, regexNumber],
+    [],
   );
 
   const handleWaterPrice = useCallback(
@@ -188,13 +137,13 @@ function PostPage() {
         e.target.value === "" ||
         e.target.value === "-"
       ) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           waterPrice: e.target.value,
-        });
+        }));
       }
     },
-    [state, regexNumber],
+    [],
   );
 
   const handlePhoneChange = useCallback(
@@ -204,13 +153,13 @@ function PostPage() {
         e.target.value === "" ||
         e.target.value === "-"
       ) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           phone: e.target.value,
-        });
+        }));
       }
     },
-    [state, regexNumber],
+    [],
   );
 
   const handleAreaRoom = useCallback(
@@ -220,44 +169,44 @@ function PostPage() {
         e.target.value === "" ||
         e.target.value === "-"
       ) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           areaRoom: e.target.value,
-        });
+        }));
       }
     },
-    [state, regexNumber],
+    [],
   );
 
   const handleDescriptionChange = useCallback(
     (e) => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         description: e.target.value,
-      });
+      }));
     },
-    [state],
+    [],
   );
 
   const handleAllCheck = useCallback(
     (e) => {
       setIsCheckAll(e.target.checked);
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         utilities: e.target.checked ? utilitiesData : [],
-      });
+      }));
     },
-    [state],
+    [],
   );
 
   const handleCheckUtil = useCallback(
     (e) => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         utilities: e,
-      });
+      }));
     },
-    [state],
+    [],
   );
 
   const handleUploadThumbnail = useCallback(
@@ -266,13 +215,13 @@ function PostPage() {
       const fd = new FormData();
       fd.append("file-single", file);
       await uploadFileSingle(fd).then((res) => {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           thumbnailImg: res.data.data,
-        });
+        }));
       });
     },
-    [state],
+    [],
   );
 
   const handleUploadMulti = useCallback(
@@ -282,24 +231,23 @@ function PostPage() {
         fd.append("file-multiple", e.target.files[i]);
       }
       await uploadFileMultiple(fd).then((res) => {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           detailImgs: res.data.data,
-        });
+        }));
       });
     },
-    [state],
+    [],
   );
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      setErrors(validator.validate(state));
       dispatch(
         createPostActions.createPostRequest({
           title: state.title,
           type_room: state.roomType,
-          address: state.addressHC,
+          address: `${state.wardName}, ${state.districtName}, ${state.cityName}`,
           detail_address: state.address,
           price_room: state.roomPrice,
           price_electron: state.electronPrice,
@@ -323,11 +271,13 @@ function PostPage() {
         phone: "",
         roomType: "",
         address: "",
-        addressHC: "",
         description: "",
         utilities: [],
         thumbnailImg: "",
         detailImgs: [],
+        cityName: '',
+        districtName: '',
+        wardName: ''
       });
       setIsPosted(true);
     },
@@ -338,7 +288,7 @@ function PostPage() {
     if (isPosted) {
       toast.success("Đã đăng bài thành công!", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -347,9 +297,13 @@ function PostPage() {
       });
     }
     return () => {
-      setIsPosted(false);
+      if (isPosted) {
+        setIsPosted(false);
+      }
     };
   }, [isPosted]);
+
+  console.log(state)
 
   const values = {
     state,
@@ -359,9 +313,6 @@ function PostPage() {
     handlePhoneChange,
     handleWaterPrice,
     locationValue,
-    onCitySelect,
-    onDistrictSelect,
-    onWardSelect,
     handleTypeRoom,
     handleAddressChange,
     handleDescriptionChange,
@@ -370,7 +321,9 @@ function PostPage() {
     isCheckAll,
     handleUploadThumbnail,
     handleUploadMulti,
-    errors,
+    handleCityChange,
+    handleDistrictChange,
+    handleWardChange
   };
 
   return (
@@ -386,27 +339,14 @@ function PostPage() {
         draggable
         pauseOnHover
       />
-      <form
-        className={clsx(styles.postForm)}
-        encType="multipart/form-data"
-        autoComplete="false"
-      >
+      <form className={clsx(styles.postForm)} encType="multipart/form-data" autoComplete="false">
         <input
           value={state.title}
           type={"text"}
           placeholder="Tiêu đề"
           className={clsx(styles.headingInput)}
-          onChange={(e) =>
-            setState({
-              ...state,
-              title: e.target.value,
-            })
-          }
-          onBlur={() => setErrorTitle(validator.validate(state))}
+          onChange={handleTitleChange}
         />
-        {errorTitle.title && (
-          <span className={clsx(styles.error)}>{errorTitle.title}</span>
-        )}
         <PostForm value={values} />
         <Divider />
         <button
@@ -421,4 +361,4 @@ function PostPage() {
   );
 }
 
-export default memo(PostPage);
+export default PostPage;

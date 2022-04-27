@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import clsx from "clsx";
 import { Input, Row, Col, Checkbox } from "antd";
 import Select from "react-select";
@@ -15,9 +15,6 @@ function PostForm({ value }) {
     handlePhoneChange,
     handleWaterPrice,
     locationValue,
-    onCitySelect,
-    onDistrictSelect,
-    onWardSelect,
     handleTypeRoom,
     handleAddressChange,
     handleDescriptionChange,
@@ -26,7 +23,9 @@ function PostForm({ value }) {
     isCheckAll,
     handleUploadThumbnail,
     handleUploadMulti,
-    errors,
+    handleCityChange,
+    handleDistrictChange,
+    handleWardChange
   } = value;
 
   const { roomType, description, utilities } = state;
@@ -44,18 +43,14 @@ function PostForm({ value }) {
             placeholder="Chọn loại phòng trọ"
             onChange={handleTypeRoom}
           />
-          {errors.roomType && (
-            <span className={clsx(styles.error)}>{errors.roomType}</span>
-          )}
         </Col>
         <LocationForm
           locationValue={locationValue}
-          onCitySelect={onCitySelect}
-          onDistrictSelect={onDistrictSelect}
-          onWardSelect={onWardSelect}
           handleAddressChange={handleAddressChange}
           state={state}
-          errors={errors}
+          handleCityChange={handleCityChange}
+          handleDistrictChange={handleDistrictChange}
+          handleWardChange={handleWardChange}
         />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -66,7 +61,6 @@ function PostForm({ value }) {
           handlePhoneChange={handlePhoneChange}
           handleAreaRoom={handleAreaRoom}
           state={state}
-          errors={errors}
         />
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -97,9 +91,6 @@ function PostForm({ value }) {
             rows={6}
             name="description"
           />
-          {errors.description && (
-            <span className={clsx(styles.error)}>{errors.description}</span>
-          )}
         </Col>
       </Row>
       <Row gutter={16} className={clsx(styles.rowForm)}>
@@ -107,7 +98,6 @@ function PostForm({ value }) {
           handleUploadMulti={handleUploadMulti}
           handleUploadThumbnail={handleUploadThumbnail}
           state={state}
-          errors={errors}
         />
       </Row>
     </div>
@@ -119,12 +109,11 @@ export default memo(PostForm);
 function LocationForm(props) {
   const {
     locationValue,
-    onCitySelect,
-    onDistrictSelect,
-    onWardSelect,
     handleAddressChange,
     state,
-    errors,
+    handleCityChange,
+    handleWardChange,
+    handleDistrictChange
   } = props;
 
   const {
@@ -136,7 +125,7 @@ function LocationForm(props) {
     selectedWard,
   } = locationValue;
 
-  const { address, addressHC } = state;
+  const { address } = state;
 
   return (
     <>
@@ -150,7 +139,7 @@ function LocationForm(props) {
             key={`cityId_${selectedCity?.value}`}
             isDisabled={cityOptions.length === 0}
             options={cityOptions}
-            onChange={(option) => onCitySelect(option)}
+            onChange={handleCityChange}
           />
           <Select
             className={clsx(styles.selectItem)}
@@ -159,7 +148,7 @@ function LocationForm(props) {
             isDisabled={districtOptions.length === 0}
             defaultValue={selectedDistrict}
             options={districtOptions}
-            onChange={(option) => onDistrictSelect(option)}
+            onChange={handleDistrictChange}
           />
           <Select
             className={clsx(styles.selectItem)}
@@ -167,13 +156,10 @@ function LocationForm(props) {
             key={`wardId_${selectedWard?.value}`}
             isDisabled={wardOptions.length === 0}
             defaultValue={selectedWard}
-            onChange={(option) => onWardSelect(option)}
+            onChange={handleWardChange}
             options={wardOptions}
           />
         </div>
-        {errors.addressHC && selectedDistrict !== null && (
-          <span className={clsx(styles.error)}>{errors.addressHC}</span>
-        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label htmlFor="detailAddress" className={clsx(styles.headingLabel)}>
@@ -186,15 +172,10 @@ function LocationForm(props) {
           onChange={handleAddressChange}
           name="address"
         />
-        {errors.address && (
-          <span className={clsx(styles.error)}>{errors.address}</span>
-        )}
       </Col>
     </>
   );
 }
-
-memo(LocationForm);
 
 function InformationForm(props) {
   const {
@@ -204,7 +185,6 @@ function InformationForm(props) {
     handlePhoneChange,
     handleRoomPrice,
     handleWaterPrice,
-    errors,
   } = props;
 
   const { roomPrice, electronPrice, waterPrice, areaRoom, phone } = state;
@@ -221,9 +201,6 @@ function InformationForm(props) {
           onChange={handleRoomPrice}
           placeholder="Nhập giá phòng..."
         />
-        {errors.roomPrice && (
-          <span className={clsx(styles.error)}>{errors.roomPrice}</span>
-        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label htmlFor="electronPrice" className={clsx(styles.headingLabel)}>
@@ -244,12 +221,6 @@ function InformationForm(props) {
             placeholder="Nhập giá nước"
             onChange={handleWaterPrice}
           />
-          {errors.electronPrice && errors.waterPrice && (
-            <>
-              <span className={clsx(styles.error)}>{errors.electronPrice}</span>
-              <span className={clsx(styles.error)}>{errors.waterPrice}</span>
-            </>
-          )}
         </Input.Group>
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
@@ -263,9 +234,6 @@ function InformationForm(props) {
           value={areaRoom}
           onChange={handleAreaRoom}
         />
-        {errors.areaRoom && (
-          <span className={clsx(styles.error)}>{errors.areaRoom}</span>
-        )}
       </Col>
       <Col span={6} className={clsx(styles.boxForm)}>
         <label className={clsx(styles.headingLabel)} htmlFor="phone">
@@ -277,18 +245,13 @@ function InformationForm(props) {
           onChange={handlePhoneChange}
           placeholder="Nhập số điện thoại"
         />
-        {errors.phone && (
-          <span className={clsx(styles.error)}>{errors.phone}</span>
-        )}
       </Col>
     </>
   );
 }
 
-memo(InformationForm);
-
 function PhotoForm(props) {
-  const { handleUploadThumbnail, state, handleUploadMulti, errors } = props;
+  const { handleUploadThumbnail, state, handleUploadMulti } = props;
 
   const { thumbnailImg, detailImgs } = state;
 
@@ -303,9 +266,6 @@ function PhotoForm(props) {
           placeholder="Chọn ảnh chi tiết"
           name="file-single"
         />
-        {errors.thumbnailImg && (
-          <span className={clsx(styles.error)}>{errors.thumbnailImg}</span>
-        )}
         <div className={clsx(styles.previewImg)}>
           <img
             src={`http://localhost:5000/${thumbnailImg}`}
@@ -337,5 +297,3 @@ function PhotoForm(props) {
     </>
   );
 }
-
-memo(PhotoForm);
