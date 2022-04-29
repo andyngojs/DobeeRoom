@@ -46,7 +46,7 @@ function PostPage() {
     } else {
       document.title = "Đăng tin | DobeeRoom";
     }
-  }, [state.title]);
+  }, [state]);
 
   const handleTitleChange = useCallback((e) =>
     setState((prevState) => ({
@@ -297,13 +297,9 @@ function PostPage() {
       });
     }
     return () => {
-      if (isPosted) {
-        setIsPosted(false);
-      }
+      setIsPosted(false);
     };
   }, [isPosted]);
-
-  console.log(state)
 
   const values = {
     state,

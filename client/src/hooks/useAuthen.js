@@ -8,7 +8,7 @@ import { getUser } from "../api";
 export default function useAuthen() {
   const navigate = useNavigate()
 
-  const findUser = (res) =>
+  const findUser = useCallback((res) =>
     new Promise((resolve, reject) => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -19,7 +19,7 @@ export default function useAuthen() {
         }
         reject();
       });
-    });
+    }), [])
 
   const { data, isLoading } = useQuery(
     "users",
@@ -36,9 +36,9 @@ export default function useAuthen() {
       return returnData;
     },
     {
-      staleTime: 30 * 60 * 1000,
-      cacheTime: 86400,
+      staleTime: 10 * 60 * 1000,
       retry: 2,
+      refetchIntervalInBackground: true
     },
   );
   return {

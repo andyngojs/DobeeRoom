@@ -1,4 +1,5 @@
 import { memo, useState, useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
 import sidebarNav from "../../constants/sidebarNav";

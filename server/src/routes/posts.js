@@ -7,7 +7,7 @@ import {
     uploadFile,
     uploadFiles,
     getPostPending,
-    getPostPublic, changeStatus, deletePost
+    getPostPublic, changeStatus, deletePost, getPublicPost
 } from "../app/controllers/PostController.js";
 
 const router = express.Router();
@@ -33,6 +33,7 @@ router.post('/posts/pending', getPostPending);
 router.post('/posts/public', getPostPublic);
 
 // [API] Trang Admin
+router.get('/post-public', getPublicPost);
 router.post('/change-status', changeStatus);
 router.post('/delete-post', deletePost);
 

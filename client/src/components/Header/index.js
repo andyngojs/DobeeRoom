@@ -15,7 +15,7 @@ const Header = ({ handleModalMobile }) => {
   const { data } = useAuthen();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const userData = useSelector(state => state.user)
+  const userData = useSelector(state => state.user.newUser)
 
   const toggleModal = useCallback(() => {
     setShow(!show);
@@ -41,7 +41,7 @@ const Header = ({ handleModalMobile }) => {
       >
         <MenuOutlined />
       </div>
-      {data && data?.accessToken ? (
+      {data.accessToken ? (
         <div className={clsx(styles.action)} onClick={toggleModal}>
           <Avatar
             className={clsx(styles.imgAvatar)}

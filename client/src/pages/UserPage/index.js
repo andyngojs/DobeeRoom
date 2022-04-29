@@ -15,24 +15,20 @@ export default function UserPage() {
   const { id } = useParams();
   const [myPostPublic, setMyPostPublic] = useState([])
   const userCurr = useSelector(getUserCurrSelector);
-  const postPublic = useSelector(postPublicSelector)
+  const postPublic = useSelector(postPublicSelector);
 
   useEffect(() => {
-    dispatch(getUserByIDAction.getUserIDRequest({ idUser: id }));
-  }, [id]);
+    dispatch(getUserByIDAction.getUserIDRequest({ idUser: id}));
+  }, []);
 
   useEffect(() => {
     dispatch(getPostAction.getPostRequest({ idUser: id }))
-  }, [id])
+  }, [])
 
   useEffect(() => {
     const myPost = postPublic.filter(post => post.created_byID === id)
     setMyPostPublic(myPost)
   }, [postPublic])
-
-  useEffect(() => {
-    document.title = `${userCurr.name} | DobeeRoom`
-  }, [])
 
   return (
     <div

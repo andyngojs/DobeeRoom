@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { Typography, Divider } from "antd";
@@ -14,13 +15,13 @@ const Modal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const handleLogOut = () => {
+  const handleLogOut = useCallback(() => {
     signOut(auth).then(() => {
       clearLocal();
       dispatch(logOutAction)
       navigate("/login");
     });
-  };
+  }, [])
 
   return (
     <div className={clsx(styles.modalWrapper)}>

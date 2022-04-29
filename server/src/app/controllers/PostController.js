@@ -6,8 +6,18 @@ import {UserModel} from "../models/UserModel.js";
 // Trang client và trang admin
 export async function getPost(req, res) {
     try {
+        const users = await UserModel.find();
         const posts = await PostModel.find();
-        res.status(200).json(posts)
+        const postCopy = [...posts];
+        const newPosts = postCopy.map((post) => {
+            const author = users.find((item) => item._id.toString() === post.created_by  )
+            return {
+                ...post._doc,
+                created_by: author.name,
+                created_byID: author._id.toString()
+            }
+        })
+        res.status(200).json(newPosts)
     } catch (err) {
         res.status(500).json({ message: err });
     }
@@ -87,6 +97,15 @@ export const getPostPublic = async (req, res) => {
 }
 
 // [Feature] Trang Admin
+export const getPublicPost = async (req, res) => {
+    try {
+        const posts = await PostModel.find({ status: 1 })
+        res.json(posts)
+    } catch (err) {
+        res.json({ message: err });
+    }
+}
+
 export const changeStatus = async (req, res) => {
     try {
         const newStatus = req.body.status
@@ -101,8 +120,8 @@ export const changeStatus = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     try {
-        const oldPost = await PostModel.findOneAndDelete({ _id: req.body.idPost });
-        res.json(oldPost)
+        await PostModel.findOneAndDelete({ _id: req.body.idPost });
+        res.json({ message: 'success' })
     } catch (err) {
         res.json({ message: err });
     }
