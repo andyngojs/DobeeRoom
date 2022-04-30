@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
-import { Skeleton } from "antd";
 import styles from "./Home.module.scss";
 import Slideshow from "../../components/Slideshow";
 import RoomItem from "./components/RoomItem";

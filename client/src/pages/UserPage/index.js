@@ -19,11 +19,11 @@ export default function UserPage() {
 
   useEffect(() => {
     dispatch(getUserByIDAction.getUserIDRequest({ idUser: id}));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     dispatch(getPostAction.getPostRequest({ idUser: id }))
-  }, [])
+  }, [id])
 
   useEffect(() => {
     const myPost = postPublic.filter(post => post.created_byID === id)

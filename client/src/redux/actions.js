@@ -2,6 +2,11 @@ export const logOutAction = {
   type: 'LOG_OUT'
 }
 
+export const loggedIn = (payload) => ({
+  type: 'LOGIN',
+  payload
+})
+
 export const createPostActions = {
   createPostRequest: (payload) => ({
     type: "createPostRequest",
