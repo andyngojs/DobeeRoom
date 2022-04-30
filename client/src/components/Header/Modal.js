@@ -19,7 +19,7 @@ const Modal = () => {
     signOut(auth).then(() => {
       clearLocal();
       dispatch(logOutAction)
-      navigate("/login");
+      navigate("/login", { replace: true });
     });
   }, [])
 

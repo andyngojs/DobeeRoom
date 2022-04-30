@@ -11,7 +11,7 @@ import MyPost from "../../pages/MyPost";
 export default function MainRouting() {
   return (
     <Routes>
-      <Route path={"/"} element={<HomePage />} />
+      <Route path={"/"} element={<HomePage />}  />
       <Route path={'/detail/:id'} element={ <DetailPage /> } />
       <Route path={"/search"} element={<SearchPage />} />
       <Route path={"/user/:id"} element={<UserPage />} />

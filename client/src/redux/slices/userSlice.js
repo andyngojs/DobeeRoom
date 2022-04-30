@@ -1,6 +1,7 @@
 const initState = {
   newUser: {},
-  userCurr: {}
+  userCurr: {},
+  isLogged: false
 }
 
 export default function userSlice(state = initState, action) {
@@ -19,6 +20,11 @@ export default function userSlice(state = initState, action) {
       }
     case 'getUserIDFailure':
       return state
+    case 'LOGIN': 
+      return {
+        ...state,
+        isLogged: action.payload
+      }
     default: 
     return state
   }

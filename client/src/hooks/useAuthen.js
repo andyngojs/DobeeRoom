@@ -38,11 +38,11 @@ export default function useAuthen() {
     {
       staleTime: 10 * 60 * 1000,
       retry: 2,
-      refetchIntervalInBackground: true
+      cacheTime: 5 * 60 * 1000
     },
   );
   return {
     data,
-    isLoading,
+    isLoading
   };
 }

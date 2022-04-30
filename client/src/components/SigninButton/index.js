@@ -1,7 +1,7 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FacebookFilled, GoogleCircleFilled } from "@ant-design/icons";
 import {
   signInWithPopup,
@@ -11,14 +11,16 @@ import {
 import styles from "./SigninButton.module.scss";
 import { auth } from "../../firebase/config";
 import { createUser } from "../../api";
-import { authAction } from "../../redux/actions";
+import { authAction, loggedIn } from "../../redux/actions";
+import { checkIsLogged } from "../../redux/selectors";
 
 const fbProvider = new FacebookAuthProvider();
 const ggProvider = new GoogleAuthProvider();
 
 const SigninButton = ({ name }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(checkIsLogged)
 
   const handleLoginFacebook = async (auth, provider) => {
     await signInWithPopup(auth, provider)
@@ -44,7 +46,7 @@ const SigninButton = ({ name }) => {
           providerId: credential.providerId,
         }).then((res) => {
           if (res.status === 200) {
-            navigate("/");
+            dispatch(loggedIn(true))
           }
         });
       })
@@ -77,7 +79,7 @@ const SigninButton = ({ name }) => {
           providerId: credential.providerId,
         }).then((res) => {
           if (res.status === 200) {
-            navigate("/");
+            dispatch(loggedIn(true))
           }
         });
       })
@@ -85,6 +87,12 @@ const SigninButton = ({ name }) => {
         console.log(`Code: ${err.code}, Message: ${err.message}`);
       });
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/', { replace: true })
+    }
+  }, [isLoggedIn])
 
   return (
     <div>

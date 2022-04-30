@@ -4,6 +4,7 @@ import AppRouting from "./App.routing";
 import store from "./redux/store";
 
 function App() {
+
   return (
     <Provider store={store}>
       <Router>

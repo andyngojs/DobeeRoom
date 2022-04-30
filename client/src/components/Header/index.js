@@ -22,7 +22,7 @@ const Header = ({ handleModalMobile }) => {
   }, [show]);
 
   const handleLogin = useCallback(() => {
-    navigate("/login");
+    navigate("/login", { replace: true });
   }, [navigate]);
 
   return (
@@ -41,7 +41,7 @@ const Header = ({ handleModalMobile }) => {
       >
         <MenuOutlined />
       </div>
-      {data.accessToken ? (
+      {data.accessToken && data.accessToken ? (
         <div className={clsx(styles.action)} onClick={toggleModal}>
           <Avatar
             className={clsx(styles.imgAvatar)}
