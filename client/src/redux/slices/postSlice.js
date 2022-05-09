@@ -1,8 +1,11 @@
+
 const initState = {
   post: {},
   postPublic: [],
   message: "",
   myPostPending: [],
+  isError: false,
+  isSuccess: false
 };
 
 const postSlice = (state = initState, action) => {
@@ -21,11 +24,19 @@ const postSlice = (state = initState, action) => {
       return {
         ...state,
         post: action.payload,
+        isSuccess: true
       };
     case "createPostFailure":
       return {
         ...state,
+        isError: true
       };
+    case 'createdPost': 
+      return {
+        ...state,
+        isSuccess: action.payload,
+        isError: action.payload
+      }
     case "getPostPendingSuccess":
       return {
         ...state,

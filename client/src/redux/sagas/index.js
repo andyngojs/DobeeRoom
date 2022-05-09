@@ -18,7 +18,6 @@ import {
   getSavedListAction,
   deleteSavedPostAction,
   getPostPending,
-  getTotalPostAction,
   getUserByIDAction,
 } from "../actions";
 

@@ -20,6 +20,10 @@ export const createPostActions = {
     type: "createPostFailure",
     payload,
   }),
+  createdPost: (payload) => ({
+    type: 'createdPost',
+    payload
+  }),
 };
 
 // Trang Home

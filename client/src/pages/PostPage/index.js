@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import { Divider } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import styles from "./NewPost.module.scss";
 import clsx from "clsx";
@@ -10,6 +10,7 @@ import { utilitiesData } from "../../constants/utilitiesForm";
 import useAuthen from "../../hooks/useAuthen";
 import { createPostActions } from "../../redux/actions";
 import { uploadFileMultiple, uploadFileSingle } from "../../api";
+import { getIsError, getIsSuccess } from "../../redux/selectors";
 
 function PostPage() {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ function PostPage() {
     districtName: '',
     wardName: ''
   });
-  const [isPosted, setIsPosted] = useState(false);
+  const isSuccess = useSelector(getIsSuccess)
+  const isError = useSelector(getIsError)
 
   const regexNumber = useMemo(() => {
     return /^-?\d*(\.\d*)?$/;
@@ -279,14 +281,23 @@ function PostPage() {
         districtName: '',
         wardName: ''
       });
-      setIsPosted(true);
     },
     [state],
   );
 
   useEffect(() => {
-    if (isPosted) {
+    if (isSuccess) {
       toast.success("Đã đăng bài thành công!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (isError) {
+      toast.error("Đăng bài thất bại!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -297,9 +308,9 @@ function PostPage() {
       });
     }
     return () => {
-      setIsPosted(false);
+      dispatch(createPostActions.createdPost(false))
     };
-  }, [isPosted]);
+  }, [isSuccess, isError]);
 
   const values = {
     state,

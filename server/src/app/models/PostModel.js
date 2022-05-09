@@ -41,15 +41,15 @@ const postSchema = new mongoose.Schema({
     },
     thumbnail_img: {
         type: String,
-        required: false
+        required: true
     },
     detail_img: {
         type: Array,
-        required:false
+        required: true
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     status: {
         type: Number,
