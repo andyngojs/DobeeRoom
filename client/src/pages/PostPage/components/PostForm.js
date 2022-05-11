@@ -5,6 +5,8 @@ import Select from "react-select";
 import styles from "./PostForm.module.scss";
 import { utilitiesData } from "../../../constants/utilitiesForm";
 import { typeOptions } from "../../../constants/typeRoom";
+// Entities
+import { URL } from '../../../constants/env';
 
 function PostForm({ value }) {
   const {
@@ -268,7 +270,7 @@ function PhotoForm(props) {
         />
         <div className={clsx(styles.previewImg)}>
           <img
-            src={`http://localhost:5000/${thumbnailImg}`}
+            src={`${URL}:5000/${thumbnailImg}`}
             className={clsx(styles.imgThumbnail)}
             alt=""
           />
@@ -286,7 +288,7 @@ function PhotoForm(props) {
         <div className={clsx(styles.previewImg)}>
           {detailImgs.map((item, index) => (
             <img
-              src={`http://localhost:5000/${item}`}
+              src={`${URL}:5000/${item}`}
               className={clsx(styles.imgDetail)}
               key={index}
               alt=""

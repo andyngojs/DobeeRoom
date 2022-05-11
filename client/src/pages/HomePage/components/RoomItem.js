@@ -1,8 +1,13 @@
 import React from "react";
+// 3-party libs
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import moment from "moment";
+// styles
 import styles from "./RoomItem.module.scss";
+// entities
+import { URL } from "../../../constants/env";
+// custom components
 import LikedBtn from "../../../components/Button/LikedBtn";
 
 export default function RoomItem({ post }) {
@@ -13,7 +18,7 @@ export default function RoomItem({ post }) {
       <div className={clsx(styles.wrapper)}>
         <div className={clsx(styles.imgRoom)}>
           <img
-            src={`http://localhost:5000/${post.thumbnail_img}`}
+            src={`${URL}:5000/${post.thumbnail_img}`}
             alt=""
             className={clsx(styles.img)}
           />

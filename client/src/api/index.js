@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const URL_API = "http://localhost:5000";
+import { URL_API } from "../constants/env";
 
 export const getUser = () => axios.get(`${URL_API}/api/user`);
 export const createUser = (payload) =>

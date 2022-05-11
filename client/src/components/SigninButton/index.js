@@ -90,7 +90,7 @@ const SigninButton = ({ name }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/', { replace: true })
+      navigate('/')
     }
   }, [isLoggedIn])
 
@@ -113,7 +113,7 @@ const SigninButton = ({ name }) => {
       >
         <GoogleCircleFilled className={clsx(styles.icon)} />
         <span className={clsx(styles.title)}>Tiếp tục với Google</span>
-      </div>
+      </div> 
     </div>
   );
 };

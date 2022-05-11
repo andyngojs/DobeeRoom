@@ -26,7 +26,7 @@ function Layout() {
       window.location.reload();
     }
     dispatch(loggedIn(false));
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <>

@@ -17,6 +17,8 @@ import LikedBtn from "../../components/Button/LikedBtn";
 import { postPublicSelector } from "../../redux/selectors";
 import { getPostAction } from "../../redux/actions";
 import useAuthen from "../../hooks/useAuthen";
+// Entities
+import { URL } from '../../constants/env';
 
 function ButtonPrevArrow({ className, style, onClick }) {
   return (
@@ -93,7 +95,7 @@ export default function DetailPage() {
                 <div key={index}>
                   <img
                     alt=""
-                    src={`http://localhost:5000/${item}`}
+                    src={`${URL}:5000/${item}`}
                     className={clsx(styles.imgs)}
                   />
                 </div>

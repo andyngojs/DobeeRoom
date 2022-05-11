@@ -4,6 +4,8 @@ import moment from "moment";
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./AboutBox.module.scss";
 import { Link } from "react-router-dom";
+// Entities
+import { URL } from "../../../constants/env";
 
 export default function AboutBox({ userCurr, title, description, isPost = false, myPostPublic }) {
   return (
@@ -13,7 +15,7 @@ export default function AboutBox({ userCurr, title, description, isPost = false,
         myPostPublic.map((post, index) => (
           <div className={clsx(styles.inner)} key={index} >
           <Link to={`/detail/${post._id}`} className={clsx(styles.thumb)} >
-            <img src={`http://localhost:5000/${post.thumbnail_img}`} alt={post.title} className={clsx(styles.thumbImg)} />
+            <img src={`${URL}:5000/${post.thumbnail_img}`} alt={post.title} className={clsx(styles.thumbImg)} />
           </Link>
           <div className={clsx(styles.info)} >
             <h3 className={clsx(styles.infoTitle)} >

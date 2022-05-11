@@ -32,7 +32,7 @@ const Siderbar = ({ show }) => {
             active={indexActive === index}
             index={index}
             handleSelected={() => handleSelected(index, item)}
-            idUser={data._id}
+            idUser={data ? data._id : null}
           />
         ))}
       </ul>
