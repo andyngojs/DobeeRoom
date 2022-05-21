@@ -12,13 +12,13 @@ import {
 } from "@ant-design/icons";
 import Slider from "react-slick";
 import styles from "./DetailPage.module.scss";
-import { API_KEY_MAP } from "../../constants/env";
+// entities
+import { API_KEY_MAP, URL } from "../../constants/env";
+
 import LikedBtn from "../../components/Button/LikedBtn";
 import { postPublicSelector } from "../../redux/selectors";
 import { getPostAction } from "../../redux/actions";
 import useAuthen from "../../hooks/useAuthen";
-// Entities
-import { URL } from '../../constants/env';
 
 function ButtonPrevArrow({ className, style, onClick }) {
   return (

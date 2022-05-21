@@ -5,4 +5,8 @@ export default class Config {
   getVersion() {
     return 'Version ' + this.version
   }
+
+  get networkIP() {
+    return "localhost"
+  }
 }
