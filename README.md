@@ -41,6 +41,8 @@ Sử dụng heroku để triển khai api và server
 
 repo server: [https://github.com/andyngojs/Dobeeroom_Server]
 
+Heroku: [https://dashboard.heroku.com/apps/dobeeroom]
+
 repo đang có remote đến git heroku với branch `master`
 
 thực hiện lệnh git như bình thường
