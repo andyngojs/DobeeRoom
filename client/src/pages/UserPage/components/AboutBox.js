@@ -15,7 +15,7 @@ export default function AboutBox({ userCurr, title, description, isPost = false,
         myPostPublic.map((post, index) => (
           <div className={clsx(styles.inner)} key={index} >
           <Link to={`/detail/${post._id}`} className={clsx(styles.thumb)} >
-            <img src={`${URL}:5000/${post.thumbnail_img}`} alt={post.title} className={clsx(styles.thumbImg)} />
+            <img src={`${URL}/${post.thumbnail_img}`} alt={post.title} className={clsx(styles.thumbImg)} />
           </Link>
           <div className={clsx(styles.info)} >
             <h3 className={clsx(styles.infoTitle)} >

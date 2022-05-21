@@ -95,7 +95,7 @@ export default function DetailPage() {
                 <div key={index}>
                   <img
                     alt=""
-                    src={`${URL}:5000/${item}`}
+                    src={`${URL}/${item}`}
                     className={clsx(styles.imgs)}
                   />
                 </div>

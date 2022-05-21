@@ -270,7 +270,7 @@ function PhotoForm(props) {
         />
         <div className={clsx(styles.previewImg)}>
           <img
-            src={`${URL}:5000/${thumbnailImg}`}
+            src={`${URL}/${thumbnailImg}`}
             className={clsx(styles.imgThumbnail)}
             alt=""
           />
@@ -288,7 +288,7 @@ function PhotoForm(props) {
         <div className={clsx(styles.previewImg)}>
           {detailImgs.map((item, index) => (
             <img
-              src={`${URL}:5000/${item}`}
+              src={`${URL}/${item}`}
               className={clsx(styles.imgDetail)}
               key={index}
               alt=""

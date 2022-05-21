@@ -18,7 +18,7 @@ export default function RoomItem({ post }) {
       <div className={clsx(styles.wrapper)}>
         <div className={clsx(styles.imgRoom)}>
           <img
-            src={`${URL}:5000/${post.thumbnail_img}`}
+            src={`${URL}/${post.thumbnail_img}`}
             alt=""
             className={clsx(styles.img)}
           />
