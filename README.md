@@ -9,7 +9,7 @@ This is my graduate project. A web app support students finding room on the plat
 
 ### Source Code 
 
-- Server: https://github.com/andyngojs/dobeeroom-be
+- Server: https://github.com/andyngojs/Dobeeroom-Server
 
 ### Developer
 Dong Ngo (AndyngoJs)
