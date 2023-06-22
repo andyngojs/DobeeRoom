@@ -1,22 +1,13 @@
-# Web App support students finding room
+# Dobee Room
 
-### Description
-This is my graduate project. A web app support students finding room on the platform Web.
-<br> Use Technology:
-- Frontend: React, Redux, Redux Saga, SASS/SCSS, CSS Module
-- Backend: Nodejs, ExpressJs, MongoDB
-- Third-party Service: Firebase (Authentication)
+> The platform support students looking for rooms. 
+>
+> This is my graduate project (2022)
 
-### Source Code 
-
-- Server: https://github.com/andyngojs/Dobeeroom-Server
+### Technologies
+- Frontend: React, Javascript, Redux, Redux Saga, SASS/SCSS, CSS Module
+- Backend: Nodejs, ExpressJs, MongoDB database
+- 3-party: Firebase Authentication
 
 ### Developer
 Dong Ngo (AndyngoJs)
-
-### Tutorial Teacher
-Pham Tien Huy
-
-### Reference
-
-Google Map Platform
